@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+}
+
+group = 'io.github.qe7'
+version = '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+
+    maven {
+        name = 'impactdevelopment-repo'
+        url = 'https://impactdevelopment.github.io/maven/'
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(JavaExec).configureEach {
+    def osType = System.getProperty('os.name').toLowerCase().contains('windows') ? 'windows' : 'linux'
+    systemProperty 'java.library.path', "${projectDir}${File.separator}test_natives${File.separator}${osType}"
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.11.0'
+    implementation 'com.github.ZeroMemes:Alpine:3.1.0'
+
+    implementation fileTree(dir: 'workspace/bin', include: ['*.jar'])
+
+    compileOnly 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.16'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
+}
