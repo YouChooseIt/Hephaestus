@@ -10,6 +10,7 @@ import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
 import io.github.qe7.features.impl.modules.impl.movement.FlightModule;
 import io.github.qe7.features.impl.modules.impl.movement.StepModule;
+import io.github.qe7.features.impl.modules.impl.render.HUDEditorGUIModule;
 import io.github.qe7.features.impl.modules.impl.render.HUDModule;
 import io.github.qe7.managers.api.Manager;
 import io.github.qe7.utils.config.FileUtil;
@@ -33,6 +34,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
 
         // Add modules to the list
         modules.add(new HUDModule());
+        modules.add(new HUDEditorGUIModule());
 
         modules.add(new FlightModule());
         modules.add(new StepModule());
@@ -99,7 +101,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
     }
 
     public void saveModules() {
-        JsonObject jsonObject = new JsonObject();
+        final JsonObject jsonObject = new JsonObject();
 
         for (Module module : this.getRegistry().values()) {
             jsonObject.add(module.getName(), module.serialize());
@@ -109,13 +111,13 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
     }
 
     public void loadModules() {
-        String config = FileUtil.readFile("modules");
+        final String config = FileUtil.readFile("modules");
 
         if (config == null) {
             return;
         }
 
-        JsonObject jsonObject = GSON.fromJson(config, JsonObject.class);
+        final JsonObject jsonObject = GSON.fromJson(config, JsonObject.class);
 
         for (Module module : this.getRegistry().values()) {
             if (jsonObject.has(module.getName())) {

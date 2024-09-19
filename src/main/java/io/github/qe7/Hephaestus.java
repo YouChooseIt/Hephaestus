@@ -72,5 +72,6 @@ public final class Hephaestus {
         System.out.println("Shutting down " + this.getName() + "...");
 
         this.getModuleManager().saveModules();
+        this.getPanelManager().savePanels();
     }
 }

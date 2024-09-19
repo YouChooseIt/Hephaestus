@@ -3,6 +3,7 @@ package io.github.qe7.features.impl.panels.impl;
 import io.github.qe7.Hephaestus;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.panels.api.Panel;
+import net.minecraft.src.ScaledResolution;
 
 public class ModuleListPanel extends Panel {
 
@@ -11,16 +12,11 @@ public class ModuleListPanel extends Panel {
 
         this.x = 10;
         this.y = 40;
-
-        this.width = 100;
-        this.height = 100;
     }
 
     @Override
-    public void drawPanel(float mouseX, float mouseY) {
-        super.drawPanel(mouseX, mouseY);
-
-        fontRenderer.drawString("mouse pos: " + mouseX + ", " + mouseY, (int) x + 2, (int) y + 2, -1);
+    public void drawPanel(float mouseX, float mouseY, ScaledResolution scaledResolution) {
+        super.drawPanel(mouseX, mouseY, scaledResolution);
 
         int y = (int) this.y + 2;
         int longest = 0;
