@@ -25,6 +25,4 @@ public class HUDModule extends Module {
 
         fontRenderer.drawStringWithShadow(Hephaestus.getInstance().getName(), 2, 2, -1);
     });
-
-
 }

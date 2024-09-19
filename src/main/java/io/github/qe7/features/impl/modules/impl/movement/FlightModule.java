@@ -6,7 +6,6 @@ import io.github.qe7.features.impl.modules.api.ModuleCategory;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.input.Keyboard;
 
 public class FlightModule extends Module {
 

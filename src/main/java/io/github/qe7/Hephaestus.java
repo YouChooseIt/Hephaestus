@@ -1,7 +1,9 @@
 package io.github.qe7;
 
+import io.github.qe7.managers.impl.CommandManager;
 import io.github.qe7.managers.impl.ModuleManager;
 import lombok.Getter;
+import lombok.Setter;
 import me.zero.alpine.bus.EventBus;
 import me.zero.alpine.bus.EventManager;
 
@@ -21,19 +23,25 @@ public final class Hephaestus {
 
     // Managers
     private final ModuleManager moduleManager;
+    private final CommandManager commandManager;
 
     // Client related variables
-    private final String name, prefix;
+    private final String name;
+
+    @Setter
+    private String prefix;
 
     // Client authors
     private final String[] authors = new String[] { "qe7", "woooow" };
 
+    // Private constructor, to prevent instantiation
     private Hephaestus() {
         // Build the event bus
         this.eventBus = EventManager.builder().setName("client").build();
 
         // Create instances of the managers
         this.moduleManager = new ModuleManager();
+        this.commandManager = new CommandManager();
 
         // Set the name of the client
         this.name = "Hephaestus";
@@ -47,5 +55,6 @@ public final class Hephaestus {
         System.out.println("Initializing " + this.getName() + "...");
 
         this.getModuleManager().initialize();
+        this.getCommandManager().initialize();
     }
 }

@@ -9,18 +9,16 @@ import lombok.Setter;
 public abstract class Command extends Feature {
 
     // Usage
-    private String usage = "";
+    private String usage = "No usage provided";
 
     // Aliases
     private String[] aliases = new String[0];
 
-    /**
-     * Creates a new command
-     *
-     * @param name        the name of the command
-     * @param description the description of the command
-     */
+    // Constructor
     public Command(String name, String description) {
         super(name, description);
     }
+
+    // Abstract method to execute the command
+    public abstract void execute(String[] args);
 }
