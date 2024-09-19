@@ -1,73 +1,66 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) braces deadcode 
-
 package net.minecraft.src;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.github.qe7.Hephaestus;
+import io.github.qe7.events.ChatMousePressEvent;
+import io.github.qe7.events.ChatMouseReleaseEvent;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-// Referenced classes of package net.minecraft.src:
-//            Gui, GuiButton, SoundManager, GuiParticle, 
-//            Tessellator, RenderEngine, FontRenderer
+import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class GuiScreen extends Gui
-{
+public class GuiScreen extends Gui {
 
-    public GuiScreen()
-    {
+    public int width;
+    public int height;
+    public boolean field_948_f;
+    public GuiParticle field_25091_h;
+    protected Minecraft mc;
+    protected List controlList;
+    protected FontRenderer fontRenderer;
+    private GuiButton selectedButton;
+
+    public GuiScreen() {
         controlList = new ArrayList();
         field_948_f = false;
         selectedButton = null;
     }
 
-    public void drawScreen(int i, int j, float f)
-    {
-        for(int k = 0; k < controlList.size(); k++)
-        {
-            GuiButton guibutton = (GuiButton)controlList.get(k);
-            guibutton.drawButton(mc, i, j);
+    public static String getClipboardString() {
+        try {
+            java.awt.datatransfer.Transferable transferable = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
+            if (transferable != null && transferable.isDataFlavorSupported(java.awt.datatransfer.DataFlavor.stringFlavor)) {
+                String s = (String) transferable.getTransferData(java.awt.datatransfer.DataFlavor.stringFlavor);
+                return s;
+            }
+        } catch (Exception exception) {
         }
-
+        return null;
     }
 
-    protected void keyTyped(char c, int i)
-    {
-        if(i == 1)
-        {
+    public void drawScreen(int i, int j, float f) {
+        for (int k = 0; k < controlList.size(); k++) {
+            GuiButton guibutton = (GuiButton) controlList.get(k);
+            guibutton.drawButton(mc, i, j);
+        }
+    }
+
+    protected void keyTyped(char c, int i) {
+        if (i == 1) {
             mc.displayGuiScreen(null);
             mc.setIngameFocus();
         }
     }
 
-    public static String getClipboardString()
-    {
-        try
-        {
-            java.awt.datatransfer.Transferable transferable = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
-            if(transferable != null && transferable.isDataFlavorSupported(java.awt.datatransfer.DataFlavor.stringFlavor))
-            {
-                String s = (String)transferable.getTransferData(java.awt.datatransfer.DataFlavor.stringFlavor);
-                return s;
-            }
-        }
-        catch(Exception exception) { }
-        return null;
-    }
-
-    protected void mouseClicked(int i, int j, int k)
-    {
-        if(k == 0)
-        {
-            for(int l = 0; l < controlList.size(); l++)
-            {
-                GuiButton guibutton = (GuiButton)controlList.get(l);
-                if(guibutton.mousePressed(mc, i, j))
-                {
+    protected void mouseClicked(int i, int j, int k) {
+        if (k == 0) {
+            for (int l = 0; l < controlList.size(); l++) {
+                GuiButton guibutton = (GuiButton) controlList.get(l);
+                if (guibutton.mousePressed(mc, i, j)) {
                     selectedButton = guibutton;
                     mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
                     actionPerformed(guibutton);
@@ -77,21 +70,24 @@ public class GuiScreen extends Gui
         }
     }
 
-    protected void mouseMovedOrUp(int i, int j, int k)
-    {
-        if(selectedButton != null && k == 0)
-        {
+    protected void mouseReleased(int i, int j, int k) {
+        if (selectedButton != null && k == 0) {
             selectedButton.mouseReleased(i, j);
             selectedButton = null;
         }
     }
 
-    protected void actionPerformed(GuiButton guibutton)
-    {
+    protected void mouseMovedOrUp(int i, int j, int k) {
+        if (selectedButton != null && k == 0) {
+            selectedButton.mouseReleased(i, j);
+            selectedButton = null;
+        }
     }
 
-    public void setWorldAndResolution(Minecraft minecraft, int i, int j)
-    {
+    protected void actionPerformed(GuiButton guibutton) {
+    }
+
+    public void setWorldAndResolution(Minecraft minecraft, int i, int j) {
         field_25091_h = new GuiParticle(minecraft);
         mc = minecraft;
         fontRenderer = minecraft.fontRenderer;
@@ -101,37 +97,33 @@ public class GuiScreen extends Gui
         initGui();
     }
 
-    public void initGui()
-    {
+    public void initGui() {
     }
 
-    public void handleInput()
-    {
-        for(; Mouse.next(); handleMouseInput()) { }
-        for(; Keyboard.next(); handleKeyboardInput()) { }
-    }
-
-    public void handleMouseInput()
-    {
-        if(Mouse.getEventButtonState())
-        {
-            int i = (Mouse.getEventX() * width) / mc.displayWidth;
-            int k = height - (Mouse.getEventY() * height) / mc.displayHeight - 1;
-            mouseClicked(i, k, Mouse.getEventButton());
-        } else
-        {
-            int j = (Mouse.getEventX() * width) / mc.displayWidth;
-            int l = height - (Mouse.getEventY() * height) / mc.displayHeight - 1;
-            mouseMovedOrUp(j, l, Mouse.getEventButton());
+    public void handleInput() {
+        for (; Mouse.next(); handleMouseInput()) {
+        }
+        for (; Keyboard.next(); handleKeyboardInput()) {
         }
     }
 
-    public void handleKeyboardInput()
-    {
-        if(Keyboard.getEventKeyState())
-        {
-            if(Keyboard.getEventKey() == 87)
-            {
+    public void handleMouseInput() {
+        int i = (Mouse.getEventX() * width) / mc.displayWidth;
+        int j = height - (Mouse.getEventY() * height) / mc.displayHeight - 1;
+        int k = Mouse.getEventButton();
+
+        if (Mouse.getEventButtonState()) {
+            mouseClicked(i, j, k);
+        } else if (k != -1) {
+            mouseReleased(i, j, k);
+        } else {
+            mouseMovedOrUp(i, j, k);
+        }
+    }
+
+    public void handleKeyboardInput() {
+        if (Keyboard.getEventKeyState()) {
+            if (Keyboard.getEventKey() == 87) {
                 mc.toggleFullscreen();
                 return;
             }
@@ -139,32 +131,26 @@ public class GuiScreen extends Gui
         }
     }
 
-    public void updateScreen()
-    {
+    public void updateScreen() {
     }
 
-    public void onGuiClosed()
-    {
+    public void onGuiClosed() {
     }
 
-    public void drawDefaultBackground()
-    {
+    public void drawDefaultBackground() {
         drawWorldBackground(0);
     }
 
-    public void drawWorldBackground(int i)
-    {
-        if(mc.theWorld != null)
-        {
+    public void drawWorldBackground(int i) {
+        if (mc.theWorld != null) {
             drawGradientRect(0, 0, width, height, 0xc0101010, 0xd0101010);
-        } else
-        {
+//			drawGradientRect(0, 0, width, height, 0x000, new Color(67, 105, 135, 189).getRGB());
+        } else {
             drawBackground(i);
         }
     }
 
-    public void drawBackground(int i)
-    {
+    public void drawBackground(int i) {
         GL11.glDisable(2896 /*GL_LIGHTING*/);
         GL11.glDisable(2912 /*GL_FOG*/);
         Tessellator tessellator = Tessellator.instance;
@@ -173,32 +159,20 @@ public class GuiScreen extends Gui
         float f = 32F;
         tessellator.startDrawingQuads();
         tessellator.setColorOpaque_I(0x404040);
-        tessellator.addVertexWithUV(0.0D, height, 0.0D, 0.0D, (float)height / f + (float)i);
-        tessellator.addVertexWithUV(width, height, 0.0D, (float)width / f, (float)height / f + (float)i);
-        tessellator.addVertexWithUV(width, 0.0D, 0.0D, (float)width / f, 0 + i);
-        tessellator.addVertexWithUV(0.0D, 0.0D, 0.0D, 0.0D, 0 + i);
+        tessellator.addVertexWithUV(0.0D, height, 0.0D, 0.0D, (float) height / f + (float) i);
+        tessellator.addVertexWithUV(width, height, 0.0D, (float) width / f, (float) height / f + (float) i);
+        tessellator.addVertexWithUV(width, 0.0D, 0.0D, (float) width / f, i);
+        tessellator.addVertexWithUV(0.0D, 0.0D, 0.0D, 0.0D, i);
         tessellator.draw();
     }
 
-    public boolean doesGuiPauseGame()
-    {
+    public boolean doesGuiPauseGame() {
         return true;
     }
 
-    public void deleteWorld(boolean flag, int i)
-    {
+    public void deleteWorld(boolean flag, int i) {
     }
 
-    public void selectNextField()
-    {
+    public void selectNextField() {
     }
-
-    protected Minecraft mc;
-    public int width;
-    public int height;
-    protected List controlList;
-    public boolean field_948_f;
-    protected FontRenderer fontRenderer;
-    public GuiParticle field_25091_h;
-    private GuiButton selectedButton;
 }

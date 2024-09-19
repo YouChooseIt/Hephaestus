@@ -193,7 +193,7 @@ public abstract class Module extends Command implements Subscriber, Serialized {
             final JsonObject settings = new JsonObject();
 
             for (Setting<?> setting : Hephaestus.getInstance().getModuleManager().getSettingsByModule(this)) {
-                settings.addProperty(setting.getName(), setting.getValue().toString());
+                settings.add(setting.getName(), setting.serialize());
             }
 
             object.add("settings", settings);
@@ -204,6 +204,21 @@ public abstract class Module extends Command implements Subscriber, Serialized {
 
     @Override
     public void deserialize(JsonObject object) {
+        this.setEnabled(object.get("enabled").getAsBoolean());
+        keyBind = object.get("keyBind").getAsInt();
 
+        if (object.has("settings")) {
+            final JsonObject settings = object.getAsJsonObject("settings");
+
+            for (Setting<?> setting : Hephaestus.getInstance().getModuleManager().getSettingsByModule(this)) {
+                if (settings.has(setting.getName())) {
+                    try {
+                        setting.deserialize(settings.getAsJsonObject(setting.getName()));
+                    } catch (Exception e) {
+                        ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Failed to load config for setting: " + setting.getName() + " - " + e.getMessage());
+                    }
+                }
+            }
+        }
     }
 }

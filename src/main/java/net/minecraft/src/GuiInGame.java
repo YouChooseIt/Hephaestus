@@ -172,7 +172,7 @@ public class GuiInGame extends Gui {
             drawString(fontrenderer, (new StringBuilder()).append("f: ").append(MathHelper.floor_double((double) ((mc.thePlayer.rotationYaw * 4F) / 360F) + 0.5D) & 3).toString(), 2, 88, 0xe0e0e0);
             GL11.glPopMatrix();
         } else {
-            final RenderScreenEvent event = new RenderScreenEvent(scaledresolution);
+            final RenderScreenEvent event = new RenderScreenEvent(scaledresolution, i, j);
             Hephaestus.getInstance().getEventBus().post(event);
         }
 

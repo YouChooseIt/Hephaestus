@@ -15,4 +15,22 @@ public final class IntSetting extends Setting<Integer> {
         this.maximum = maximum;
         this.step = step;
     }
+
+    @Override
+    public JsonObject serialize() {
+        final JsonObject object = new JsonObject();
+
+        object.addProperty("value", this.getValue());
+
+        return object;
+    }
+
+    @Override
+    public void deserialize(JsonObject object) {
+        if (!object.has("value") || !object.get("value").isJsonPrimitive()) {
+            return;
+        }
+
+        this.setValue(object.get("value").getAsInt());
+    }
 }

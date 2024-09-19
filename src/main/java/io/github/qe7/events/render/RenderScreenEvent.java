@@ -9,4 +9,6 @@ import net.minecraft.src.ScaledResolution;
 public final class RenderScreenEvent {
 
     private final ScaledResolution scaledResolution;
+
+    private float mouseX, mouseY;
 }

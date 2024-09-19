@@ -1,11 +1,12 @@
 package io.github.qe7.features.impl.modules.api.settings.api;
 
+import io.github.qe7.utils.config.Serialized;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.function.BooleanSupplier;
 
-public abstract class Setting<T> {
+public abstract class Setting<T> implements Serialized {
 
     private BooleanSupplier supplier;
 

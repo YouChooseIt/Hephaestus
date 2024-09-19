@@ -1,5 +1,8 @@
 package io.github.qe7.managers.impl;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.sun.xml.internal.ws.api.config.management.policy.ManagementAssertion;
 import io.github.qe7.Hephaestus;
 import io.github.qe7.events.KeyPressEvent;
@@ -9,6 +12,7 @@ import io.github.qe7.features.impl.modules.impl.movement.FlightModule;
 import io.github.qe7.features.impl.modules.impl.movement.StepModule;
 import io.github.qe7.features.impl.modules.impl.render.HUDModule;
 import io.github.qe7.managers.api.Manager;
+import io.github.qe7.utils.config.FileUtil;
 import lombok.Getter;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
@@ -19,6 +23,8 @@ import java.util.*;
 
 @Getter
 public final class ModuleManager extends Manager<Class<? extends Module>, Module> implements Subscriber {
+
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private final Map<Module, List<Setting<?>>> setting = new HashMap<>();
 
@@ -33,6 +39,8 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
 
         // Register modules
         modules.forEach(this::register);
+
+        this.loadModules();
 
         // Subscribe to the event bus for key press events
         Hephaestus.getInstance().getEventBus().subscribe(this);
@@ -88,6 +96,36 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
     public void addSetting(Module feature, Setting<?> property) {
         setting.putIfAbsent(feature, new ArrayList<>());
         setting.get(feature).add(property);
+    }
+
+    public void saveModules() {
+        JsonObject jsonObject = new JsonObject();
+
+        for (Module module : this.getRegistry().values()) {
+            jsonObject.add(module.getName(), module.serialize());
+        }
+
+        FileUtil.writeFile("modules", GSON.toJson(jsonObject));
+    }
+
+    public void loadModules() {
+        String config = FileUtil.readFile("modules");
+
+        if (config == null) {
+            return;
+        }
+
+        JsonObject jsonObject = GSON.fromJson(config, JsonObject.class);
+
+        for (Module module : this.getRegistry().values()) {
+            if (jsonObject.has(module.getName())) {
+                try {
+                    module.deserialize(jsonObject.getAsJsonObject(module.getName()));
+                } catch (Exception e) {
+                    System.out.println("Failed to load config for module: " + module.getName() + " - " + e.getMessage());
+                }
+            }
+        }
     }
 
     @Subscribe

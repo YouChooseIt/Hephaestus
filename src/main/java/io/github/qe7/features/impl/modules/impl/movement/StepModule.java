@@ -30,5 +30,7 @@ public class StepModule extends Module {
     }
 
     @Subscribe
-    public final Listener<UpdateEvent> onUpdate = new Listener<>(event -> Minecraft.getMinecraft().thePlayer.stepHeight = 1.0f);
+    public final Listener<UpdateEvent> onUpdate = new Listener<>(event -> {
+        Minecraft.getMinecraft().thePlayer.stepHeight = 1.0f;
+    });
 }

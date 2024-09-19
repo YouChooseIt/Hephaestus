@@ -2,6 +2,7 @@ package io.github.qe7;
 
 import io.github.qe7.managers.impl.CommandManager;
 import io.github.qe7.managers.impl.ModuleManager;
+import io.github.qe7.managers.impl.PanelManager;
 import lombok.Getter;
 import lombok.Setter;
 import me.zero.alpine.bus.EventBus;
@@ -24,6 +25,7 @@ public final class Hephaestus {
     // Managers
     private final ModuleManager moduleManager;
     private final CommandManager commandManager;
+    private final PanelManager panelManager;
 
     // Client related variables
     private final String name;
@@ -42,6 +44,7 @@ public final class Hephaestus {
         // Create instances of the managers
         this.moduleManager = new ModuleManager();
         this.commandManager = new CommandManager();
+        this.panelManager = new PanelManager();
 
         // Set the name of the client
         this.name = "Hephaestus";
@@ -56,5 +59,18 @@ public final class Hephaestus {
 
         this.getModuleManager().initialize();
         this.getCommandManager().initialize();
+        this.getPanelManager().initialize();
+
+        // register shutdown hook, save configs on shutdown
+        Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
+    }
+
+    /**
+     * Shutdown the client
+     */
+    public void shutdown() {
+        System.out.println("Shutting down " + this.getName() + "...");
+
+        this.getModuleManager().saveModules();
     }
 }
