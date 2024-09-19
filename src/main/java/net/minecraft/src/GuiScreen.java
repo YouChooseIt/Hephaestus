@@ -1,15 +1,11 @@
 package net.minecraft.src;
 
-import io.github.qe7.Hephaestus;
-import io.github.qe7.events.ChatMousePressEvent;
-import io.github.qe7.events.ChatMouseReleaseEvent;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

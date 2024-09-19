@@ -1,7 +1,5 @@
 package net.minecraft.src;
 
-import io.github.qe7.Hephaestus;
-import io.github.qe7.events.ChatMousePressEvent;
 import org.lwjgl.input.Keyboard;
 
 public class GuiChat extends GuiScreen {
