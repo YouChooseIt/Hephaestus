@@ -1,5 +1,6 @@
 package io.github.qe7;
 
+import io.github.qe7.managers.impl.AccountManager;
 import io.github.qe7.managers.impl.CommandManager;
 import io.github.qe7.managers.impl.ModuleManager;
 import io.github.qe7.managers.impl.PanelManager;
@@ -23,6 +24,7 @@ public final class Hephaestus {
     private final EventBus eventBus;
 
     // Managers
+    private final AccountManager accountManager;
     private final ModuleManager moduleManager;
     private final CommandManager commandManager;
     private final PanelManager panelManager;
@@ -42,6 +44,7 @@ public final class Hephaestus {
         this.eventBus = EventManager.builder().setName("client").build();
 
         // Create instances of the managers
+        this.accountManager = new AccountManager();
         this.moduleManager = new ModuleManager();
         this.commandManager = new CommandManager();
         this.panelManager = new PanelManager();
@@ -57,6 +60,7 @@ public final class Hephaestus {
     public void initialize() {
         System.out.println("Initializing " + this.getName() + "...");
 
+        this.getAccountManager().initialize();
         this.getModuleManager().initialize();
         this.getCommandManager().initialize();
         this.getPanelManager().initialize();
@@ -71,6 +75,7 @@ public final class Hephaestus {
     public void shutdown() {
         System.out.println("Shutting down " + this.getName() + "...");
 
+        this.getAccountManager().saveAccounts();
         this.getModuleManager().saveModules();
         this.getPanelManager().savePanels();
     }

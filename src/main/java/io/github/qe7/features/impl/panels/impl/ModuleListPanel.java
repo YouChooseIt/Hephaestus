@@ -23,7 +23,7 @@ public class ModuleListPanel extends Panel {
 
         for (Module module : Hephaestus.getInstance().getModuleManager().getRegistry().values()) {
             if (module.isEnabled()) {
-                this.fontRenderer.drawStringWithShadow(module.getName(), (int) this.x + 2, y, -1);
+                this.fontRenderer.drawStringWithShadow(module.getName(), (int) this.x + 2, y, module.getCategory().getColor().getRGB());
                 if (this.fontRenderer.getStringWidth(module.getName()) > longest) {
                     longest = this.fontRenderer.getStringWidth(module.getName());
                 }

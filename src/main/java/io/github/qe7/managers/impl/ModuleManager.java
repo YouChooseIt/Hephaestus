@@ -8,6 +8,7 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
+import io.github.qe7.features.impl.modules.impl.misc.AutoLoginModule;
 import io.github.qe7.features.impl.modules.impl.movement.FlightModule;
 import io.github.qe7.features.impl.modules.impl.movement.StepModule;
 import io.github.qe7.features.impl.modules.impl.render.HUDEditorGUIModule;
@@ -33,11 +34,16 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         final List<Module> modules = new ArrayList<>();
 
         // Add modules to the list
+        /* Render */
         modules.add(new HUDModule());
         modules.add(new HUDEditorGUIModule());
 
+        /* Movement */
         modules.add(new FlightModule());
         modules.add(new StepModule());
+
+        /* Misc */
+        modules.add(new AutoLoginModule());
 
         // Register modules
         modules.forEach(this::register);
@@ -119,7 +125,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
 
         final JsonObject jsonObject = GSON.fromJson(config, JsonObject.class);
 
-        for (Module module : this.getRegistry().values()) {
+        for (final Module module : this.getRegistry().values()) {
             if (jsonObject.has(module.getName())) {
                 try {
                     module.deserialize(jsonObject.getAsJsonObject(module.getName()));

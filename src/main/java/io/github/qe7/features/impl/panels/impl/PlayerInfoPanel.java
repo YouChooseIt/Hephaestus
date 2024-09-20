@@ -17,7 +17,7 @@ public class PlayerInfoPanel extends Panel {
     public void drawPanel(float mouseX, float mouseY, ScaledResolution scaledResolution) {
         super.drawPanel(mouseX, mouseY, scaledResolution);
 
-        this.fontRenderer.drawStringWithShadow("Name: " + Minecraft.getMinecraft().thePlayer.username, (int) this.x + 2, (int) this.y + 2, -1);
+        this.fontRenderer.drawStringWithShadow("Welcome, " + Minecraft.getMinecraft().thePlayer.username, (int) this.x + 2, (int) this.y + 2, -1);
         this.fontRenderer.drawStringWithShadow("Health: " + Minecraft.getMinecraft().thePlayer.health, (int) this.x + 2, (int) this.y + 12, -1);
         this.fontRenderer.drawStringWithShadow("X: " + ((int) Minecraft.getMinecraft().thePlayer.posX), (int) this.x + 2, (int) this.y + 22, -1);
         this.fontRenderer.drawStringWithShadow("Y: " + ((int) Minecraft.getMinecraft().thePlayer.posY), (int) this.x + 2, (int) this.y + 32, -1);

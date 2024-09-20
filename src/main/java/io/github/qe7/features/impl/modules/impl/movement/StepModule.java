@@ -9,8 +9,6 @@ import net.minecraft.client.Minecraft;
 
 public class StepModule extends Module {
 
-    private float oldStepHeight;
-
     public StepModule() {
         super("Step", "Allows the local player to step up higher", ModuleCategory.MOVEMENT);
     }
@@ -18,15 +16,13 @@ public class StepModule extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
-
-        oldStepHeight = Minecraft.getMinecraft().thePlayer.stepHeight;
     }
 
     @Override
     public void onDisable() {
         super.onDisable();
 
-        Minecraft.getMinecraft().thePlayer.stepHeight = oldStepHeight;
+        Minecraft.getMinecraft().thePlayer.stepHeight = 0.5f;
     }
 
     @Subscribe
