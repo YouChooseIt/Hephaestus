@@ -2,6 +2,7 @@ package io.github.qe7.managers.impl;
 
 import io.github.qe7.Hephaestus;
 import io.github.qe7.events.packet.IncomingPacketEvent;
+import io.github.qe7.utils.math.TimerUtil;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import me.zero.alpine.listener.Subscriber;
@@ -19,6 +20,8 @@ public final class PlayerManager implements Subscriber {
 
     // Instead of using regex to match the entire line, we'll just look for "Players online:"
     private static final String PLAYER_LIST_IDENTIFIER = "Players online:";
+
+    private final TimerUtil timerUtil = new TimerUtil();
 
     private final List<String> onlinePlayers = new ArrayList<>();
 
@@ -50,20 +53,28 @@ public final class PlayerManager implements Subscriber {
             if (normalisedMessage.contains(PLAYER_LIST_IDENTIFIER)) {
                 test = true;
                 builder.setLength(0); // Clear the builder for new list
+                timerUtil.reset();
                 return; // Wait for next packets to get player names
             }
 
             // Continue reading the player list if we're in the middle of it
             if (test) {
-                builder.append(normalisedMessage);
-
                 // Attempting to detect end of player list, but this is not reliable LOL
-                if (message.contains("<") || message.contains("§")) {
+                if ((message.contains("<") || message.contains("§"))) {
                     test = false;
                     System.out.println(builder);
                     updateOnlinePlayers(builder.toString());
                 }
+
+                builder.append(normalisedMessage);
+                timerUtil.reset();
             }
+        }
+
+        if (test && timerUtil.hasTimeElapsed(100, false)) {
+            test = false;
+            System.out.println(builder);
+            updateOnlinePlayers(builder.toString());
         }
     });
 
