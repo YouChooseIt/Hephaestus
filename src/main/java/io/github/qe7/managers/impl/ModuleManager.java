@@ -8,7 +8,7 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
-import io.github.qe7.features.impl.modules.impl.misc.AutoLoginModule;
+import io.github.qe7.features.impl.modules.impl.misc.*;
 import io.github.qe7.features.impl.modules.impl.movement.FlightModule;
 import io.github.qe7.features.impl.modules.impl.movement.StepModule;
 import io.github.qe7.features.impl.modules.impl.render.HUDEditorGUIModule;
@@ -44,6 +44,11 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
 
         /* Misc */
         modules.add(new AutoLoginModule());
+        modules.add(new NoFallDamageModule());
+        modules.add(new FastPortalsModule());
+        modules.add(new FreeCameraModule());
+        modules.add(new FastBreakModule());
+        modules.add(new AutoToolModule());
 
         // Register modules
         modules.forEach(this::register);

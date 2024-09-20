@@ -226,7 +226,7 @@ public class PlayerControllerMP extends PlayerController
     private int currentBlockX;
     private int currentBlockY;
     private int currentblockZ;
-    private float curBlockDamageMP;
+    public float curBlockDamageMP;
     private float prevBlockDamageMP;
     private float field_9441_h;
     private int blockHitDelay;

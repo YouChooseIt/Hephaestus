@@ -147,7 +147,7 @@ public class PlayerControllerSP extends PlayerController
     private int field_1074_c;
     private int field_1073_d;
     private int field_1072_e;
-    private float curBlockDamage;
+    public float curBlockDamage;
     private float prevBlockDamage;
     private float field_1069_h;
     private int blockHitWait;

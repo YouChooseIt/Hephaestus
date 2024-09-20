@@ -195,9 +195,13 @@ public class RenderItem extends Render
         {
             return;
         }
-        if(itemstack.stackSize > 1)
+        if(itemstack.stackSize != 1)
         {
-            String s = (new StringBuilder()).append("").append(itemstack.stackSize).toString();
+            String s;
+            if(itemstack.stackSize < 1) {
+                s = (new StringBuilder()).append("§c").append(itemstack.stackSize).toString();
+            } else
+                s = (new StringBuilder()).append("").append(itemstack.stackSize).toString();
             GL11.glDisable(2896 /*GL_LIGHTING*/);
             GL11.glDisable(2929 /*GL_DEPTH_TEST*/);
             fontrenderer.drawStringWithShadow(s, (i + 19) - 2 - fontrenderer.getStringWidth(s), j + 6 + 3, 0xffffff);

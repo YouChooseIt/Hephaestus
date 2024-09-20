@@ -75,6 +75,12 @@ public class GuiMainMenu extends GuiScreen
         {
             splashText = "Happy new year!";
         }
+        if(new Random().nextInt(10) == 0) {
+            if(mc.session.username.equals("rg4") || mc.session.username.equals("wsndow0")) {
+                splashText = "Thanks, " + this.mc.session.username + "!";
+            } else
+                splashText = "Welcome, " + this.mc.session.username + "!";
+        }
         StringTranslate stringtranslate = StringTranslate.getInstance();
         int i = height / 4 + 48;
         controlList.add(new GuiButton(1, width / 2 - 100, i, stringtranslate.translateKey("menu.singleplayer")));

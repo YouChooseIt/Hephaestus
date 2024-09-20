@@ -5,7 +5,10 @@
 package net.minecraft.src;
 
 import io.github.qe7.Hephaestus;
+import io.github.qe7.events.PushOutOfBlocksEvent;
+import io.github.qe7.events.UpdateActionMPEvent;
 import io.github.qe7.events.UpdateEvent;
+import io.github.qe7.events.packet.OutgoingPacketEvent;
 import net.minecraft.client.Minecraft;
 
 // Referenced classes of package net.minecraft.src:
@@ -96,11 +99,14 @@ public class EntityPlayerSP extends EntityPlayer {
             ySize = 0.2F;
         }
 
-        pushOutOfBlocks(posX - (double) width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ + (double) width * 0.34999999999999998D);
-        pushOutOfBlocks(posX - (double) width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ - (double) width * 0.34999999999999998D);
-        pushOutOfBlocks(posX + (double) width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ - (double) width * 0.34999999999999998D);
-        pushOutOfBlocks(posX + (double) width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ + (double) width * 0.34999999999999998D);
-
+        final PushOutOfBlocksEvent event1 = new PushOutOfBlocksEvent();
+        Hephaestus.getInstance().getEventBus().post(event1);
+        if(!event1.isCancelled()) {
+            pushOutOfBlocks(posX - (double) width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ + (double) width * 0.34999999999999998D);
+            pushOutOfBlocks(posX - (double) width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ - (double) width * 0.34999999999999998D);
+            pushOutOfBlocks(posX + (double) width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ - (double) width * 0.34999999999999998D);
+            pushOutOfBlocks(posX + (double) width * 0.34999999999999998D, boundingBox.minY + 0.5D, posZ + (double) width * 0.34999999999999998D);
+        }
         super.onLivingUpdate();
     }
 
@@ -156,6 +162,11 @@ public class EntityPlayerSP extends EntityPlayer {
     }
 
     public void sendChatMessage(String s) {
+        Packet3Chat packet = new Packet3Chat(s);
+        final OutgoingPacketEvent event = new OutgoingPacketEvent(packet);
+        Hephaestus.getInstance().getEventBus().post(event);
+        if(!event.isCancelled())
+            this.addChatMessage("<" + this.username + "> " + packet.message);
     }
 
     public boolean isSneaking() {

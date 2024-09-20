@@ -4,6 +4,8 @@
 
 package net.minecraft.src;
 
+import io.github.qe7.Hephaestus;
+import io.github.qe7.events.render.RenderInsideBlockOverlayEvent;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
@@ -338,6 +340,12 @@ public class ItemRenderer
 
     private void renderInsideOfBlock(float f, int i)
     {
+        final RenderInsideBlockOverlayEvent renderInsideBlockOverlayEvent = new RenderInsideBlockOverlayEvent();
+        Hephaestus.getInstance().getEventBus().post(renderInsideBlockOverlayEvent);
+
+        if (renderInsideBlockOverlayEvent.isCancelled()) {
+            return;
+        }
         Tessellator tessellator = Tessellator.instance;
         float f1 = mc.thePlayer.getEntityBrightness(f);
         f1 = 0.1F;

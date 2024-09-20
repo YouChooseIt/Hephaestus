@@ -1280,7 +1280,7 @@ public abstract class Entity
     public float height;
     public float prevDistanceWalkedModified;
     public float distanceWalkedModified;
-    protected float fallDistance;
+    public float fallDistance;
     private int nextStepDistance;
     public double lastTickPosX;
     public double lastTickPosY;

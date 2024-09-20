@@ -4,6 +4,9 @@
 
 package net.minecraft.src;
 
+import io.github.qe7.Hephaestus;
+import io.github.qe7.events.UpdateActionMPEvent;
+import io.github.qe7.events.packet.OutgoingPacketEvent;
 import net.minecraft.client.Minecraft;
 
 // Referenced classes of package net.minecraft.src:
@@ -52,80 +55,67 @@ public class EntityClientPlayerMP extends EntityPlayerSP
 
     public void func_4056_N()
     {
-        if(field_9380_bx++ == 20)
-        {
-            sendInventoryChanged();
-            field_9380_bx = 0;
-        }
-        boolean flag = isSneaking();
-        if(flag != wasSneaking)
-        {
-            if(flag)
-            {
-                sendQueue.addToSendQueue(new Packet19EntityAction(this, 1));
-            } else
-            {
-                sendQueue.addToSendQueue(new Packet19EntityAction(this, 2));
+        final UpdateActionMPEvent event = new UpdateActionMPEvent();
+        Hephaestus.getInstance().getEventBus().post(event);
+        if(!event.isCancelled()) {
+            if (field_9380_bx++ == 20) {
+                sendInventoryChanged();
+                field_9380_bx = 0;
             }
-            wasSneaking = flag;
-        }
-        double d = posX - oldPosX;
-        double d1 = boundingBox.minY - field_9378_bz;
-        double d2 = posY - oldPosY;
-        double d3 = posZ - oldPosZ;
-        double d4 = rotationYaw - oldRotationYaw;
-        double d5 = rotationPitch - oldRotationPitch;
-        boolean flag1 = d1 != 0.0D || d2 != 0.0D || d != 0.0D || d3 != 0.0D;
-        boolean flag2 = d4 != 0.0D || d5 != 0.0D;
-        if(ridingEntity != null)
-        {
-            if(flag2)
-            {
-                sendQueue.addToSendQueue(new Packet11PlayerPosition(motionX, -999D, -999D, motionZ, onGround));
-            } else
-            {
-                sendQueue.addToSendQueue(new Packet13PlayerLookMove(motionX, -999D, -999D, motionZ, rotationYaw, rotationPitch, onGround));
+            boolean flag = isSneaking();
+            if (flag != wasSneaking) {
+                if (flag) {
+                    sendQueue.addToSendQueue(new Packet19EntityAction(this, 1));
+                } else {
+                    sendQueue.addToSendQueue(new Packet19EntityAction(this, 2));
+                }
+                wasSneaking = flag;
             }
-            flag1 = false;
-        } else
-        if(flag1 && flag2)
-        {
-            sendQueue.addToSendQueue(new Packet13PlayerLookMove(posX, boundingBox.minY, posY, posZ, rotationYaw, rotationPitch, onGround));
-            field_12242_bI = 0;
-        } else
-        if(flag1)
-        {
-            sendQueue.addToSendQueue(new Packet11PlayerPosition(posX, boundingBox.minY, posY, posZ, onGround));
-            field_12242_bI = 0;
-        } else
-        if(flag2)
-        {
-            sendQueue.addToSendQueue(new Packet12PlayerLook(rotationYaw, rotationPitch, onGround));
-            field_12242_bI = 0;
-        } else
-        {
-            sendQueue.addToSendQueue(new Packet10Flying(onGround));
-            if(field_9382_bF != onGround || field_12242_bI > 200)
-            {
+            double d = posX - oldPosX;
+            double d1 = boundingBox.minY - field_9378_bz;
+            double d2 = posY - oldPosY;
+            double d3 = posZ - oldPosZ;
+            double d4 = rotationYaw - oldRotationYaw;
+            double d5 = rotationPitch - oldRotationPitch;
+            boolean flag1 = d1 != 0.0D || d2 != 0.0D || d != 0.0D || d3 != 0.0D;
+            boolean flag2 = d4 != 0.0D || d5 != 0.0D;
+            if (ridingEntity != null) {
+                if (flag2) {
+                    sendQueue.addToSendQueue(new Packet11PlayerPosition(motionX, -999D, -999D, motionZ, onGround));
+                } else {
+                    sendQueue.addToSendQueue(new Packet13PlayerLookMove(motionX, -999D, -999D, motionZ, rotationYaw, rotationPitch, onGround));
+                }
+                flag1 = false;
+            } else if (flag1 && flag2) {
+                sendQueue.addToSendQueue(new Packet13PlayerLookMove(posX, boundingBox.minY, posY, posZ, rotationYaw, rotationPitch, onGround));
                 field_12242_bI = 0;
-            } else
-            {
-                field_12242_bI++;
+            } else if (flag1) {
+                sendQueue.addToSendQueue(new Packet11PlayerPosition(posX, boundingBox.minY, posY, posZ, onGround));
+                field_12242_bI = 0;
+            } else if (flag2) {
+                sendQueue.addToSendQueue(new Packet12PlayerLook(rotationYaw, rotationPitch, onGround));
+                field_12242_bI = 0;
+            } else {
+                sendQueue.addToSendQueue(new Packet10Flying(onGround));
+                if (field_9382_bF != onGround || field_12242_bI > 200) {
+                    field_12242_bI = 0;
+                } else {
+                    field_12242_bI++;
+                }
             }
-        }
-        field_9382_bF = onGround;
-        if(flag1)
-        {
-            oldPosX = posX;
-            field_9378_bz = boundingBox.minY;
-            oldPosY = posY;
-            oldPosZ = posZ;
-        }
-        if(flag2)
-        {
-            oldRotationYaw = rotationYaw;
-            oldRotationPitch = rotationPitch;
-        }
+            field_9382_bF = onGround;
+            if (flag1) {
+                oldPosX = posX;
+                field_9378_bz = boundingBox.minY;
+                oldPosY = posY;
+                oldPosZ = posZ;
+            }
+            if (flag2) {
+                oldRotationYaw = rotationYaw;
+                oldRotationPitch = rotationPitch;
+            }
+        } else
+            this.sendQueue.addToSendQueue(new Packet0KeepAlive());
     }
 
     public void dropCurrentItem()

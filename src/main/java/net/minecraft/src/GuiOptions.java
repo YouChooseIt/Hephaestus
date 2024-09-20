@@ -90,7 +90,7 @@ public class GuiOptions extends GuiScreen
     static 
     {
         field_22135_k = (new EnumOptions[] {
-            EnumOptions.MUSIC, EnumOptions.SOUND, EnumOptions.INVERT_MOUSE, EnumOptions.SENSITIVITY, EnumOptions.DIFFICULTY
+            EnumOptions.MUSIC, EnumOptions.SOUND, EnumOptions.INVERT_MOUSE, EnumOptions.SENSITIVITY, EnumOptions.DIFFICULTY, EnumOptions.FOV
         });
     }
 }

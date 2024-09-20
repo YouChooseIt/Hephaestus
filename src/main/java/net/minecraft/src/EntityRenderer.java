@@ -164,11 +164,15 @@ public class EntityRenderer {
         }
     }
 
-    private float getFOVModifier(float f) {
+    private float getFOVModifier(float f, boolean flag) {
         EntityLiving entityliving = mc.renderViewEntity;
         float f1 = 70F;
+        if(flag) {
+            f1 += this.mc.gameSettings.FOV * 40.0F;
+            f1 *= 1.0F;
+        }
         if (entityliving.isInsideOfMaterial(Material.water)) {
-            f1 = 60F;
+            f1 -= 10.0F;
         }
         if (entityliving.health <= 0) {
             float f2 = (float) entityliving.deathTime + f;
@@ -296,9 +300,9 @@ public class EntityRenderer {
         if (cameraZoom != 1.0D) {
             GL11.glTranslatef((float) cameraYaw, (float) (-cameraPitch), 0.0F);
             GL11.glScaled(cameraZoom, cameraZoom, 1.0D);
-            GLU.gluPerspective(getFOVModifier(f), (float) mc.displayWidth / (float) mc.displayHeight, 0.05F, farPlaneDistance * 2.0F);
+            GLU.gluPerspective(getFOVModifier(f, true), (float) mc.displayWidth / (float) mc.displayHeight, 0.05F, farPlaneDistance * 2.0F);
         } else {
-            GLU.gluPerspective(getFOVModifier(f), (float) mc.displayWidth / (float) mc.displayHeight, 0.05F, farPlaneDistance * 2.0F);
+            GLU.gluPerspective(getFOVModifier(f, true), (float) mc.displayWidth / (float) mc.displayHeight, 0.05F, farPlaneDistance * 2.0F);
         }
         GL11.glMatrixMode(5888 /*GL_MODELVIEW0_ARB*/);
         GL11.glLoadIdentity();
@@ -318,6 +322,11 @@ public class EntityRenderer {
     }
 
     private void func_4135_b(float f, int i) {
+        GL11.glMatrixMode(5889);
+        GL11.glLoadIdentity();
+        GL11.glScalef(1.0F, 1.0F, 0.1F);
+        GLU.gluPerspective(getFOVModifier(f, false), (float) mc.displayWidth / (float) mc.displayHeight, 0.05F, farPlaneDistance * 2.0F);
+        GL11.glMatrixMode(5888);
         GL11.glLoadIdentity();
         if (mc.gameSettings.anaglyph) {
             GL11.glTranslatef((float) (i * 2 - 1) * 0.1F, 0.0F, 0.0F);

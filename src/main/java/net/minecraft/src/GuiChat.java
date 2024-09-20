@@ -69,6 +69,11 @@ public class GuiChat extends GuiScreen {
         }
     }
 
+    @Override
+    public boolean doesGuiPauseGame() {
+        return false;
+    }
+
     protected String message;
     private int updateCounter;
     private static final String field_20082_i;
