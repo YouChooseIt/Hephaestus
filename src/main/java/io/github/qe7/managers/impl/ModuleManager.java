@@ -9,6 +9,8 @@ import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
 import io.github.qe7.features.impl.modules.impl.misc.*;
+import io.github.qe7.features.impl.modules.impl.misc.AutoListModule;
+import io.github.qe7.features.impl.modules.impl.misc.AutoLoginModule;
 import io.github.qe7.features.impl.modules.impl.movement.FlightModule;
 import io.github.qe7.features.impl.modules.impl.movement.StepModule;
 import io.github.qe7.features.impl.modules.impl.render.HUDEditorGUIModule;
@@ -49,6 +51,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new FreeCameraModule());
         modules.add(new FastBreakModule());
         modules.add(new AutoToolModule());
+        modules.add(new AutoListModule());
 
         // Register modules
         modules.forEach(this::register);

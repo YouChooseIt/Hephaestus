@@ -49,7 +49,7 @@ public final class PlayerManager implements Subscriber {
             // Normalize the message (remove color codes like §e, §7) to make it easier to match
             final String normalisedMessage = message.replaceAll("§[0-9a-f]", "");
 
-            // Check for player join/leave messages (WORKS)
+            // Check for player join/leave messages
             Matcher joinLeaveMatcher = PLAYER_JOIN_LEAVE_PATTERN.matcher(normalisedMessage);
             if (joinLeaveMatcher.matches()) {
                 String playerName = joinLeaveMatcher.group(1);
@@ -79,6 +79,7 @@ public final class PlayerManager implements Subscriber {
             }
         }
 
+        // More reliable way to detect end of player list
         if (test && timerUtil.hasTimeElapsed(100, false)) {
             test = false;
             updateOnlinePlayers(builder.toString());
