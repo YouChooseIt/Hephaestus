@@ -8,6 +8,7 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
+import io.github.qe7.features.impl.modules.impl.misc.AutoListModule;
 import io.github.qe7.features.impl.modules.impl.misc.AutoLoginModule;
 import io.github.qe7.features.impl.modules.impl.movement.FlightModule;
 import io.github.qe7.features.impl.modules.impl.movement.StepModule;
@@ -44,6 +45,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
 
         /* Misc */
         modules.add(new AutoLoginModule());
+        modules.add(new AutoListModule());
 
         // Register modules
         modules.forEach(this::register);
