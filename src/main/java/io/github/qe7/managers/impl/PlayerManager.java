@@ -2,6 +2,7 @@ package io.github.qe7.managers.impl;
 
 import io.github.qe7.Hephaestus;
 import io.github.qe7.events.packet.IncomingPacketEvent;
+import io.github.qe7.utils.ChatUtil;
 import io.github.qe7.utils.math.TimerUtil;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
@@ -37,6 +38,14 @@ public final class PlayerManager implements Subscriber {
         if (event.getPacket() instanceof Packet3Chat) {
             String message = ((Packet3Chat) event.getPacket()).message;
 
+            if (message == null) {
+                return;
+            }
+
+            if (message.startsWith("<")) {
+                return;
+            }
+
             // Normalize the message (remove color codes like §e, §7) to make it easier to match
             final String normalisedMessage = message.replaceAll("§[0-9a-f]", "");
 
@@ -62,7 +71,6 @@ public final class PlayerManager implements Subscriber {
                 // Attempting to detect end of player list, but this is not reliable LOL
                 if ((message.contains("<") || message.contains("§"))) {
                     test = false;
-                    System.out.println(builder);
                     updateOnlinePlayers(builder.toString());
                 }
 
@@ -73,7 +81,6 @@ public final class PlayerManager implements Subscriber {
 
         if (test && timerUtil.hasTimeElapsed(100, false)) {
             test = false;
-            System.out.println(builder);
             updateOnlinePlayers(builder.toString());
         }
     });
