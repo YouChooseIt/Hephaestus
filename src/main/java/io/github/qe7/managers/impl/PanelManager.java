@@ -7,6 +7,7 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.events.render.RenderScreenEvent;
 import io.github.qe7.features.impl.panels.api.Panel;
 import io.github.qe7.features.impl.panels.impl.ModuleListPanel;
+import io.github.qe7.features.impl.panels.impl.OnlinePlayersPanel;
 import io.github.qe7.features.impl.panels.impl.PlayerInfoPanel;
 import io.github.qe7.managers.api.Manager;
 import io.github.qe7.ui.hudeditor.GuiHudEditor;
@@ -29,6 +30,7 @@ public final class PanelManager extends Manager<Class<? extends Panel>, Panel> i
         // Add panels to the list
         panels.add(new ModuleListPanel());
         panels.add(new PlayerInfoPanel());
+        panels.add(new OnlinePlayersPanel());
 
         // Register panels
         panels.forEach(this::register);
