@@ -1,9 +1,14 @@
 package io.github.qe7.features.impl.panels.impl;
 
 import io.github.qe7.Hephaestus;
+import io.github.qe7.features.api.Feature;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.panels.api.Panel;
 import net.minecraft.src.ScaledResolution;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ModuleListPanel extends Panel {
 
@@ -18,10 +23,14 @@ public class ModuleListPanel extends Panel {
     public void drawPanel(float mouseX, float mouseY, ScaledResolution scaledResolution) {
         super.drawPanel(mouseX, mouseY, scaledResolution);
 
+        final List<Module> modules = Hephaestus.getInstance().getModuleManager().getRegistry().values().stream().sorted(
+                Comparator.comparing(Feature::getName)
+        ).collect(Collectors.toList());
+
         int y = (int) this.y + 2;
         int longest = 0;
 
-        for (Module module : Hephaestus.getInstance().getModuleManager().getRegistry().values()) {
+        for (Module module : modules) {
             if (module.isEnabled()) {
                 this.fontRenderer.drawStringWithShadow(module.getName(), (int) this.x + 2, y, module.getCategory().getColor().getRGB());
                 if (this.fontRenderer.getStringWidth(module.getName()) > longest) {
