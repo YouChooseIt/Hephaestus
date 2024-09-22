@@ -34,7 +34,7 @@ public final class Hephaestus {
     private String prefix;
 
     // Client authors
-    private final String[] authors = new String[] { "qe7", "woooow" };
+    private final String[] authors;
 
     // Private constructor, to prevent instantiation
     private Hephaestus() {
@@ -51,6 +51,8 @@ public final class Hephaestus {
         // Set the name of the client
         this.name = "Hephaestus";
         this.prefix = ".";
+
+        this.authors = new String[] { "qe7", "woooow" };
     }
 
     /**
