@@ -40,7 +40,7 @@ public abstract class Panel extends Feature implements Subscriber, Serialized {
             this.y = MathUtil.clamp(mouseY - dragY, titleHeight, scaledResolution.getScaledHeight() - height);
         }
 
-        Gui.drawRect(x, y - titleHeight, x + width, y, new Color(29, 34, 54, 200).getRGB());
+        Gui.drawRect(x, y - titleHeight, x + width, y, new Color(29, 34, 54, 255).getRGB());
         Gui.drawRect(x, y, x + width, y + height, new Color(0, 0, 0, 150).getRGB());
 
         Gui.drawRect(x + width - 10, y - titleHeight + 2, x + width - 2, y - 2, this.isEnabled() ? new Color(0, 0, 0, 150).getRGB() : new Color(0, 0, 0, 50).getRGB());

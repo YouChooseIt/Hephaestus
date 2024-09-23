@@ -8,6 +8,7 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
+import io.github.qe7.features.impl.modules.impl.combat.ForceFieldModule;
 import io.github.qe7.features.impl.modules.impl.misc.*;
 import io.github.qe7.features.impl.modules.impl.misc.AutoListModule;
 import io.github.qe7.features.impl.modules.impl.misc.AutoLoginModule;
@@ -36,6 +37,9 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         final List<Module> modules = new ArrayList<>();
 
         // Add modules to the list
+        /* Combat */
+        modules.add(new ForceFieldModule());
+
         /* Render */
         modules.add(new HUDModule());
         modules.add(new HUDEditorGUIModule());
@@ -52,6 +56,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new FastBreakModule());
         modules.add(new AutoToolModule());
         modules.add(new AutoListModule());
+        modules.add(new SchizoBotModule());
 
         // Register modules
         modules.forEach(this::register);

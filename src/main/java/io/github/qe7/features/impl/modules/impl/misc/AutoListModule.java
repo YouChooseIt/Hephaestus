@@ -26,7 +26,7 @@ public class AutoListModule extends Module {
 
             System.out.println(chat.message);
 
-            if (chat.message.startsWith("§c") && chat.message.contains("Successful login!")) {
+            if (chat.message.startsWith("§c") && (chat.message.contains("Successful login!") || chat.message.contains("Session login")) ) {
                 shouldSendList = true;
                 timerUtil.reset();
             }

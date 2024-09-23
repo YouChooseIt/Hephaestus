@@ -2893,8 +2893,8 @@ public class World
 
     public boolean scheduledUpdatesAreImmediate;
     private List lightingToUpdate;
-    public List loadedEntityList;
-    private List unloadedEntityList;
+    public List<Entity> loadedEntityList;
+    private List<Entity> unloadedEntityList;
     private TreeSet scheduledTickTreeSet;
     private Set scheduledTickSet;
     public List loadedTileEntityList;
