@@ -51,7 +51,6 @@ public final class Hephaestus {
         this.getPanelManager().initialize();
         this.getPlayerManager().initialise();
 
-        // register shutdown hook, save configs on shutdown
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
     }
 
