@@ -27,12 +27,10 @@ public final class PanelManager extends Manager<Class<? extends Panel>, Panel> i
     public void initialize() {
         final List<Panel> panels = new ArrayList<>();
 
-        // Add panels to the list
         panels.add(new ModuleListPanel());
         panels.add(new PlayerInfoPanel());
         panels.add(new OnlinePlayersPanel());
 
-        // Register panels
         panels.forEach(this::register);
 
         this.loadPanels();
@@ -75,11 +73,9 @@ public final class PanelManager extends Manager<Class<? extends Panel>, Panel> i
     }
 
     @Subscribe
-    public final Listener<RenderScreenEvent> renderScreenEventListener = new Listener<>(event -> {
-        this.getRegistry().values().forEach(panel -> {
-            if (panel.isEnabled() || (Minecraft.getMinecraft().currentScreen != null && Minecraft.getMinecraft().currentScreen instanceof GuiHudEditor)) {
-                panel.drawPanel(event.getMouseX(), event.getMouseY(), event.getScaledResolution());
-            }
-        });
-    });
+    public final Listener<RenderScreenEvent> renderScreenEventListener = new Listener<>(event -> this.getRegistry().values().forEach(panel -> {
+        if (panel.isEnabled() || (Minecraft.getMinecraft().currentScreen != null && Minecraft.getMinecraft().currentScreen instanceof GuiHudEditor)) {
+            panel.drawPanel(event.getMouseX(), event.getMouseY(), event.getScaledResolution());
+        }
+    }));
 }

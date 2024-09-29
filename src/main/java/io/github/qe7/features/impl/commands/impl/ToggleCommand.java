@@ -16,16 +16,13 @@ public class ToggleCommand extends Command {
 
     @Override
     public void execute(final String[] args) {
-        // Check if the user provided a module name
         if (args.length < 1) {
             ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Usage: " + this.getUsage());
             return;
         }
 
-        // Get the module name from the arguments
         final String moduleName = args[1];
 
-        // Find the target module by name
         Module targetModule = null;
 
         for (Module module : Hephaestus.getInstance().getModuleManager().getRegistry().values()) {
@@ -35,13 +32,11 @@ public class ToggleCommand extends Command {
             }
         }
 
-        // Check if the module was found
         if (targetModule == null) {
             ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Module not found: " + moduleName);
             return;
         }
 
-        // Toggle the module
         targetModule.toggle();
         ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Toggled module: " + targetModule.getName() + " to " + (targetModule.isEnabled() ? "enabled" : "disabled"));
     }

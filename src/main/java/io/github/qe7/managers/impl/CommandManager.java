@@ -21,20 +21,16 @@ public final class CommandManager extends Manager<Class<? extends Command>, Comm
     public void initialize() {
         final List<Command> commands = new ArrayList<>();
 
-        // Add commands to the list
         commands.add(new ToggleCommand());
         commands.add(new PrefixCommand());
         commands.add(new BindCommand());
 
-        // Register commands
         commands.forEach(command -> register(command.getClass()));
 
-        // Add modules to map, as they are commands
         Hephaestus.getInstance().getModuleManager().getRegistry().values().forEach(module -> {
             this.getRegistry().putIfAbsent(module.getClass(), module);
         });
 
-        // Subscribe to the event bus for outgoing packet events
         Hephaestus.getInstance().getEventBus().subscribe(this);
     }
 
@@ -50,25 +46,18 @@ public final class CommandManager extends Manager<Class<? extends Command>, Comm
 
     @Subscribe
     public final Listener<OutgoingPacketEvent> outgoingPacketListener = new Listener<>(event -> {
-        // Check if the packet is a chat packet
         if (!(event.getPacket() instanceof Packet3Chat)) return;
 
-        // Get the chat packet
         final Packet3Chat chat = (Packet3Chat) event.getPacket();
 
-        // Check if the message starts with the prefix
         if (!chat.message.startsWith(Hephaestus.getInstance().getPrefix())) return;
 
-        // Cancel to prevent sending . commands to the server
         event.setCancelled(true);
 
-        // Split the message into arguments
         String[] args = chat.message.substring(1).split(" ");
 
-        // Find the target command
         Command targetCommand = null;
 
-        // Loop through the registered commands to find the target command
         for (Command command : this.getRegistry().values()) {
             if (command.getName().equalsIgnoreCase(args[0])) {
                 targetCommand = command;
@@ -83,13 +72,11 @@ public final class CommandManager extends Manager<Class<? extends Command>, Comm
             }
         }
 
-        // Execute the target command if found
         if (targetCommand != null) {
             targetCommand.execute(args);
             return;
         }
 
-        // If no command was found, send a message to the chat
         ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Command not found: " + args[0]);
     });
 }

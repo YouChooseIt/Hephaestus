@@ -28,12 +28,13 @@ public class FlightModule extends Module {
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 mc.thePlayer.motionY -= 0.25;
             }
+            if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+                mc.thePlayer.motionY += 0.25;
+            }
         }
     });
     @Subscribe
     public final Listener<OutgoingPacketEvent> outgoingPacketEventListener = new Listener<>(event -> {
-        final Minecraft mc = Minecraft.getMinecraft();
-
         if(!(event.getPacket() instanceof Packet10Flying)) return;
         Packet10Flying packet = (Packet10Flying) event.getPacket();
         packet.onGround = true;

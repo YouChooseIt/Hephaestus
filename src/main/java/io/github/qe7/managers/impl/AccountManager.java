@@ -104,7 +104,6 @@ public final class AccountManager extends Manager<String, Account> implements Su
         if (packet instanceof Packet3Chat) {
             final Packet3Chat chat = (Packet3Chat) packet;
 
-            // format "/login password"
             if (chat.message.startsWith("/login") || chat.message.startsWith("/register")) {
                 String[] args = chat.message.split(" ");
                 if (args.length == 2) {

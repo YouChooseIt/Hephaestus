@@ -36,7 +36,6 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
     public void initialize() {
         final List<Module> modules = new ArrayList<>();
 
-        // Add modules to the list
         /* Combat */
         modules.add(new ForceFieldModule());
 
@@ -58,12 +57,10 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new AutoListModule());
         modules.add(new SchizoBotModule());
 
-        // Register modules
         modules.forEach(this::register);
 
         this.loadModules();
 
-        // Subscribe to the event bus for key press events
         Hephaestus.getInstance().getEventBus().subscribe(this);
     }
 
@@ -74,21 +71,15 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
      */
     public void register(final Module module) {
         try {
-            // Register the module
             this.getRegistry().putIfAbsent(module.getClass(), module);
             System.out.println("Registered module: " + module.getClass().getSimpleName());
 
-            // Register settings for the module
-            // Iterate through declared fields of the module class
             for (final Field declaredField : module.getClass().getDeclaredFields()) {
-                // Check if the field is a Setting
                 if (declaredField.getType().getSuperclass() == null) continue;
                 if (!declaredField.getType().getSuperclass().equals(ManagementAssertion.Setting.class)) continue;
 
-                // Make the field accessible
                 declaredField.setAccessible(true);
 
-                // Add the setting to the map (register it)
                 this.addSetting(this.getRegistry().get(module.getClass()), (Setting<?>) declaredField.get(this.getRegistry().get(module.getClass())));
                 System.out.println("Registered setting: " + declaredField.getName() + " for module: " + module.getClass().getSimpleName());
             }
@@ -98,22 +89,10 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         }
     }
 
-    /**
-     * Get all settings for a module
-     *
-     * @param module the module to get settings for
-     * @return a list of settings for the specified module
-     */
     public List<Setting<?>> getSettingsByModule(Module module) {
         return setting.getOrDefault(module, Collections.emptyList());
     }
 
-    /**
-     * Add a setting to a module
-     *
-     * @param feature  the module to which the setting belongs
-     * @param property the setting to be added
-     */
     public void addSetting(Module feature, Setting<?> property) {
         setting.putIfAbsent(feature, new ArrayList<>());
         setting.get(feature).add(property);

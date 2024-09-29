@@ -152,7 +152,8 @@ public class SchizoBotModule extends Module {
             "They know what I'm going to do before I do it.",
             "I heard whispers from the vents. Someone's listening.",
             "The trees are watching. I can feel their eyes on me.",
-            "I haven't seen the mailman in weeks. They've taken him."
+            "I haven't seen the mailman in weeks. They've taken him.",
+            "The shadows are getting longer. They're reaching for me."
     };
 
     private final List<String> lastMessages = new ArrayList<>();
