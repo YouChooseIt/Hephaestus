@@ -39,7 +39,7 @@ public final class Hephaestus {
         this.name = "Hephaestus";
         this.prefix = ".";
 
-        this.authors = new String[]{"qe7", "woooow"};
+        this.authors = new String[]{"qe7"};
     }
 
     public void initialize() {
