@@ -10,6 +10,7 @@ import me.zero.alpine.listener.Subscriber;
 import net.minecraft.src.Packet3Chat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -80,6 +81,7 @@ public final class PlayerManager implements Subscriber {
 
     private void updateOnlinePlayers(String playerList) {
         String[] players = playerList.split(", ");
+        System.out.println(Arrays.toString(players));
         for (String player : players) {
             if (!onlinePlayers.contains(player)) {
                 onlinePlayers.add(player);

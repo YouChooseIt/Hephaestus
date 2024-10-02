@@ -8,6 +8,7 @@ import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityLiving;
 import net.minecraft.src.Packet7UseEntity;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class ForceFieldModule extends Module {
     private void handleTargets() {
         final Minecraft mc = Minecraft.getMinecraft();
         targets.clear();
-        mc.theWorld.loadedEntityList.stream().filter(entity -> entity != mc.thePlayer && entity != null && entity.isEntityAlive() && mc.thePlayer.getDistanceToEntity(entity) <= 4.2f).forEach(targets::add);
+        mc.theWorld.loadedEntityList.stream().filter(entity -> entity != mc.thePlayer && entity instanceof EntityLiving && entity.isEntityAlive() && mc.thePlayer.getDistanceToEntity(entity) <= 4.2f).forEach(targets::add);
     }
 
     private void handleAttack(Entity target) {

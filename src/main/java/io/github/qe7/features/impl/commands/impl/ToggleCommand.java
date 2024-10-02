@@ -16,7 +16,7 @@ public class ToggleCommand extends Command {
 
     @Override
     public void execute(final String[] args) {
-        if (args.length < 1) {
+        if (args.length != 2) {
             ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Usage: " + this.getUsage());
             return;
         }
