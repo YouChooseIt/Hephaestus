@@ -5,13 +5,9 @@ import io.github.qe7.Hephaestus;
 import java.io.File;
 import java.nio.file.Files;
 
-/**
- * Utility class for file/config related tasks
- * Files are stored in the Osiris/ directory in the root of the system drive
- */
 public final class FileUtil {
 
-    private static final String FILE_EXTENSION = ".json"; // We're using JSON files
+    private static final String FILE_EXTENSION = ".json";
 
     private static final String FILE_DIRECTORY = System.getenv("SystemDrive") + File.separator + Hephaestus.getInstance().getName() + File.separator;
 
@@ -19,9 +15,6 @@ public final class FileUtil {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
-    /**
-     * Creates the Osiris/ directory
-     */
     public static void createDirectory() {
         File directory = new File(FILE_DIRECTORY);
 
@@ -38,15 +31,9 @@ public final class FileUtil {
         }
     }
 
-    /**
-     * Creates a file in the Osiris/ directory
-     *
-     * @param fileName name of the file to create
-     */
     public static void createFile(final String fileName) {
         File file = new File(FILE_DIRECTORY + fileName + FILE_EXTENSION);
 
-        // check if directory exists
         createDirectory();
 
         if (!file.exists()) {
@@ -60,11 +47,6 @@ public final class FileUtil {
         }
     }
 
-    /**
-     * Deletes a file from the Osiris/ directory
-     *
-     * @param fileName name of the file to delete
-     */
     public static void deleteFile(final String fileName) {
         File file = new File(FILE_DIRECTORY + fileName + FILE_EXTENSION);
 
@@ -79,12 +61,6 @@ public final class FileUtil {
         }
     }
 
-    /**
-     * Reads a file from the Osiris/ directory
-     *
-     * @param fileName name of the file to read
-     * @return file content as a string
-     */
     public static String readFile(final String fileName) {
         File file = new File(FILE_DIRECTORY + fileName + FILE_EXTENSION);
 
@@ -99,12 +75,6 @@ public final class FileUtil {
         return null;
     }
 
-    /**
-     * Writes to a file in the Osiris/ directory
-     *
-     * @param fileName name of the file to write to
-     * @param content  content to write to the file
-     */
     public static void writeFile(final String fileName, final String content) {
         File file = new File(FILE_DIRECTORY + fileName + FILE_EXTENSION);
 

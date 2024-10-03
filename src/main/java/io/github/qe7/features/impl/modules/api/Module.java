@@ -19,40 +19,25 @@ import java.util.Objects;
 @Setter
 public abstract class Module extends Command implements Subscriber, Serialized {
 
-    // Module category
     private final ModuleCategory category;
 
-    // Key bind
     private int keyBind;
 
-    // State
     private boolean enabled;
 
-    // Constructor
     public Module(final String name, final String description, final ModuleCategory category) {
         super(name, description);
         this.category = category;
     }
 
-    /**
-     * Called when the module is enabled
-     */
     public void onEnable() {
         Hephaestus.getInstance().getEventBus().subscribe(this);
     }
 
-    /**
-     * Called when the module is disabled
-     */
     public void onDisable() {
         Hephaestus.getInstance().getEventBus().unsubscribe(this);
     }
 
-    /**
-     * Sets the module to enabled or disabled
-     *
-     * @param enabled the new state of the module
-     */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
 
@@ -63,9 +48,6 @@ public abstract class Module extends Command implements Subscriber, Serialized {
         }
     }
 
-    /**
-     * Toggles the module
-     */
     public void toggle() {
         enabled = !enabled;
 
@@ -76,17 +58,10 @@ public abstract class Module extends Command implements Subscriber, Serialized {
         }
     }
 
-    /**
-     * Executes the command associated with the module
-     *
-     * @param args the arguments passed to the command
-     */
     @Override
     public void execute(String[] args) {
         if (args.length == 1) {
             if (Objects.equals(this.getUsage(), "No usage provided")) {
-                // Create new usage, if not provided (based off settings)
-                // Formatted as "module <setting> <value>"
                 StringBuilder usage = new StringBuilder(this.getName());
 
                 if (Hephaestus.getInstance().getModuleManager().getSettingsByModule(this).isEmpty()) {

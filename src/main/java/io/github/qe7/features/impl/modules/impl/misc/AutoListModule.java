@@ -7,7 +7,7 @@ import io.github.qe7.utils.ChatUtil;
 import io.github.qe7.utils.math.TimerUtil;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
-import net.minecraft.src.Packet3Chat;
+import net.minecraft.src.Packet1Login;
 
 public class AutoListModule extends Module {
 
@@ -21,18 +21,12 @@ public class AutoListModule extends Module {
 
     @Subscribe
     public final Listener<IncomingPacketEvent> incomingPacketEvent = new Listener<>(IncomingPacketEvent.class, event -> {
-        if (event.getPacket() instanceof Packet3Chat) {
-            Packet3Chat chat = (Packet3Chat) event.getPacket();
-
-            System.out.println(chat.message);
-
-            if (chat.message.startsWith("§c") && chat.message.contains("Successful login!")) {
-                shouldSendList = true;
-                timerUtil.reset();
-            }
+        if (event.getPacket() instanceof Packet1Login) {
+            shouldSendList = true;
+            timerUtil.reset();
         }
 
-        if (shouldSendList && timerUtil.hasTimeElapsed(1000, false)) {
+        if (shouldSendList && timerUtil.hasTimeElapsed(10000, false)) {
             ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Sending /list command...");
             ChatUtil.sendMessage("/list");
             shouldSendList = false;

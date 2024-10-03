@@ -14,21 +14,18 @@ public class PrefixCommand extends Command {
 
     @Override
     public void execute(String[] args) {
-        // Check if the user provided a new prefix
         if (args.length == 1) {
             ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Please provide a new prefix.");
             ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Usage: " + this.getUsage());
             return;
         }
 
-        // Check if the command is being used correctly
         if (args.length != 2) {
             ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Invalid number of arguments.");
             ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Usage: " + this.getUsage());
             return;
         }
 
-        // Sanitize and validate the new prefix
         String newPrefix = args[1];
 
         if (newPrefix.isEmpty()) {
@@ -41,7 +38,6 @@ public class PrefixCommand extends Command {
             return;
         }
 
-        // Set the new prefix
         Hephaestus.getInstance().setPrefix(newPrefix);
         ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Prefix changed to: " + newPrefix);
     }
