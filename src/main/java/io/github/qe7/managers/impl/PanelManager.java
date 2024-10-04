@@ -9,6 +9,7 @@ import io.github.qe7.features.impl.panels.api.Panel;
 import io.github.qe7.features.impl.panels.impl.ModuleListPanel;
 import io.github.qe7.features.impl.panels.impl.OnlinePlayersPanel;
 import io.github.qe7.features.impl.panels.impl.PlayerInfoPanel;
+import io.github.qe7.features.impl.panels.impl.RadarListPanel;
 import io.github.qe7.managers.api.Manager;
 import io.github.qe7.ui.hudeditor.GuiHudEditor;
 import io.github.qe7.utils.config.FileUtil;
@@ -30,6 +31,7 @@ public final class PanelManager extends Manager<Class<? extends Panel>, Panel> i
         panels.add(new ModuleListPanel());
         panels.add(new PlayerInfoPanel());
         panels.add(new OnlinePlayersPanel());
+        panels.add(new RadarListPanel());
 
         panels.forEach(this::register);
 
