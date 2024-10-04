@@ -54,6 +54,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new FreeCameraModule());
         modules.add(new FastBreakModule());
         modules.add(new AutoToolModule());
+        modules.add(new YawModule());
         modules.add(new AutoListModule());
         modules.add(new SchizoBotModule());
 
