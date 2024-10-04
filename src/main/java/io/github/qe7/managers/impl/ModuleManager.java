@@ -8,6 +8,7 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
+import io.github.qe7.features.impl.modules.impl.combat.AntiKnockBackModule;
 import io.github.qe7.features.impl.modules.impl.combat.ForceFieldModule;
 import io.github.qe7.features.impl.modules.impl.misc.*;
 import io.github.qe7.features.impl.modules.impl.misc.AutoListModule;
@@ -38,6 +39,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
 
         /* Combat */
         modules.add(new ForceFieldModule());
+        modules.add(new AntiKnockBackModule());
 
         /* Render */
         modules.add(new HUDModule());

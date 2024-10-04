@@ -3,9 +3,7 @@ package io.github.qe7.managers.impl;
 import io.github.qe7.Hephaestus;
 import io.github.qe7.events.packet.OutgoingPacketEvent;
 import io.github.qe7.features.impl.commands.api.Command;
-import io.github.qe7.features.impl.commands.impl.BindCommand;
-import io.github.qe7.features.impl.commands.impl.PrefixCommand;
-import io.github.qe7.features.impl.commands.impl.ToggleCommand;
+import io.github.qe7.features.impl.commands.impl.*;
 import io.github.qe7.managers.api.Manager;
 import io.github.qe7.utils.ChatUtil;
 import me.zero.alpine.listener.Listener;
@@ -24,6 +22,9 @@ public final class CommandManager extends Manager<Class<? extends Command>, Comm
         commands.add(new ToggleCommand());
         commands.add(new PrefixCommand());
         commands.add(new BindCommand());
+        commands.add(new CommandListCommand());
+        commands.add(new ModuleListCommand());
+        commands.add(new InfoCommand());
 
         commands.forEach(command -> register(command.getClass()));
 

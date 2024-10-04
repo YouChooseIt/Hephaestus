@@ -10,8 +10,8 @@ public class ToggleCommand extends Command {
     public ToggleCommand() {
         super("Toggle", "Toggles a module on or off");
 
-        this.setUsage(".toggle <module>");
-        this.setAliases(new String[] { "t" });
+        this.setUsage(".Toggle <module>");
+        this.setAliases(new String[] { "T" });
     }
 
     @Override
