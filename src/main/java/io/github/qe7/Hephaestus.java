@@ -16,7 +16,8 @@ public final class Hephaestus {
 
     private final AccountManager accountManager;
     private final ModuleManager moduleManager;
-    private final CommandManager commandManager;
+    private final ChatCommandManager chatCommandManager;
+    private final ClientCommandManager clientCommandManager;
     private final PanelManager panelManager;
     private final PlayerManager playerManager;
 
@@ -32,7 +33,8 @@ public final class Hephaestus {
 
         this.accountManager = new AccountManager();
         this.moduleManager = new ModuleManager();
-        this.commandManager = new CommandManager();
+        this.chatCommandManager = new ChatCommandManager();
+        this.clientCommandManager = new ClientCommandManager();
         this.panelManager = new PanelManager();
         this.playerManager = new PlayerManager();
 
@@ -47,7 +49,8 @@ public final class Hephaestus {
 
         this.getAccountManager().initialize();
         this.getModuleManager().initialize();
-        this.getCommandManager().initialize();
+        this.getChatCommandManager().initialize();
+        this.getClientCommandManager().initialize();
         this.getPanelManager().initialize();
         this.getPlayerManager().initialise();
 

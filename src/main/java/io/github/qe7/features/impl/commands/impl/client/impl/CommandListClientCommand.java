@@ -1,13 +1,13 @@
-package io.github.qe7.features.impl.commands.impl;
+package io.github.qe7.features.impl.commands.impl.client.impl;
 
 import io.github.qe7.Hephaestus;
-import io.github.qe7.features.impl.commands.api.Command;
+import io.github.qe7.features.impl.commands.impl.client.api.ClientCommand;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.utils.ChatUtil;
 
-public class CommandListCommand extends Command {
+public class CommandListClientCommand extends ClientCommand {
 
-    public CommandListCommand() {
+    public CommandListClientCommand() {
         super("Commands", "Prints a list of all commands");
 
         this.setUsage("Commands");
@@ -24,11 +24,11 @@ public class CommandListCommand extends Command {
 
         StringBuilder commandList = new StringBuilder();
 
-        for (Command command : Hephaestus.getInstance().getCommandManager().getRegistry().values()) {
-            if (command instanceof Module) {
+        for (ClientCommand clientCommand : Hephaestus.getInstance().getClientCommandManager().getRegistry().values()) {
+            if (clientCommand instanceof Module) {
                 continue;
             }
-            commandList.append(command.getName()).append(", ");
+            commandList.append(clientCommand.getName()).append(", ");
         }
 
         ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Commands: " + commandList);

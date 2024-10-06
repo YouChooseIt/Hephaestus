@@ -1,13 +1,13 @@
-package io.github.qe7.features.impl.commands.impl;
+package io.github.qe7.features.impl.commands.impl.client.impl;
 
 import io.github.qe7.Hephaestus;
-import io.github.qe7.features.impl.commands.api.Command;
+import io.github.qe7.features.impl.commands.impl.client.api.ClientCommand;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.utils.ChatUtil;
 
-public class ModuleListCommand extends Command {
+public class ModuleListClientCommand extends ClientCommand {
 
-    public ModuleListCommand() {
+    public ModuleListClientCommand() {
         super("Modules", "Prints a list of all modules.");
 
         this.setUsage("Modules");

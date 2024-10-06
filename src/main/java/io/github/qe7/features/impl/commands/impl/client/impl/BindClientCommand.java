@@ -1,14 +1,14 @@
-package io.github.qe7.features.impl.commands.impl;
+package io.github.qe7.features.impl.commands.impl.client.impl;
 
 import io.github.qe7.Hephaestus;
-import io.github.qe7.features.impl.commands.api.Command;
+import io.github.qe7.features.impl.commands.impl.client.api.ClientCommand;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.utils.ChatUtil;
 import org.lwjgl.input.Keyboard;
 
-public class BindCommand extends Command {
+public class BindClientCommand extends ClientCommand {
 
-    public BindCommand() {
+    public BindClientCommand() {
         super("Bind", "Bind a Module to a keybind");
 
         this.setUsage("Bind <Module> <Key/\"None\">");

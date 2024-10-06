@@ -2,7 +2,7 @@ package io.github.qe7.features.impl.modules.api;
 
 import com.google.gson.JsonObject;
 import io.github.qe7.Hephaestus;
-import io.github.qe7.features.impl.commands.api.Command;
+import io.github.qe7.features.impl.commands.impl.client.api.ClientCommand;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
 import io.github.qe7.features.impl.modules.api.settings.impl.BooleanSetting;
 import io.github.qe7.features.impl.modules.api.settings.impl.DoubleSetting;
@@ -17,7 +17,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public abstract class Module extends Command implements Subscriber, Serialized {
+public abstract class Module extends ClientCommand implements Subscriber, Serialized {
 
     private final ModuleCategory category;
 

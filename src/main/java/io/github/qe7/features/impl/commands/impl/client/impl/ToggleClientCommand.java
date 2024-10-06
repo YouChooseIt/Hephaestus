@@ -1,13 +1,13 @@
-package io.github.qe7.features.impl.commands.impl;
+package io.github.qe7.features.impl.commands.impl.client.impl;
 
 import io.github.qe7.Hephaestus;
-import io.github.qe7.features.impl.commands.api.Command;
+import io.github.qe7.features.impl.commands.impl.client.api.ClientCommand;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.utils.ChatUtil;
 
-public class ToggleCommand extends Command {
+public class ToggleClientCommand extends ClientCommand {
 
-    public ToggleCommand() {
+    public ToggleClientCommand() {
         super("Toggle", "Toggles a module on or off");
 
         this.setUsage(".Toggle <module>");

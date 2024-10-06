@@ -59,6 +59,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new YawModule());
         modules.add(new AutoListModule());
         modules.add(new SchizoBotModule());
+        modules.add(new ChatBotModule());
 
         modules.forEach(this::register);
 
