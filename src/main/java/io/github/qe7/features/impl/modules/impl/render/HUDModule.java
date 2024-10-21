@@ -4,6 +4,7 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.events.render.RenderScreenEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
+import io.github.qe7.utils.RenderUtil;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
@@ -21,8 +22,6 @@ public class HUDModule extends Module {
 
     @Subscribe
     public final Listener<RenderScreenEvent> renderScreenEventListener = new Listener<>(event -> {
-        final FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
-
-        fontRenderer.drawStringWithShadow(Hephaestus.getInstance().getName(), 2, 2, -1);
+        RenderUtil.renderFancyString(Hephaestus.getInstance().getName(), 2, 2, -1);
     });
 }

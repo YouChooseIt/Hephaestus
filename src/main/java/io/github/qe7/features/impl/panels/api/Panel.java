@@ -2,6 +2,7 @@ package io.github.qe7.features.impl.panels.api;
 
 import com.google.gson.JsonObject;
 import io.github.qe7.features.api.Feature;
+import io.github.qe7.utils.RenderUtil;
 import io.github.qe7.utils.config.Serialized;
 import io.github.qe7.utils.math.MathUtil;
 import lombok.Getter;
@@ -45,7 +46,7 @@ public abstract class Panel extends Feature implements Subscriber, Serialized {
 
         Gui.drawRect(x + width - 10, y - titleHeight + 2, x + width - 2, y - 2, this.isEnabled() ? new Color(0, 0, 0, 150).getRGB() : new Color(0, 0, 0, 50).getRGB());
 
-        this.fontRenderer.drawStringWithShadow(this.getName(), (int) x + 2, (int) y - titleHeight + 2, -1);
+        RenderUtil.renderFancyString(this.getName(), (int) x + 2, (int) y - titleHeight + 2, -1);
     }
 
     public void handleMouseClick(float mouseX, float mouseY, int mouseButton) {

@@ -2,6 +2,7 @@ package io.github.qe7.features.impl.panels.impl;
 
 import io.github.qe7.Hephaestus;
 import io.github.qe7.features.impl.panels.api.Panel;
+import io.github.qe7.utils.RenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
@@ -25,7 +26,7 @@ public class RadarListPanel extends Panel {
 
         for (Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
             if (entity != Minecraft.getMinecraft().thePlayer && entity instanceof EntityPlayer) {
-                this.fontRenderer.drawStringWithShadow(((EntityPlayer) entity).username, (int) this.x + 2, (int) this.y, -1);
+                RenderUtil.renderFancyString(((EntityPlayer) entity).username, (int) this.x + 2, (int) this.y, -1);
                 y += 10;
             }
         }

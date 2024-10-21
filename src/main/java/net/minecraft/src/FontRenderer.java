@@ -131,12 +131,12 @@ public class FontRenderer
         drawString(s, i, j, k);
     }
 
-    public void drawString(String s, int i, int j, int k)
+    public void drawString(String s, float i, float j, int k)
     {
         renderString(s, i, j, k, false);
     }
 
-    public void renderString(String s, int i, int j, int k, boolean flag)
+    public void renderString(String s, float i, float j, int k, boolean flag)
     {
         if(s == null)
         {

@@ -3,7 +3,7 @@ package io.github.qe7.managers.impl;
 import io.github.qe7.Hephaestus;
 import io.github.qe7.events.packet.IncomingPacketEvent;
 import io.github.qe7.features.impl.commands.impl.chat.api.ChatCommand;
-import io.github.qe7.features.impl.commands.impl.chat.impl.TestChatCommand;
+import io.github.qe7.features.impl.commands.impl.chat.impl.*;
 import io.github.qe7.features.impl.modules.impl.misc.ChatBotModule;
 import io.github.qe7.managers.api.Manager;
 import io.github.qe7.utils.ChatUtil;
@@ -13,15 +13,18 @@ import me.zero.alpine.listener.Subscriber;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Packet3Chat;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public final class ChatCommandManager extends Manager<Class<? extends ChatCommand>, ChatCommand> implements Subscriber {
 
     public void initialize() {
         final List<ChatCommand> chatCommand = new ArrayList<>();
 
-        chatCommand.add(new TestChatCommand());
+        chatCommand.add(new PongChatCommand());
+        chatCommand.add(new QuoteChatCommand());
+        chatCommand.add(new JokeChatCommand());
+        chatCommand.add(new DiceChatCommand());
+        chatCommand.add(new HelpChatCommand());
 
         chatCommand.forEach(command -> register(command.getClass()));
 
@@ -60,22 +63,24 @@ public final class ChatCommandManager extends Manager<Class<? extends ChatComman
 
         if (!message.startsWith("$")) return;
 
-        String[] args = chat.message.substring(1).split(" ");
+        String[] args = message.split(" ");
 
-        ChatCommand targetChatCommand = null;
+        if (args.length == 0) return;
 
-        for (ChatCommand chatCommand : this.getRegistry().values()) {
-            if (chatCommand.getName().equalsIgnoreCase(args[0])) {
-                targetChatCommand = chatCommand;
+        ChatCommand targetCommand = null;
+
+        for (ChatCommand command : this.getRegistry().values()) {
+            if (command.getName().equalsIgnoreCase(args[0].substring(1))) {
+                targetCommand = command;
                 break;
             }
         }
 
-        if (targetChatCommand != null) {
-            targetChatCommand.execute(username, args);
+        if (targetCommand == null) {
+            ChatUtil.sendMessage("Command not found.");
             return;
         }
 
-        ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "ChatCommand not found: " + args[0]);
+        targetCommand.execute(username, args);
     });
 }

@@ -4,6 +4,7 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.features.api.Feature;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.panels.api.Panel;
+import io.github.qe7.utils.RenderUtil;
 import net.minecraft.src.ScaledResolution;
 
 import java.util.Comparator;
@@ -32,7 +33,7 @@ public class ModuleListPanel extends Panel {
 
         for (Module module : modules) {
             if (module.isEnabled()) {
-                this.fontRenderer.drawStringWithShadow(module.getName(), (int) this.x + 2, y, module.getCategory().getColor().getRGB());
+                RenderUtil.renderFancyString(module.getName(), (int) this.x + 2, y, module.getCategory().getColor().getRGB());
                 if (this.fontRenderer.getStringWidth(module.getName()) > longest) {
                     longest = this.fontRenderer.getStringWidth(module.getName());
                 }
