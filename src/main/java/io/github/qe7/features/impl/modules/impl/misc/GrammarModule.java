@@ -18,8 +18,9 @@ public class GrammarModule extends Module {
     public GrammarModule() {
         super("Grammar", "Fixing grammar of messages, also un-abbreviates abbreviations", ModuleCategory.MISC);
 
-        abbreviations.put("wassup", "What's up");
-        abbreviations.put("sup", "What's up");
+        abbreviations.put("wassup", "what's up");
+        abbreviations.put("sup", "what's up");
+        abbreviations.put("tf", "the fuck");
         abbreviations.put("u", "you");
         abbreviations.put("ur", "your");
         abbreviations.put("ure", "you are");
@@ -85,6 +86,8 @@ public class GrammarModule extends Module {
         abbreviations.put("wut", "what");
         abbreviations.put("fabric", "mcp");
         abbreviations.put("license", "licence");
+        abbreviations.put("stfu", "shut the fuck up");
+        abbreviations.put("kys", "keep yourself safe");
         abbreviations.put("woooow_0", "nebuladreamer4");
         abbreviations.put("nig", "nigga"); //N-Word pass by wsndow0
     }
