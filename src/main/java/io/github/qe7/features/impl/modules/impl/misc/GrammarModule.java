@@ -107,7 +107,11 @@ public class GrammarModule extends Module {
                 message += ".";
             }
 
-            message = message.replaceFirst(message.charAt(0) + "", Character.toUpperCase(message.charAt(0)) + "");
+            try {
+                message = message.replaceFirst(message.charAt(0) + "", Character.toUpperCase(message.charAt(0)) + "");
+            } catch(Exception e){
+                //bals
+            }
             //chat bugs osiris moment message.substring(0, 100); :fire: @shae
             chatPacket.message = message;
         }
