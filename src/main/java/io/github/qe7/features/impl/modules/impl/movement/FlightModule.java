@@ -25,6 +25,7 @@ public class FlightModule extends Module {
             mc.thePlayer.fallDistance = 0.0f;
             mc.thePlayer.motionY = 0;
             mc.thePlayer.onGround = true;
+            if(mc.currentScreen != null) return;
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 mc.thePlayer.motionY -= 0.25;
             }
