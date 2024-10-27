@@ -31,6 +31,11 @@ public class PlayerControllerMP extends PlayerController
         netClientHandler = netclienthandler;
     }
 
+    @Override
+    public boolean isBeingUsed() {
+        return this.isHittingBlock;
+    }
+
     public void flipPlayer(EntityPlayer entityplayer)
     {
         entityplayer.rotationYaw = -180F;
@@ -159,7 +164,7 @@ public class PlayerControllerMP extends PlayerController
         mc.sndManager.playRandomMusicIfReady();
     }
 
-    private void syncCurrentPlayItem()
+    public void syncCurrentPlayItem()
     {
         int i = mc.thePlayer.inventory.currentItem;
         if(i != currentPlayerItem)

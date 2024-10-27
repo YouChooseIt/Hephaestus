@@ -727,7 +727,7 @@ public class Block
     public static final Block trapdoor;
     public int blockIndexInTexture;
     public final int blockID;
-    protected float blockHardness;
+    public float blockHardness;
     protected float blockResistance;
     protected boolean blockConstructorCalled;
     protected boolean enableStats;

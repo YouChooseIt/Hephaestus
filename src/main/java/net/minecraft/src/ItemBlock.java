@@ -86,5 +86,5 @@ public class ItemBlock extends Item
         return Block.blocksList[blockID].getBlockName();
     }
 
-    private int blockID;
+    public int blockID;
 }

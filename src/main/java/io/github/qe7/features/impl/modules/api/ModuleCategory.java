@@ -12,7 +12,8 @@ public enum ModuleCategory {
     MOVEMENT("Movement", new Color(119, 221, 119)),
     PLAYER("Player", new Color(174, 198, 207)),
     RENDER("Render", new Color(253, 253, 150)),
-    MISC("Misc", new Color(216, 191, 216));
+    MISC("Misc", new Color(216, 191, 216)),
+    AUTO("Auto", new Color(200, 196, 11));
 
     private final String name;
     private final Color color;

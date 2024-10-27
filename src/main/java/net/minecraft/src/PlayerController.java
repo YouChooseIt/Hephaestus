@@ -140,4 +140,8 @@ public class PlayerController
 
     protected final Minecraft mc;
     public boolean field_1064_b;
+
+    public boolean isBeingUsed() {
+        return false;
+    }
 }

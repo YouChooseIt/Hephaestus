@@ -26,6 +26,11 @@ public class PlayerControllerSP extends PlayerController
         blockHitWait = 0;
     }
 
+    @Override
+    public boolean isBeingUsed() {
+        return this.field_1073_d != -1;
+    }
+
     public void flipPlayer(EntityPlayer entityplayer)
     {
         entityplayer.rotationYaw = -180F;
