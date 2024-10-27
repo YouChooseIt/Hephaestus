@@ -20,6 +20,7 @@ public final class Hephaestus {
     private final ClientCommandManager clientCommandManager;
     private final PanelManager panelManager;
     private final PlayerManager playerManager;
+    private final RelationManager relationManager;
 
     private final String name;
 
@@ -37,6 +38,7 @@ public final class Hephaestus {
         this.clientCommandManager = new ClientCommandManager();
         this.panelManager = new PanelManager();
         this.playerManager = new PlayerManager();
+        this.relationManager = new RelationManager();
 
         this.name = "Hephaestus";
         this.prefix = ".";

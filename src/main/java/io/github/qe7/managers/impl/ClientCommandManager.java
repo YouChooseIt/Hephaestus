@@ -25,6 +25,8 @@ public final class ClientCommandManager extends Manager<Class<? extends ClientCo
         clientCommands.add(new CommandListClientCommand());
         clientCommands.add(new ModuleListClientCommand());
         clientCommands.add(new InfoClientCommand());
+        clientCommands.add(new FriendClientCommand());
+        clientCommands.add(new EnemyClientCommand());
 
         clientCommands.forEach(command -> register(command.getClass()));
 
