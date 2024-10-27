@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 
 import java.awt.*;
 
-public class RenderUtil {
+public final class RenderUtil {
 
     private RenderUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
