@@ -34,8 +34,8 @@ public class AutoTunnelModule extends Module {
     public EnumSetting order = new EnumSetting("Order", Arrays.asList("UpDown", "DownUp", "DownOnly", "UpOnly"));
     public EnumSetting placeMode = new EnumSetting("PlaceMode", Arrays.asList("Single", "Multi"));
     public BooleanSetting disableClientPlace = new BooleanSetting("DisableClientPlace", true);
-    public IntSetting packetsPerTick = new IntSetting("MaxPacketsPerTick", 1, 12, 40, 0);
-    public IntSetting disableOnReconnect = new IntSetting(this, "DisableOnReconnectS", 0, 0, 10);
+    public IntSetting packetsPerTick = new IntSetting("MaxPacketsPerTick", 1, 12, 40, 1);
+    public IntSetting disableOnReconnect = new IntSetting("DisableOnReconnectS", 0, 0, 10, 1);
     public BooleanSetting swing = new BooleanSetting("Swing", false);
     public BooleanSetting alwaysCheckBoth = new BooleanSetting( "AlwaysCheckBoth", true);
     public int xCur;
