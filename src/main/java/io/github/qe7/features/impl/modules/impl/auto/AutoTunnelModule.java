@@ -64,7 +64,7 @@ public class AutoTunnelModule extends Module {
     private Direction dir;
 
     public AutoTunnelModule() {
-        super("Auto Tunnel", "relique skid uwu~", ModuleCategory.AUTO);
+        super("AutoTunnel", "relique skid uwu~", ModuleCategory.AUTO);
     }
 
     @Override
