@@ -6,9 +6,7 @@ import com.google.gson.JsonObject;
 import io.github.qe7.Hephaestus;
 import io.github.qe7.events.render.RenderScreenEvent;
 import io.github.qe7.features.impl.panels.api.Panel;
-import io.github.qe7.features.impl.panels.impl.ModuleListPanel;
-import io.github.qe7.features.impl.panels.impl.OnlinePlayersPanel;
-import io.github.qe7.features.impl.panels.impl.PlayerInfoPanel;
+import io.github.qe7.features.impl.panels.impl.*;
 import io.github.qe7.managers.api.Manager;
 import io.github.qe7.ui.hudeditor.GuiHudEditor;
 import io.github.qe7.utils.config.FileUtil;
@@ -27,9 +25,14 @@ public final class PanelManager extends Manager<Class<? extends Panel>, Panel> i
     public void initialize() {
         final List<Panel> panels = new ArrayList<>();
 
+        panels.add(new ClientInfoPanel());
         panels.add(new ModuleListPanel());
-        panels.add(new PlayerInfoPanel());
         panels.add(new OnlinePlayersPanel());
+        panels.add(new ArmourHudPanel());
+        panels.add(new PositionPanel());
+        panels.add(new PlayerInfoPanel());
+        panels.add(new ServerInfoPanel());
+        panels.add(new InventoryPanel());
 
         panels.forEach(this::register);
 

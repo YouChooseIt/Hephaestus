@@ -19,9 +19,7 @@ public class AntiKnockBackModule extends Module {
         if (event.getPacket() instanceof Packet28EntityVelocity && Minecraft.getMinecraft().thePlayer != null) {
             Packet28EntityVelocity packet = (Packet28EntityVelocity) event.getPacket();
             if (packet.entityId == Minecraft.getMinecraft().thePlayer.entityId) {
-                packet.motionX = 0;
-                packet.motionY = 0;
-                packet.motionZ = 0;
+                event.cancel();
             }
         }
     });

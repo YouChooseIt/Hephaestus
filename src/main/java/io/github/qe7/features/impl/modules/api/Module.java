@@ -6,6 +6,7 @@ import io.github.qe7.features.impl.commands.impl.client.api.ClientCommand;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
 import io.github.qe7.features.impl.modules.api.settings.impl.BooleanSetting;
 import io.github.qe7.features.impl.modules.api.settings.impl.DoubleSetting;
+import io.github.qe7.features.impl.modules.api.settings.impl.EnumSetting;
 import io.github.qe7.features.impl.modules.api.settings.impl.IntSetting;
 import io.github.qe7.utils.ChatUtil;
 import io.github.qe7.utils.config.Serialized;
@@ -20,6 +21,8 @@ import java.util.Objects;
 public abstract class Module extends ClientCommand implements Subscriber, Serialized {
 
     private final ModuleCategory category;
+
+    private String suffix = "";
 
     private int keyBind;
 
@@ -148,6 +151,18 @@ public abstract class Module extends ClientCommand implements Subscriber, Serial
                     }
 
                     doubleSetting.setValue(Double.parseDouble(args[2]));
+                    ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Set " + setting.getName() + " to " + args[2]);
+                    return;
+                }
+                if (setting instanceof EnumSetting) {
+                    EnumSetting<?> enumSetting = (EnumSetting<?>) setting;
+
+                    if (enumSetting.getIndex(args[2]) == -1) {
+                        ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Invalid value");
+                        return;
+                    }
+
+                    enumSetting.setIndex(enumSetting.getIndex(args[2]));
                     ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Set " + setting.getName() + " to " + args[2]);
                     return;
                 }

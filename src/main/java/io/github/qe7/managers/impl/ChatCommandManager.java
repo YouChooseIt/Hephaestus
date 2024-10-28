@@ -58,9 +58,6 @@ public final class ChatCommandManager extends Manager<Class<? extends ChatComman
         String username = normalizedMessage.substring(1, normalizedMessage.indexOf(">"));
         String message = normalizedMessage.substring(normalizedMessage.indexOf(">") + 1).trim();
 
-        System.out.println("username: " + username);
-        System.out.println("message: " + message);
-
         if (!message.startsWith("$")) return;
 
         String[] args = message.split(" ");

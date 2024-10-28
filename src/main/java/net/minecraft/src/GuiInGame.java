@@ -376,7 +376,7 @@ public class GuiInGame extends Gui {
         addChatMessage(s1);
     }
 
-    private static RenderItem itemRenderer = new RenderItem();
+    public static RenderItem itemRenderer = new RenderItem();
     private java.util.List chatMessageList;
     private Random rand;
     private Minecraft mc;

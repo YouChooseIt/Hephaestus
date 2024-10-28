@@ -5,13 +5,10 @@ import io.github.qe7.utils.RenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.ScaledResolution;
 
-public class PlayerInfoPanel extends Panel {
+public class ServerInfoPanel extends Panel {
 
-    public PlayerInfoPanel() {
-        super("PlayerInfo", "Displays information about the player");
-
-        this.x = 150;
-        this.y = 10;
+    public ServerInfoPanel() {
+        super("ServerInfo", "Displays information about the server");
     }
 
     @Override
@@ -26,12 +23,8 @@ public class PlayerInfoPanel extends Panel {
         float y = this.y + 2;
 
         final String[] strings = new String[]{
-                "Name: " + Minecraft.getMinecraft().thePlayer.username,
-                "Health: " + Minecraft.getMinecraft().thePlayer.health,
-                "Armor: " + Minecraft.getMinecraft().thePlayer.getPlayerArmorValue(),
-                "Item: " + (Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null ? Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem().getStatName() : "N/a"),
-                "Pitch: " + Minecraft.getMinecraft().thePlayer.rotationPitch,
-                "Yaw: " + Minecraft.getMinecraft().thePlayer.rotationYaw,
+                "IP: " + (Minecraft.getMinecraft().theWorld.multiplayerWorld ? Minecraft.getMinecraft().gameSettings.lastServer.replace("_", ":") : "N/a"),
+                "Seed: " + Minecraft.getMinecraft().theWorld.getRandomSeed(),
         };
 
         float longest = 100;

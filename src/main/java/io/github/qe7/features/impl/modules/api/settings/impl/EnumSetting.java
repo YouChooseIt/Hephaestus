@@ -19,9 +19,16 @@ public final class EnumSetting<T extends IEnumSetting> extends Setting<T> {
         this.values = new ArrayList<>(Arrays.asList(defaultValue.getClass().getEnumConstants()));
     }
 
-    public int getIndexOf(T value) {
-        return values.indexOf(value);
+    public int getIndex(String name) {
+        for (int i = 0; i < values.size(); i++) {
+            if (values.get(i).getName().equalsIgnoreCase(name)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
+
 
     public int getIndex() {
         return values.indexOf(getValue());

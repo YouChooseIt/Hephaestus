@@ -22,7 +22,7 @@ public final class Hephaestus {
     private final PlayerManager playerManager;
     private final RelationManager relationManager;
 
-    private final String name;
+    private final String name, version;
 
     @Setter
     private String prefix;
@@ -41,6 +41,7 @@ public final class Hephaestus {
         this.relationManager = new RelationManager();
 
         this.name = "Hephaestus";
+        this.version = "1.0.0";
         this.prefix = ".";
 
         this.authors = new String[]{"qe7"};

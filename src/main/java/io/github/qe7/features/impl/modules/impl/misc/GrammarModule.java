@@ -16,7 +16,7 @@ public class GrammarModule extends Module {
     private final HashMap<String, String> abbreviations = new HashMap<>();
 
     public GrammarModule() {
-        super("Grammar", "Fixing grammar of messages, also un-abbreviates abbreviations", ModuleCategory.MISC);
+        super("Grammar", "Grammar nazi", ModuleCategory.MISC);
 
         abbreviations.put("wassup", "what's up");
         abbreviations.put("sup", "what's up");
@@ -90,6 +90,9 @@ public class GrammarModule extends Module {
         abbreviations.put("kys", "keep yourself safe");
         abbreviations.put("woooow_0", "nebuladreamer4");
         abbreviations.put("nig", "nigga"); //N-Word pass by wsndow0
+        abbreviations.put("fr", "for real");
+        abbreviations.put("iirc", "if I recall correctly");
+        abbreviations.put("wb", "welcome back");
     }
 
     @Subscribe

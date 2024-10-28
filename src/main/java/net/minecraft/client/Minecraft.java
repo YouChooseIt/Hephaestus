@@ -25,7 +25,7 @@ public abstract class Minecraft implements Runnable {
     public int displayWidth;
     public int displayHeight;
     private OpenGlCapsChecker glCapabilities;
-    private final Timer timer;
+    public final Timer timer;
     public World theWorld;
     public RenderGlobal renderGlobal;
     public EntityPlayerSP thePlayer;
@@ -939,6 +939,8 @@ public abstract class Minecraft implements Runnable {
                             if (Keyboard.getEventKey() != 0) {
                                 final KeyPressEvent event = new KeyPressEvent(Keyboard.getEventKey());
                                 Hephaestus.getInstance().getEventBus().post(event);
+
+                                if (event.isCancelled()) return;
                             }
                             if (Keyboard.getEventKey() == 1) {
                                 displayInGameMenu();

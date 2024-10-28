@@ -3,20 +3,21 @@ package io.github.qe7.managers.impl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.sun.xml.internal.ws.api.config.management.policy.ManagementAssertion;
 import io.github.qe7.Hephaestus;
 import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
+import io.github.qe7.features.impl.modules.impl.auto.AutoTunnelModule;
 import io.github.qe7.features.impl.modules.impl.combat.AntiKnockBackModule;
 import io.github.qe7.features.impl.modules.impl.combat.ForceFieldModule;
 import io.github.qe7.features.impl.modules.impl.misc.*;
 import io.github.qe7.features.impl.modules.impl.misc.AutoListModule;
 import io.github.qe7.features.impl.modules.impl.misc.AutoLoginModule;
-import io.github.qe7.features.impl.modules.impl.movement.FlightModule;
-import io.github.qe7.features.impl.modules.impl.movement.StepModule;
+import io.github.qe7.features.impl.modules.impl.movement.*;
+import io.github.qe7.features.impl.modules.impl.render.FullBrightModule;
 import io.github.qe7.features.impl.modules.impl.render.HUDEditorGUIModule;
-import io.github.qe7.features.impl.modules.impl.render.HUDModule;
+import io.github.qe7.features.impl.modules.impl.render.NameTagsModule;
+import io.github.qe7.features.impl.modules.impl.render.XRayModule;
 import io.github.qe7.managers.api.Manager;
 import io.github.qe7.utils.config.FileUtil;
 import lombok.Getter;
@@ -42,12 +43,17 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new AntiKnockBackModule());
 
         /* Render */
-        modules.add(new HUDModule());
         modules.add(new HUDEditorGUIModule());
+        modules.add(new NameTagsModule());
+        modules.add(new FullBrightModule());
+        modules.add(new XRayModule());
 
         /* Movement */
         modules.add(new FlightModule());
         modules.add(new StepModule());
+        modules.add(new InventoryMoveModule());
+        modules.add(new SpeedModule());
+        modules.add(new JesusModule());
 
         /* Misc */
         modules.add(new AutoLoginModule());
@@ -61,6 +67,11 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new SchizoBotModule());
         modules.add(new ChatBotModule());
         modules.add(new GrammarModule());
+        modules.add(new AutoHealModule());
+        modules.add(new Auto127Module());
+
+        /* Auto */
+        modules.add(new AutoTunnelModule());
 
         modules.forEach(this::register);
 
@@ -79,9 +90,9 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
             this.getRegistry().putIfAbsent(module.getClass(), module);
             System.out.println("Registered module: " + module.getClass().getSimpleName());
 
-            for (final Field declaredField : module.getClass().getDeclaredFields()) {
+            for (Field declaredField : module.getClass().getDeclaredFields()) {
                 if (declaredField.getType().getSuperclass() == null) continue;
-                if (!declaredField.getType().getSuperclass().equals(ManagementAssertion.Setting.class)) continue;
+                if (!declaredField.getType().getSuperclass().equals(Setting.class)) continue;
 
                 declaredField.setAccessible(true);
 

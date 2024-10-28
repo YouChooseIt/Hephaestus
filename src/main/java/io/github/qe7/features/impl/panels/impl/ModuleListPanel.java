@@ -9,6 +9,7 @@ import net.minecraft.src.ScaledResolution;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ModuleListPanel extends Panel {
@@ -33,9 +34,11 @@ public class ModuleListPanel extends Panel {
 
         for (Module module : modules) {
             if (module.isEnabled()) {
-                RenderUtil.renderFancyString(module.getName(), (int) this.x + 2, y, module.getCategory().getColor().getRGB());
-                if (this.fontRenderer.getStringWidth(module.getName()) > longest) {
-                    longest = this.fontRenderer.getStringWidth(module.getName());
+                String name = module.getName() + (Objects.equals(module.getSuffix(), "") ? "" : " §7" + module.getSuffix());
+
+                RenderUtil.renderFancyString(name, this.x + 2, y, module.getCategory().getColor().getRGB());
+                if (this.fontRenderer.getStringWidth(name) > longest) {
+                    longest = this.fontRenderer.getStringWidth(name);
                 }
                 y += 10;
             }

@@ -22,8 +22,9 @@ public class OnlinePlayersPanel extends Panel {
         super.drawPanel(mouseX, mouseY, scaledResolution);
 
         int y = 0;
+
         for (String player : Hephaestus.getInstance().getPlayerManager().getOnlinePlayers()) {
-            RenderUtil.renderFancyString(Objects.equals(player, Minecraft.getMinecraft().session.username) ? "§6" + player : player, (int) (this.x + 2), (int) (this.y + 2 + y), 0xFFFFFF);
+            RenderUtil.renderFancyString(Objects.equals(player, Minecraft.getMinecraft().session.username) ? "§6" + player : player, this.x + 2, this.y + 2 + y, 0xFFFFFF);
             y += 10;
         }
 
