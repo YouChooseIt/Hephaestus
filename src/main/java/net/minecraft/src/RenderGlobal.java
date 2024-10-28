@@ -6,6 +6,9 @@ package net.minecraft.src;
 
 import java.nio.IntBuffer;
 import java.util.*;
+
+import io.github.qe7.Hephaestus;
+import io.github.qe7.events.render.RenderWorldEvent;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.ARBOcclusionQuery;
 import org.lwjgl.opengl.GL11;
@@ -256,6 +259,7 @@ public class RenderGlobal
 
     public void renderEntities(Vec3D vec3d, ICamera icamera, float f)
     {
+        Hephaestus.getInstance().getEventBus().post(new RenderWorldEvent());
         if(renderEntitiesStartupCounter > 0)
         {
             renderEntitiesStartupCounter--;

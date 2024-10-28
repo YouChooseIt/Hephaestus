@@ -7,9 +7,11 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
+import io.github.qe7.features.impl.modules.impl.auto.AutoHighwayModule;
 import io.github.qe7.features.impl.modules.impl.auto.AutoTunnelModule;
 import io.github.qe7.features.impl.modules.impl.combat.AntiKnockBackModule;
 import io.github.qe7.features.impl.modules.impl.combat.ForceFieldModule;
+import io.github.qe7.features.impl.modules.impl.exploit.Slot9Module;
 import io.github.qe7.features.impl.modules.impl.misc.*;
 import io.github.qe7.features.impl.modules.impl.misc.AutoListModule;
 import io.github.qe7.features.impl.modules.impl.misc.AutoLoginModule;
@@ -72,6 +74,10 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
 
         /* Auto */
         modules.add(new AutoTunnelModule());
+        modules.add(new AutoHighwayModule());
+
+        /* Exploit */
+        modules.add(new Slot9Module());
 
         modules.forEach(this::register);
 

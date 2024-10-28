@@ -37,10 +37,10 @@ public class PositionPanel extends Panel {
         float x = this.x + 2;
         float y = this.y + 2;
 
-        RenderUtil.renderFancyString("Overworld: " + overWorldPos[0] + ", " + overWorldPos[1] + ", " + overWorldPos[2], x, y, 0xFFFFFF);
-        RenderUtil.renderFancyString("Nether: " + netherPos[0] + ", " + netherPos[1] + ", " + netherPos[2], x, y + 10, 0xFFFFFF);
+        RenderUtil.renderFancyString("Overworld: " + String.format("%.1f", overWorldPos[0]) + ", " + String.format("%.1f", overWorldPos[1]) + ", " + String.format("%.1f", overWorldPos[2]), x, y, 0xFFFFFF);
+        RenderUtil.renderFancyString("Nether: " + String.format("%.1f", netherPos[0]) + ", " + String.format("%.1f", netherPos[1]) + ", " + String.format("%.1f", netherPos[2]), x, y + 10, 0xFFFFFF);
 
-        this.width = Math.max(this.getFontRenderer().getStringWidth("Overworld: " + overWorldPos[0] + ", " + overWorldPos[1] + ", " + overWorldPos[2]), this.getFontRenderer().getStringWidth("Nether: " + netherPos[0] + ", " + netherPos[1] + ", " + netherPos[2])) + 4;
+        this.width = Math.max(this.getFontRenderer().getStringWidth("Overworld: " + String.format("%.1f", overWorldPos[0]) + ", " + String.format("%.1f", overWorldPos[1]) + ", " + String.format("%.1f", overWorldPos[2])), this.getFontRenderer().getStringWidth("Nether: " + String.format("%.1f", netherPos[0]) + ", " + String.format("%.1f", netherPos[1]) + ", " + String.format("%.1f", netherPos[2]))) + 4;
         this.height = 22;
     }
 

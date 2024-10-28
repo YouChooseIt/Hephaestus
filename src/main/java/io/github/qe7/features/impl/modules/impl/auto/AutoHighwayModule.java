@@ -16,6 +16,7 @@ import io.github.qe7.features.impl.modules.api.settings.impl.IntSetting;
 import io.github.qe7.features.impl.modules.api.settings.impl.interfaces.IEnumSetting;
 import io.github.qe7.type.BlockPos;
 import io.github.qe7.type.Direction;
+import io.github.qe7.utils.ChatUtil;
 import io.github.qe7.utils.PlayerUtils;
 import io.github.qe7.utils.RenderUtil;
 import me.zero.alpine.listener.Listener;
@@ -24,8 +25,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 
-public class AutoTunnelModule extends Module {
-
+public class AutoHighwayModule extends Module {
+    private boolean disabledObsidian = false;
     public final Minecraft mc = Minecraft.getMinecraft();
 
     public DoubleSetting walkStart = new DoubleSetting("StartWalkingAfter", 2.0, 1.0, 8.0, 1.0);
@@ -64,8 +65,8 @@ public class AutoTunnelModule extends Module {
     private boolean isDiagonal;
     private Direction dir;
 
-    public AutoTunnelModule() {
-        super("AutoTunnel", "relique skid uwu~", ModuleCategory.AUTO);
+    public AutoHighwayModule() {
+        super("AutoHighway", "y - 1 moment", ModuleCategory.AUTO);
     }
 
     @Override
@@ -75,6 +76,7 @@ public class AutoTunnelModule extends Module {
         mc.playerController.field_1064_b = false;
         this.selected = false;
         this.timeout = 0;
+        this.disabledObsidian = false;
     }
 
     public Direction getDirection() {
@@ -111,12 +113,6 @@ public class AutoTunnelModule extends Module {
         }
         if (this.order.getValue() == OrderEnum.DOWN_UP) {
             return Order.DOWN_UP;
-        }
-        if (this.order.getValue() == OrderEnum.UP_ONLY) {
-            return Order.UP_ONLY;
-        }
-        if (this.order.getValue() == OrderEnum.DOWN_ONLY) {
-            return Order.DOWN_ONLY;
         }
         return Order.UP_DOWN;
     }
@@ -172,7 +168,7 @@ public class AutoTunnelModule extends Module {
             ItemStack item = mc.thePlayer.inventory.mainInventory[i];
             if (item != null && item.getItem() instanceof ItemBlock) {
                 ItemBlock blk = (ItemBlock)item.getItem();
-                if (this.isBlockWalkable(blk.blockID)) {
+                if (blk.blockID == Block.obsidian.blockID) {
                     return i + 1;
                 }
             }
@@ -203,6 +199,10 @@ public class AutoTunnelModule extends Module {
                         ((PlayerControllerMP)mc.playerController).syncCurrentPlayItem();
                     }
                 } else {
+                    if(!this.disabledObsidian)
+                        ChatUtil.addPrefixedMessage("AutoHighway", "No obsidian found in hotbar!");
+                    this.toggle();
+                    this.disabledObsidian = true;
                     return false;
                 }
             }
@@ -410,6 +410,19 @@ public class AutoTunnelModule extends Module {
         if (this.isLiquid(mc.theWorld.getBlockId(x, y + 1, z + 1))) {
             this.trySettingPlaceXYZ(x, y + 1, z + 1);
         }
+
+        if (this.isLiquid(mc.theWorld.getBlockId(x - 1, y + 2, z))) {
+            this.trySettingPlaceXYZ(x - 1, y + 2, z);
+        }
+        if (this.isLiquid(mc.theWorld.getBlockId(x + 1, y + 2, z))) {
+            this.trySettingPlaceXYZ(x + 1, y + 2, z);
+        }
+        if (this.isLiquid(mc.theWorld.getBlockId(x, y + 2, z - 1))) {
+            this.trySettingPlaceXYZ(x, y + 2, z - 1);
+        }
+        if (this.isLiquid(mc.theWorld.getBlockId(x, y + 2, z + 1))) {
+            this.trySettingPlaceXYZ(x, y + 2, z + 1);
+        }
     }
 
     @Subscribe
@@ -425,8 +438,8 @@ public class AutoTunnelModule extends Module {
         isDiagonal = dir.ordinal() % 2 == 1;
         boolean success = false;
         int x = MathHelper.floor_double(mc.thePlayer.posX);
-        int y = MathHelper.floor_double(mc.thePlayer.posY);
-        int yBelow = y - 2;
+        int y = MathHelper.floor_double(mc.thePlayer.posY) - 1;
+        int yBelow = y - 1;
         int z = MathHelper.floor_double(mc.thePlayer.posZ);
         int walkAfter = this.walkStart.getValue().intValue();
         this.walking = false;
@@ -434,8 +447,8 @@ public class AutoTunnelModule extends Module {
         boolean walkSwitch = true;
         boolean walkSwitched = false;
         Order breakOrder = this.getOrder();
-        boolean success2 = breakOrder != Order.DOWN_ONLY && breakOrder != Order.UP_ONLY;
-        boolean m = this.alwaysCheckBoth.getValue() != false && (breakOrder == Order.DOWN_ONLY || breakOrder == Order.UP_ONLY);
+        boolean success2 = true;
+        boolean m = this.alwaysCheckBoth.getValue() != false;
         String comment = "you think this code is better than whatever u will be able to write, enchantiledev?";
         int i = 0;
         while ((double)i < this.reach.getValue() && !success) {
@@ -443,94 +456,70 @@ public class AutoTunnelModule extends Module {
             if (isDiagonal) {
                 y += dir.yOffset;
                 if (breakOrder == Order.DOWN_UP) {
-                    if (!success) {
+                    if (!success && this.mc.theWorld.getBlockId(x + dir.xOffset, y - 1, z) != Block.obsidian.blockID) {
                         success = this.trySettingDestroyXYZ(x + dir.xOffset, y - 1, z);
                     }
                     if (!success) {
                         success = this.trySettingDestroyXYZ(x + dir.xOffset, y, z);
+                    }
+                    if (!success) {
+                        success = this.trySettingDestroyXYZ(x + dir.xOffset, y + 1, z);
                     }
                 } else if (breakOrder == Order.UP_DOWN) {
                     if (!success) {
-                        success = this.trySettingDestroyXYZ(x + dir.xOffset, y, z);
+                        success = this.trySettingDestroyXYZ(x + dir.xOffset, y + 1, z);
                     }
-                    if (!success) {
-                        success = this.trySettingDestroyXYZ(x + dir.xOffset, y - 1, z);
-                    }
-                } else if (breakOrder == Order.DOWN_ONLY) {
-                    if (!success) {
-                        success = this.trySettingDestroyXYZ(x + dir.xOffset, y - 1, z);
-                    }
-                    if (!success2) {
-                        success2 = this.trySettingDestroyXYZ(x + dir.xOffset, y, z, true);
-                    }
-                } else if (breakOrder == Order.UP_ONLY) {
                     if (!success) {
                         success = this.trySettingDestroyXYZ(x + dir.xOffset, y, z);
                     }
-                    if (!success2) {
-                        success2 = this.trySettingDestroyXYZ(x + dir.xOffset, y - 1, z, true);
+                    if (!success && this.mc.theWorld.getBlockId(x + dir.xOffset, y - 1, z) != Block.obsidian.blockID) {
+                        success = this.trySettingDestroyXYZ(x + dir.xOffset, y - 1, z);
                     }
                 }
                 this.tryRemovingLiquids(x + dir.xOffset, y, z);
                 if (breakOrder == Order.DOWN_UP) {
-                    if (!success) {
+                    if (!success && this.mc.theWorld.getBlockId(x, y - 1, z + dir.zOffset) != Block.obsidian.blockID) {
                         success = this.trySettingDestroyXYZ(x, y - 1, z + dir.zOffset);
                     }
                     if (!success) {
                         success = this.trySettingDestroyXYZ(x, y, z + dir.zOffset);
+                    }
+                    if (!success) {
+                        success = this.trySettingDestroyXYZ(x, y + 1, z + dir.zOffset);
                     }
                 } else if (breakOrder == Order.UP_DOWN) {
                     if (!success) {
-                        success = this.trySettingDestroyXYZ(x, y, z + dir.zOffset);
+                        success = this.trySettingDestroyXYZ(x, y + 1, z + dir.zOffset);
                     }
-                    if (!success) {
-                        success = this.trySettingDestroyXYZ(x, y - 1, z + dir.zOffset);
-                    }
-                } else if (breakOrder == Order.DOWN_ONLY) {
-                    if (!success) {
-                        success = this.trySettingDestroyXYZ(x, y - 1, z + dir.zOffset);
-                    }
-                    if (!success2) {
-                        success2 = this.trySettingDestroyXYZ(x, y - 1, z + dir.zOffset, true);
-                    }
-                } else if (breakOrder == Order.UP_ONLY) {
                     if (!success) {
                         success = this.trySettingDestroyXYZ(x, y, z + dir.zOffset);
                     }
-                    if (!success2) {
-                        success2 = this.trySettingDestroyXYZ(x, y - 1, z + dir.zOffset, true);
+                    if (!success && this.mc.theWorld.getBlockId(x, y - 1, z + dir.zOffset) != Block.obsidian.blockID) {
+                        success = this.trySettingDestroyXYZ(x, y - 1, z + dir.zOffset);
                     }
                 }
                 this.tryRemovingLiquids(x, y, z + dir.zOffset);
                 x += dir.xOffset;
                 z += dir.zOffset;
                 if (breakOrder == Order.DOWN_UP) {
-                    if (!success) {
+                    if (!success && this.mc.theWorld.getBlockId(x, y - 1, z) != Block.obsidian.blockID) {
                         success = this.trySettingDestroyXYZ(x, y - 1, z);
                     }
                     if (!success) {
                         success = this.trySettingDestroyXYZ(x, y, z);
+                    }
+                    if (!success) {
+                        success = this.trySettingDestroyXYZ(x, y + 1, z);
                     }
                 } else if (breakOrder == Order.UP_DOWN) {
                     if (!success) {
-                        success = this.trySettingDestroyXYZ(x, y, z);
+                        success = this.trySettingDestroyXYZ(x, y + 1, z);
                     }
-                    if (!success) {
-                        success = this.trySettingDestroyXYZ(x, y - 1, z);
-                    }
-                } else if (breakOrder == Order.DOWN_ONLY) {
-                    if (!success) {
-                        success = this.trySettingDestroyXYZ(x, y - 1, z);
-                    }
-                    if (!success2) {
-                        success2 = this.trySettingDestroyXYZ(x, y, z, true);
-                    }
-                } else if (breakOrder == Order.UP_ONLY) {
                     if (!success) {
                         success = this.trySettingDestroyXYZ(x, y, z);
                     }
-                    if (!success2) {
-                        success2 = this.trySettingDestroyXYZ(x, y - 1, z, true);
+                    if (!success && this.mc.theWorld.getBlockId(x, y - 1, z) != Block.obsidian.blockID) {
+                        success = this.trySettingDestroyXYZ(x, y - 1, z);
                     }
                 }
                 this.tryRemovingLiquids(x, y, z);
@@ -538,32 +527,24 @@ public class AutoTunnelModule extends Module {
                 x += dir.xOffset;
                 z += dir.zOffset;
                 if (breakOrder == Order.DOWN_UP) {
-                    if (!success) {
+                    if (!success && this.mc.theWorld.getBlockId(x, y - 1, z) != Block.obsidian.blockID) {
                         success = this.trySettingDestroyXYZ(x, y - 1, z);
                     }
                     if (!success) {
                         success = this.trySettingDestroyXYZ(x, y, z);
+                    }
+                    if (!success) {
+                        success = this.trySettingDestroyXYZ(x, y + 1, z);
                     }
                 } else if (breakOrder == Order.UP_DOWN) {
                     if (!success) {
-                        success = this.trySettingDestroyXYZ(x, y, z);
+                        success = this.trySettingDestroyXYZ(x, y + 1, z);
                     }
-                    if (!success) {
-                        success = this.trySettingDestroyXYZ(x, y - 1, z);
-                    }
-                } else if (breakOrder == Order.DOWN_ONLY) {
-                    if (!success) {
-                        success = this.trySettingDestroyXYZ(x, y - 1, z);
-                    }
-                    if (!success2) {
-                        success2 = this.trySettingDestroyXYZ(x, y, z, true);
-                    }
-                } else if (breakOrder == Order.UP_ONLY) {
                     if (!success) {
                         success = this.trySettingDestroyXYZ(x, y, z);
                     }
-                    if (!success2) {
-                        success2 = this.trySettingDestroyXYZ(x, y - 1, z, true);
+                    if (!success && this.mc.theWorld.getBlockId(x, y - 1, z) != Block.obsidian.blockID) {
+                        success = this.trySettingDestroyXYZ(x, y - 1, z);
                     }
                 }
                 this.tryRemovingLiquids(x, y, z);
@@ -580,8 +561,8 @@ public class AutoTunnelModule extends Module {
                 } else if (!success && !this.isBlockWalkable(idbelow3)) {
                     this.trySettingPlaceXYZ(x, yBelow, z);
                 }
-                if (this.isLiquid(mc.theWorld.getBlockId(x, y + 1, z))) {
-                    this.trySettingPlaceXYZ(x, y + 1, z);
+                if (this.isLiquid(mc.theWorld.getBlockId(x, y + 2, z))) {
+                    this.trySettingPlaceXYZ(x, y + 2, z);
                     walkSwitch = false;
                 }
                 if (b && i >= walkAfter && !this.walking && !walkSwitched) {
@@ -676,9 +657,7 @@ public class AutoTunnelModule extends Module {
 
     public enum Order {
         UP_DOWN,
-        DOWN_UP,
-        UP_ONLY,
-        DOWN_ONLY;
+        DOWN_UP;
     }
 
 
@@ -738,9 +717,7 @@ public class AutoTunnelModule extends Module {
 
     public enum OrderEnum implements IEnumSetting {
         UP_DOWN("UpDown"),
-        DOWN_UP("DownUp"),
-        UP_ONLY("UpOnly"),
-        DOWN_ONLY("DownOnly");
+        DOWN_UP("DownUp");
 
         private final String name;
 

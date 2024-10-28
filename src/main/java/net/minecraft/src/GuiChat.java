@@ -22,6 +22,25 @@ public class GuiChat extends GuiScreen {
     }
 
     protected void keyTyped(char c, int i) {
+        if(c == '\026')
+        {
+            String s;
+            int j;
+            s = GuiScreen.getClipboardString();
+            if(s == null)
+            {
+                s = "";
+            }
+            j = 100 - message.length();
+            if(j > s.length())
+            {
+                j = s.length();
+            }
+            if(j > 0)
+            {
+                message += s.substring(0, j);
+            }
+        }
         if (i == 1) {
             mc.displayGuiScreen(null);
             return;
