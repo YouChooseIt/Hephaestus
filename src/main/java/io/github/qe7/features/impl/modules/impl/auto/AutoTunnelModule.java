@@ -69,6 +69,8 @@ public class AutoTunnelModule extends Module {
 
     @Override
     public void onDisable() {
+        super.onDisable();
+
         mc.playerController.field_1064_b = false;
         this.selected = false;
         this.timeout = 0;
