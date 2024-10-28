@@ -5,7 +5,6 @@ package io.github.qe7.features.impl.modules.impl.auto;
 import java.util.HashSet;
 
 import io.github.qe7.events.UpdateEvent;
-import io.github.qe7.events.render.RenderScreenEvent;
 import io.github.qe7.events.render.RenderWorldEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
@@ -16,7 +15,7 @@ import io.github.qe7.features.impl.modules.api.settings.impl.IntSetting;
 import io.github.qe7.features.impl.modules.api.settings.impl.interfaces.IEnumSetting;
 import io.github.qe7.type.BlockPos;
 import io.github.qe7.type.Direction;
-import io.github.qe7.utils.PlayerUtils;
+import io.github.qe7.utils.PlayerUtil;
 import io.github.qe7.utils.RenderUtil;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
@@ -255,17 +254,17 @@ public class AutoTunnelModule extends Module {
 
     public void placeBlock(int x, int y, int z, int face) {
         if (this.disableClientPlace.getValue()) {
-            PlayerUtils.placeBlock(x, y, z, face);
+            PlayerUtil.placeBlock(x, y, z, face);
         } else {
-            PlayerUtils.placeBlockUnsafe(x, y, z, face);
+            PlayerUtil.placeBlockUnsafe(x, y, z, face);
         }
     }
 
     public void destroyBlock(int x, int y, int z, int face) {
         if (this.mineMode.getValue() == MineModeEnum.LEGAL) {
-            PlayerUtils.destroyBlock(this.xCur, this.yCur, this.zCur, this.getHitSide());
+            PlayerUtil.destroyBlock(this.xCur, this.yCur, this.zCur, this.getHitSide());
         } else {
-            PlayerUtils.destroyBlockInstant(this.xCur, this.yCur, this.zCur, this.getHitSide());
+            PlayerUtil.destroyBlockInstant(this.xCur, this.yCur, this.zCur, this.getHitSide());
         }
     }
 
@@ -680,12 +679,6 @@ public class AutoTunnelModule extends Module {
         UP_ONLY,
         DOWN_ONLY;
     }
-
-
-//    public List<String> modes = Arrays.asList("Z+", "Z+X-", "X-", "Z-X-", "Z-", "Z-X+", "X+", "Z+X+");
-    // mineMode = Arrays.asList("Legal", "InstantSingle", "InstantMulti")
-    // order = Arrays.asList("UpDown", "DownUp", "DownOnly", "UpOnly")
-    // placeMode = Arrays.asList("Single", "Multi")
 
     public enum ModesEnum implements IEnumSetting {
         ZPOS("Z+"),

@@ -71,6 +71,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new GrammarModule());
         modules.add(new AutoHealModule());
         modules.add(new Auto127Module());
+        modules.add(new ScaffoldModule());
 
         /* Auto */
         modules.add(new AutoTunnelModule());

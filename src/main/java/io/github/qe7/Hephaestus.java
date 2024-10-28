@@ -1,7 +1,7 @@
 package io.github.qe7;
 
 import io.github.qe7.managers.impl.*;
-import io.github.qe7.utils.PlayerUtils;
+import io.github.qe7.utils.PlayerUtil;
 import lombok.Getter;
 import lombok.Setter;
 import me.zero.alpine.bus.EventBus;
@@ -58,8 +58,6 @@ public final class Hephaestus {
         this.getClientCommandManager().initialize();
         this.getPanelManager().initialize();
         this.getPlayerManager().initialise();
-
-        PlayerUtils.mc = Minecraft.getMinecraft();
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
     }
