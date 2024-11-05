@@ -1,12 +1,10 @@
 package io.github.qe7;
 
 import io.github.qe7.managers.impl.*;
-import io.github.qe7.utils.PlayerUtil;
 import lombok.Getter;
 import lombok.Setter;
 import me.zero.alpine.bus.EventBus;
 import me.zero.alpine.bus.EventManager;
-import net.minecraft.client.Minecraft;
 
 @Getter
 public final class Hephaestus {
