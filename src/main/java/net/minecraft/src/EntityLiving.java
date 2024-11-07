@@ -962,8 +962,8 @@ public abstract class EntityLiving extends Entity
     float field_9348_ae;
     protected int field_9346_af;
     protected int entityAge;
-    protected float moveStrafing;
-    protected float moveForward;
+    public float moveStrafing;
+    public float moveForward;
     protected float randomYawVelocity;
     protected boolean isJumping;
     protected float defaultPitch;

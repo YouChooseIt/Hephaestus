@@ -4,6 +4,7 @@ package io.github.qe7.features.impl.modules.impl.auto;
 
 import java.util.HashSet;
 
+import io.github.qe7.events.PlayerMoveSetEvent;
 import io.github.qe7.events.UpdateEvent;
 import io.github.qe7.events.render.RenderWorldEvent;
 import io.github.qe7.features.impl.modules.api.Module;
@@ -410,7 +411,14 @@ public class AutoTunnelModule extends Module {
             this.trySettingPlaceXYZ(x, y + 1, z + 1);
         }
     }
-
+    
+    @Subscribe
+    public final Listener<PlayerMoveSetEvent> playerMoveSetListener = new Listener<>(event -> {
+    	event.setCancelled(true);
+    	mc.thePlayer.moveStrafing = 0;
+    	mc.thePlayer.moveForward = this.walking ? 1 : 0;
+    });
+    
     @Subscribe
     public final Listener<UpdateEvent> updateListener = new Listener<>(event -> {
         mc.thePlayer.rotationYaw = this.getDirection().getYaw();

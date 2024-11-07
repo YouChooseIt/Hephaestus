@@ -5,6 +5,7 @@
 package net.minecraft.src;
 
 import io.github.qe7.Hephaestus;
+import io.github.qe7.events.PlayerMoveSetEvent;
 import io.github.qe7.events.PushOutOfBlocksEvent;
 import io.github.qe7.events.UpdateActionMPEvent;
 import io.github.qe7.events.UpdateEvent;
@@ -41,9 +42,14 @@ public class EntityPlayerSP extends EntityPlayer {
 
     public void updatePlayerActionState() {
         super.updatePlayerActionState();
-        moveStrafing = movementInput.moveStrafe;
-        moveForward = movementInput.moveForward;
-        isJumping = movementInput.jump;
+        
+        final PlayerMoveSetEvent event = new PlayerMoveSetEvent();
+        Hephaestus.getInstance().getEventBus().post(event);
+        if(!event.isCancelled()) {
+        	moveStrafing = movementInput.moveStrafe;
+            moveForward = movementInput.moveForward;
+            isJumping = movementInput.jump;
+        }
     }
 
     public void onLivingUpdate() {
