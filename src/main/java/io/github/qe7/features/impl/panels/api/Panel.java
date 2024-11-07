@@ -49,13 +49,13 @@ public abstract class Panel extends Feature implements Subscriber, Serialized {
         RenderUtil.renderFancyString(this.getName(), (int) x + 2, (int) y - titleHeight + 2, -1);
     }
 
-    public void handleMouseClick(float mouseX, float mouseY, int mouseButton) {
+    public boolean handleMouseClick(float mouseX, float mouseY, int mouseButton) {
         if (mouseButton != 0) {
-            return;
+            return false;
         }
 
         if (!this.isMouseOverPanel(mouseX, mouseY)) {
-            return;
+            return false;
         }
 
         if (mouseX >= x + width - 10 && mouseX <= x + width - 2 && mouseY >= y - titleHeight + 2 && mouseY <= y - 2) {
@@ -65,6 +65,7 @@ public abstract class Panel extends Feature implements Subscriber, Serialized {
             dragX = mouseX - x;
             dragY = mouseY - y;
         }
+        return true;
     }
 
     public void handleMouseRelease(float mouseX, float mouseY) {

@@ -18,7 +18,8 @@ public class GuiHudEditor extends GuiScreen {
         super.mouseClicked(i, j, k);
 
         for (Panel panel : Hephaestus.getInstance().getPanelManager().getRegistry().values()) {
-            panel.handleMouseClick(i, j, k);
+            boolean cancel = panel.handleMouseClick(i, j, k);
+            if(cancel) break;
         }
     }
 

@@ -76,9 +76,13 @@ public final class PanelManager extends Manager<Class<? extends Panel>, Panel> i
     }
 
     @Subscribe
-    public final Listener<RenderScreenEvent> renderScreenEventListener = new Listener<>(event -> this.getRegistry().values().forEach(panel -> {
-        if (panel.isEnabled() || (Minecraft.getMinecraft().currentScreen != null && Minecraft.getMinecraft().currentScreen instanceof GuiHudEditor)) {
-            panel.drawPanel(event.getMouseX(), event.getMouseY(), event.getScaledResolution());
-        }
-    }));
+    public final Listener<RenderScreenEvent> renderScreenEventListener = new Listener<>(event -> {
+    	ArrayList<Panel> list = new ArrayList<>(this.getRegistry().values());
+    	for(int i = list.size() - 1; i >= 0; --i) {
+    		Panel panel = list.get(i);
+    		if (panel.isEnabled() || (Minecraft.getMinecraft().currentScreen != null && Minecraft.getMinecraft().currentScreen instanceof GuiHudEditor)) {
+                panel.drawPanel(event.getMouseX(), event.getMouseY(), event.getScaledResolution());
+            }
+    	}
+    });
 }
