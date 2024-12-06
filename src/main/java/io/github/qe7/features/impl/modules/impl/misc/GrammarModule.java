@@ -93,6 +93,7 @@ public class GrammarModule extends Module {
         abbreviations.put("fr", "for real");
         abbreviations.put("iirc", "if I recall correctly");
         abbreviations.put("wb", "welcome back");
+        abbreviations.put("ong", "on god");
     }
 
     @Subscribe

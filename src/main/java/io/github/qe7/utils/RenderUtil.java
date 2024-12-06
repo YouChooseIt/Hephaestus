@@ -14,9 +14,23 @@ public final class RenderUtil {
     }
 
     public static void renderFancyString(String text, float x, float y, int color) {
-        Minecraft.getMinecraft().fontRenderer.drawString(text.replaceAll("§[0-9a-fA-F]", ""), x + 0.5f, y + 0.5f, new Color(0, 0, 0, 255).getRGB());
+        Minecraft.getMinecraft().fontRenderer.drawString(text.replaceAll("§[0-9a-fA-F]", ""), x + 0.5f, y + 0.5f, darkenColour(color));
         Minecraft.getMinecraft().fontRenderer.drawString(text, x, y, color);
     }
+
+    public static int darkenColour(final int color) {
+        int alpha = (color >> 24) & 0xFF;
+        int red = (color >> 16) & 0xFF;
+        int green = (color >> 8) & 0xFF;
+        int blue = color & 0xFF;
+
+        red = (int) (red * 0.4);
+        green = (int) (green * 0.4);
+        blue = (int) (blue * 0.4);
+
+        return (alpha << 24) | (red << 16) | (green << 8) | blue;
+    }
+
 
     /**
      * Draws a name tag above an entity
