@@ -2,6 +2,7 @@ package io.github.qe7.features.impl.panels.impl;
 
 import io.github.qe7.features.impl.panels.api.Panel;
 import io.github.qe7.utils.RenderUtil;
+import io.github.qe7.utils.math.MathUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.ScaledResolution;
 
@@ -31,7 +32,7 @@ public class PlayerInfoPanel extends Panel {
                 "Armor: " + Minecraft.getMinecraft().thePlayer.getPlayerArmorValue(),
                 "Item: " + (Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null ? Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem().getStatName() : "N/a"),
                 "Pitch: " + Minecraft.getMinecraft().thePlayer.rotationPitch,
-                "Yaw: " + Minecraft.getMinecraft().thePlayer.rotationYaw,
+                "Yaw: " + MathUtil.playerYaw180(),
         };
 
         float longest = 100;

@@ -1,5 +1,7 @@
 package io.github.qe7.utils.math;
 
+import net.minecraft.client.Minecraft;
+
 public final class MathUtil {
 
     private MathUtil() {
@@ -32,5 +34,19 @@ public final class MathUtil {
         long tmp = Math.round(value);
 
         return (float) tmp / factor;
+    }
+
+    public static float playerYaw180() {
+        float newYaw = Minecraft.getMinecraft().thePlayer.rotationYaw;
+
+        if (newYaw >= 180.0f) {
+            newYaw -= 360.0f;
+        }
+
+        if (newYaw <= -180.0f) {
+            newYaw += 360.0f;
+        }
+
+        return newYaw;
     }
 }

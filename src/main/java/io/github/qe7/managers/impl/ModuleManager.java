@@ -56,6 +56,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new InventoryMoveModule());
         modules.add(new SpeedModule());
         modules.add(new JesusModule());
+        modules.add(new StrafeModule());
 
         /* Misc */
         modules.add(new AutoLoginModule());
