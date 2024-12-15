@@ -19,6 +19,7 @@ public class BindClientCommand extends ClientCommand {
         if (args.length != 3) {
             ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Invalid arguments");
             ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Usage: " + this.getUsage());
+            return;
         }
 
         Module targetModule = null;
