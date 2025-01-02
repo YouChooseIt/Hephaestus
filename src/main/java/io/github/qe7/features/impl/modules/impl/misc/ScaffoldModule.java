@@ -40,7 +40,7 @@ public class ScaffoldModule extends Module {
 
         int radius = 1;
 
-        if (!this.timerUtil.hasTimeElapsed(100, true)) {
+        if (!this.timerUtil.hasTimeElapsed(300, true)) {
             return;
         }
 
