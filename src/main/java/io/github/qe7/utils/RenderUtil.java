@@ -14,8 +14,9 @@ public final class RenderUtil {
     }
 
     public static void renderFancyString(String text, float x, float y, int color) {
-        Minecraft.getMinecraft().fontRenderer.drawString(text.replaceAll("§[0-9a-fA-F]", ""), x + 0.5f, y + 0.5f, darkenColour(color));
-        Minecraft.getMinecraft().fontRenderer.drawString(text, x, y, color);
+//        Minecraft.getMinecraft().fontRenderer.drawString(text.replaceAll("§[0-9a-fA-F]", ""), x + 0.5f, y + 0.5f, darkenColour(color));
+//        Minecraft.getMinecraft().fontRenderer.drawString(text, x, y, color);
+        Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(text, (int) x, (int) y, color);
     }
 
     public static int darkenColour(final int color) {

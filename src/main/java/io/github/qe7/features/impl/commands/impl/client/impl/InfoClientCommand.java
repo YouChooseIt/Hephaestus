@@ -4,7 +4,7 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.features.impl.commands.impl.client.api.ClientCommand;
 import io.github.qe7.utils.ChatUtil;
 
-public class InfoClientCommand extends ClientCommand {
+public final class InfoClientCommand extends ClientCommand {
 
     public InfoClientCommand() {
         super("Info", "Prints information related to a desired module or command");

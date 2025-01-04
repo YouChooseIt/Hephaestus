@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class ModuleListPanel extends Panel {
+public final class ModuleListPanel extends Panel {
 
     public ModuleListPanel() {
         super("ModuleList", "Displays enabled Modules");

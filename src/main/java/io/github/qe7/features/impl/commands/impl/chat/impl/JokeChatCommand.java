@@ -3,7 +3,7 @@ package io.github.qe7.features.impl.commands.impl.chat.impl;
 import io.github.qe7.features.impl.commands.impl.chat.api.ChatCommand;
 import io.github.qe7.utils.ChatUtil;
 
-public class JokeChatCommand extends ChatCommand {
+public final class JokeChatCommand extends ChatCommand {
 
     private final String[] jokes = new String[]{
             "Why did the scarecrow win an award? Because he was outstanding in his field!",

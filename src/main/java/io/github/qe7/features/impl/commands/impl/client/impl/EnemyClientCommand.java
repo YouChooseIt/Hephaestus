@@ -9,7 +9,7 @@ import io.github.qe7.utils.ChatUtil;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EnemyClientCommand extends ClientCommand {
+public final class EnemyClientCommand extends ClientCommand {
 
     public EnemyClientCommand() {
         super("Enemy", "Targets a player");

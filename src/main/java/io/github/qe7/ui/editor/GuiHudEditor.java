@@ -1,4 +1,4 @@
-package io.github.qe7.ui.hudeditor;
+package io.github.qe7.ui.editor;
 
 import io.github.qe7.Hephaestus;
 import io.github.qe7.features.impl.panels.api.Panel;

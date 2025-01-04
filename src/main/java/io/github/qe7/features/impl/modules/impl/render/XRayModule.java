@@ -4,12 +4,12 @@ import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
 import net.minecraft.client.Minecraft;
 
-public class XRayModule extends Module {
+public final class XRayModule extends Module {
 
     private static final int[] blockIDs = {8, 9, 10, 11, 14, 15, 16, 21, 22, 41, 42, 52, 54, 56, 57, 73, 74};
 
     public XRayModule() {
-        super("XRay", "Disables the rendering of unwanted blocks", ModuleCategory.RENDER);
+        super("XRay", "Disables the rendering of unwanted blocks.", ModuleCategory.RENDER);
     }
 
     @Override

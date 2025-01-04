@@ -11,12 +11,12 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GrammarModule extends Module {
+public final class GrammarModule extends Module {
 
     private final HashMap<String, String> abbreviations = new HashMap<>();
 
     public GrammarModule() {
-        super("Grammar", "Grammar nazi", ModuleCategory.MISC);
+        super("Grammar", "\"Grammar nazi\" - Anu", ModuleCategory.MISC);
 
         abbreviations.put("wassup", "what's up");
         abbreviations.put("sup", "what's up");

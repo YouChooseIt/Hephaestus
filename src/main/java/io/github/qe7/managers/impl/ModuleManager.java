@@ -7,19 +7,16 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
-import io.github.qe7.features.impl.modules.impl.auto.AutoHighwayModule;
-import io.github.qe7.features.impl.modules.impl.auto.AutoTunnelModule;
+import io.github.qe7.features.impl.modules.impl.misc.AutoTunnelModule;
 import io.github.qe7.features.impl.modules.impl.combat.AntiKnockBackModule;
 import io.github.qe7.features.impl.modules.impl.combat.ForceFieldModule;
+import io.github.qe7.features.impl.modules.impl.exploit.FastPortalsModule;
 import io.github.qe7.features.impl.modules.impl.exploit.Slot9Module;
 import io.github.qe7.features.impl.modules.impl.misc.*;
 import io.github.qe7.features.impl.modules.impl.misc.AutoListModule;
 import io.github.qe7.features.impl.modules.impl.misc.AutoLoginModule;
 import io.github.qe7.features.impl.modules.impl.movement.*;
-import io.github.qe7.features.impl.modules.impl.render.FullBrightModule;
-import io.github.qe7.features.impl.modules.impl.render.HUDEditorGUIModule;
-import io.github.qe7.features.impl.modules.impl.render.NameTagsModule;
-import io.github.qe7.features.impl.modules.impl.render.XRayModule;
+import io.github.qe7.features.impl.modules.impl.render.*;
 import io.github.qe7.managers.api.Manager;
 import io.github.qe7.utils.config.FileUtil;
 import lombok.Getter;
@@ -49,6 +46,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new NameTagsModule());
         modules.add(new FullBrightModule());
         modules.add(new XRayModule());
+        modules.add(new ClickGUIModule());
 
         /* Movement */
         modules.add(new FlightModule());
@@ -61,7 +59,6 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         /* Misc */
         modules.add(new AutoLoginModule());
         modules.add(new NoFallDamageModule());
-        modules.add(new FastPortalsModule());
         modules.add(new FreeCameraModule());
         modules.add(new FastBreakModule());
         modules.add(new AutoToolModule());
@@ -73,13 +70,12 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new AutoHealModule());
         modules.add(new Auto127Module());
         modules.add(new ScaffoldModule());
-
-        /* Auto */
+        modules.add(new NoPushModule());
         modules.add(new AutoTunnelModule());
-        modules.add(new AutoHighwayModule());
 
         /* Exploit */
         modules.add(new Slot9Module());
+        modules.add(new FastPortalsModule());
 
         modules.forEach(this::register);
 
@@ -143,11 +139,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
 
         for (final Module module : this.getRegistry().values()) {
             if (jsonObject.has(module.getName())) {
-                try {
-                    module.deserialize(jsonObject.getAsJsonObject(module.getName()));
-                } catch (Exception e) {
-                    System.out.println("Failed to load config for module: " + module.getName() + " - " + e.getMessage());
-                }
+                module.deserialize(jsonObject.getAsJsonObject(module.getName()));
             }
         }
     }

@@ -10,14 +10,14 @@ import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
 
-public class SpeedModule extends Module {
+public final class SpeedModule extends Module {
 
     private final EnumSetting<Mode> mode = new EnumSetting<>("Mode", Mode.PULSE);
 
     private int pulseTick = 0;
 
     public SpeedModule() {
-        super("Speed", "Speeds up your life! :D", ModuleCategory.MOVEMENT);
+        super("Speed", "Speeds up your life! :D.", ModuleCategory.MOVEMENT);
     }
 
     @Override
@@ -42,6 +42,8 @@ public class SpeedModule extends Module {
     @Subscribe
     public final Listener<UpdateEvent> updateEventListener = new Listener<>(event -> {
         if (Minecraft.getMinecraft().thePlayer == null) return;
+
+        if (Minecraft.getMinecraft().thePlayer.motionX == 0 && Minecraft.getMinecraft().thePlayer.motionZ == 0) return;
 
         switch (mode.getValue()) {
             case PULSE:

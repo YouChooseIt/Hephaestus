@@ -4,7 +4,7 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.features.impl.commands.impl.chat.api.ChatCommand;
 import io.github.qe7.utils.ChatUtil;
 
-public class HelpChatCommand extends ChatCommand {
+public final class HelpChatCommand extends ChatCommand {
 
     public HelpChatCommand() {
         super("Help", "Displays a list of commands");

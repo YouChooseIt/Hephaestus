@@ -2,6 +2,7 @@ package io.github.qe7.features.impl.panels.api;
 
 import com.google.gson.JsonObject;
 import io.github.qe7.features.api.Feature;
+import io.github.qe7.ui.click.ClickGUI;
 import io.github.qe7.utils.RenderUtil;
 import io.github.qe7.utils.config.Serialized;
 import io.github.qe7.utils.math.MathUtil;
@@ -42,6 +43,14 @@ public abstract class Panel extends Feature implements Subscriber, Serialized {
         }
 
         Gui.drawRect(x, y - titleHeight, x + width, y, new Color(29, 34, 54, 255).getRGB());
+
+        Gui.drawRect(x - 0.5f, y - 0.5f, x + width + 0.5f, y, new Color(0, 0, 0, 255).getRGB());
+        Gui.drawRect(x - 0.5f, y - titleHeight - 0.5f, x + width + 0.5f, y - titleHeight, new Color(0, 0, 0, 255).getRGB());
+        Gui.drawRect(x - 0.5f, y + height, x + width + 0.5f, y + height + 0.5f, new Color(0, 0, 0, 255).getRGB());
+
+        Gui.drawRect(x - 0.5f, y - titleHeight - 0.5f, x, y + height + 0.5f, new Color(0, 0, 0, 255).getRGB());
+        Gui.drawRect(x + width, y - titleHeight - 0.5f, x + width + 0.5f, y + height + 0.5f, new Color(0, 0, 0, 255).getRGB());
+
         Gui.drawRect(x, y, x + width, y + height, new Color(0, 0, 0, 150).getRGB());
 
         Gui.drawRect(x + width - 10, y - titleHeight + 2, x + width - 2, y - 2, this.isEnabled() ? new Color(0, 0, 0, 150).getRGB() : new Color(0, 0, 0, 50).getRGB());

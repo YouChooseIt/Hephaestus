@@ -9,10 +9,10 @@ import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Packet10Flying;
 
-public class NoFallDamageModule extends Module {
+public final class NoFallDamageModule extends Module {
 
     public NoFallDamageModule() {
-        super("NoFall", "No fall damage", ModuleCategory.MISC);
+        super("NoFallDamage", "Removes fall damage... duh.", ModuleCategory.MISC);
     }
 
     @Subscribe

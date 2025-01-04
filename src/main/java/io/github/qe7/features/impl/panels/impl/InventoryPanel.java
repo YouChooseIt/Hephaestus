@@ -8,7 +8,7 @@ import net.minecraft.src.RenderHelper;
 import net.minecraft.src.ScaledResolution;
 import org.lwjgl.opengl.GL11;
 
-public class InventoryPanel extends Panel {
+public final class InventoryPanel extends Panel {
 
     public InventoryPanel() {
         super("Inventory", "Displays your inventory on screen");

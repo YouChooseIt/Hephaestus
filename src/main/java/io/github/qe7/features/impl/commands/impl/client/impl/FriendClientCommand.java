@@ -9,7 +9,7 @@ import io.github.qe7.utils.ChatUtil;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FriendClientCommand extends ClientCommand {
+public final class FriendClientCommand extends ClientCommand {
 
     public FriendClientCommand() {
         super("Friend", "Whitelists a player");

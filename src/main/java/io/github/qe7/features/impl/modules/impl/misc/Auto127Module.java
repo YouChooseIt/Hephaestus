@@ -14,12 +14,12 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.Packet101CloseWindow;
 import org.lwjgl.input.Keyboard;
 
-public class Auto127Module extends Module {
+public final class Auto127Module extends Module {
 
     private final BooleanSetting requireQ = new BooleanSetting("Require Q", true);
 
     public Auto127Module() {
-        super("Auto127", "Automatically gives you autism", ModuleCategory.MISC);
+        super("Auto127", "Automatically drops an infinite item to the rollover amount (-129).", ModuleCategory.MISC);
     }
 
     @Subscribe

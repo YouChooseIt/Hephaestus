@@ -8,10 +8,10 @@ import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Packet28EntityVelocity;
 
-public class AntiKnockBackModule extends Module {
+public final class AntiKnockBackModule extends Module {
 
     public AntiKnockBackModule() {
-        super("NoKnockBack", "Negates all knock back given to the player", ModuleCategory.COMBAT);
+        super("NoKnockBack", "Removes knockback when you are hit.", ModuleCategory.COMBAT);
     }
 
     @Subscribe

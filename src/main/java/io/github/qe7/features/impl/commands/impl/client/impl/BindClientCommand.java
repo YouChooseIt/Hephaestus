@@ -6,7 +6,7 @@ import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.utils.ChatUtil;
 import org.lwjgl.input.Keyboard;
 
-public class BindClientCommand extends ClientCommand {
+public final class BindClientCommand extends ClientCommand {
 
     public BindClientCommand() {
         super("Bind", "Bind a Module to a keybind");

@@ -6,7 +6,7 @@ import io.github.qe7.utils.math.MathUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.ScaledResolution;
 
-public class PositionPanel extends Panel {
+public final class PositionPanel extends Panel {
 
     public PositionPanel() {
         super("Position", "Displays the coordinates of the player");

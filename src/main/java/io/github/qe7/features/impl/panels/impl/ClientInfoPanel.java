@@ -5,7 +5,7 @@ import io.github.qe7.features.impl.panels.api.Panel;
 import io.github.qe7.utils.RenderUtil;
 import net.minecraft.src.ScaledResolution;
 
-public class ClientInfoPanel extends Panel {
+public final class ClientInfoPanel extends Panel {
 
     public ClientInfoPanel() {
         super("ClientInfo", "Information related to the client");

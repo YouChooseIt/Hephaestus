@@ -40,6 +40,24 @@ public final class EnumSetting<T extends IEnumSetting> extends Setting<T> {
         }
     }
 
+    public void cycleForward() {
+        int currentIndex = values.indexOf(getValue());
+        if (currentIndex == values.size() - 1) {
+            setValue((T) values.get(0));
+        } else {
+            setValue((T) values.get(currentIndex + 1));
+        }
+    }
+
+    public void cycleBackward() {
+        int currentIndex = values.indexOf(getValue());
+        if (currentIndex == 0) {
+            setValue((T) values.get(values.size() - 1));
+        } else {
+            setValue((T) values.get(currentIndex - 1));
+        }
+    }
+
     @Override
     public JsonObject serialize() {
         final JsonObject object = new JsonObject();

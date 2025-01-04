@@ -63,7 +63,7 @@ public class Gui {
         GL11.glDisable(3042 /*GL_BLEND*/);
     }
 
-    protected void drawGradientRect(int i, int j, int k, int l, int i1, int j1) {
+    public static void drawGradientRect(int i, int j, int k, int l, int i1, int j1) {
         float f = (float) (i1 >> 24 & 0xff) / 255F;
         float f1 = (float) (i1 >> 16 & 0xff) / 255F;
         float f2 = (float) (i1 >> 8 & 0xff) / 255F;
@@ -100,7 +100,7 @@ public class Gui {
         fontrenderer.drawStringWithShadow(s, i, j, k);
     }
 
-    public void drawTexturedModalRect(int i, int j, int k, int l, int i1, int j1) {
+    protected void drawTexturedModalRect(int i, int j, int k, int l, int i1, int j1) {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
         Tessellator tessellator = Tessellator.instance;

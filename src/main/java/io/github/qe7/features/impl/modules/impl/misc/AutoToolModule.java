@@ -10,10 +10,10 @@ import net.minecraft.src.Block;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Packet14BlockDig;
 
-public class AutoToolModule extends Module {
+public final class AutoToolModule extends Module {
 
     public AutoToolModule() {
-        super("AutoTool", "Automatically switches to the best tool", ModuleCategory.MISC);
+        super("AutoTool", "Automatically switches to the best tool.", ModuleCategory.MISC);
     }
 
     @Subscribe

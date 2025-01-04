@@ -3,6 +3,7 @@ package io.github.qe7.features.impl.modules.impl.misc;
 import io.github.qe7.events.UpdateEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
+import io.github.qe7.features.impl.modules.api.settings.impl.IntSetting;
 import io.github.qe7.utils.PlayerUtil;
 import io.github.qe7.utils.math.TimerUtil;
 import me.zero.alpine.listener.Listener;
@@ -10,14 +11,16 @@ import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 
-public class ScaffoldModule extends Module {
+public final class ScaffoldModule extends Module {
+
+    private final IntSetting radius = new IntSetting("Radius", 1, 1, 5, 1);
 
     private final TimerUtil timerUtil = new TimerUtil();
 
     private int oldSlot = -1;
 
     public ScaffoldModule() {
-        super("Scaffold", "Places blocks under the player", ModuleCategory.MISC);
+        super("Scaffold", "Places blocks under the player.", ModuleCategory.MISC);
     }
 
     @Override
@@ -38,9 +41,9 @@ public class ScaffoldModule extends Module {
         int y = MathHelper.floor_double(Minecraft.getMinecraft().thePlayer.posY) - 2;
         int z = MathHelper.floor_double(Minecraft.getMinecraft().thePlayer.posZ);
 
-        int radius = 1;
+        int radius = this.radius.getValue();
 
-        if (!this.timerUtil.hasTimeElapsed(300, true)) {
+        if (!this.timerUtil.hasTimeElapsed(100, true)) {
             return;
         }
 

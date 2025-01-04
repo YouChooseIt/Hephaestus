@@ -7,10 +7,10 @@ import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
 
-public class StepModule extends Module {
+public final class StepModule extends Module {
 
     public StepModule() {
-        super("Step", "Allows the local player to step up higher", ModuleCategory.MOVEMENT);
+        super("Step", "Allows the local player to step up higher.", ModuleCategory.MOVEMENT);
     }
 
     @Override

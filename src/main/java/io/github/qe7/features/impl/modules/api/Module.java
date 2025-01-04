@@ -42,6 +42,10 @@ public abstract class Module extends ClientCommand implements Subscriber, Serial
     }
 
     public void setEnabled(boolean enabled) {
+        if (this.enabled == enabled) {
+            return;
+        }
+
         this.enabled = enabled;
 
         if (enabled) {

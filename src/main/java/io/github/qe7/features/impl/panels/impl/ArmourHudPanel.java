@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 
-public class ArmourHudPanel extends Panel {
+public final class ArmourHudPanel extends Panel {
 
     public ArmourHudPanel() {
         super("ArmourHud", "Displays your armor on the screen");
@@ -30,12 +30,12 @@ public class ArmourHudPanel extends Panel {
         GL11.glEnable(GL11.GL_COLOR_MATERIAL);
         GL11.glEnable(GL11.GL_LIGHTING);
 
-        ItemStack boots = Minecraft.getMinecraft().thePlayer.inventory.armorInventory[0];
-        ItemStack legs = Minecraft.getMinecraft().thePlayer.inventory.armorInventory[1];
-        ItemStack chest = Minecraft.getMinecraft().thePlayer.inventory.armorInventory[2];
         ItemStack helmet = Minecraft.getMinecraft().thePlayer.inventory.armorInventory[3];
+        ItemStack chest = Minecraft.getMinecraft().thePlayer.inventory.armorInventory[2];
+        ItemStack legs = Minecraft.getMinecraft().thePlayer.inventory.armorInventory[1];
+        ItemStack boots = Minecraft.getMinecraft().thePlayer.inventory.armorInventory[0];
 
-        ItemStack[] armor = {boots, legs, chest, helmet};
+        ItemStack[] armor = {helmet, chest, legs, boots};
 
         for (ItemStack itemStack : armor) {
             if (itemStack != null) {

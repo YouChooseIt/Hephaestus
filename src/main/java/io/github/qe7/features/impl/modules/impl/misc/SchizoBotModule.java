@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class SchizoBotModule extends Module {
+public final class SchizoBotModule extends Module {
 
     private final TimerUtil timer = new TimerUtil();
 
@@ -159,7 +159,7 @@ public class SchizoBotModule extends Module {
     private String message;
 
     public SchizoBotModule() {
-        super("SchizoBot", "Prints messages to the chat that makes you look like a schizo", ModuleCategory.MISC);
+        super("SchizoBot", "Prints messages to the chat that makes you look like a schizophrenic (or Anu).", ModuleCategory.MISC);
     }
 
     @Subscribe

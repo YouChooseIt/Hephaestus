@@ -4,16 +4,24 @@ package io.github.qe7.features.impl.modules.impl.misc;
 import io.github.qe7.events.UpdateEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
+import io.github.qe7.features.impl.modules.api.settings.impl.BooleanSetting;
 import io.github.qe7.features.impl.modules.api.settings.impl.DoubleSetting;
+import io.github.qe7.utils.PacketUtil;
+import io.github.qe7.utils.PlayerUtil;
+import it.unimi.dsi.fastutil.booleans.BooleanSet;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.EnumMovingObjectType;
 import net.minecraft.src.PlayerControllerMP;
+import org.lwjgl.input.Mouse;
 
-public class FastBreakModule extends Module {
+public final class FastBreakModule extends Module {
+
+    private final BooleanSetting instant = new BooleanSetting("Instant", true);
 
     public FastBreakModule() {
-        super("FastBreak", "Mines blocks faster", ModuleCategory.MISC);
+        super("FastBreak", "Mines blocks faster or instantly.", ModuleCategory.MISC);
     }
 
     @Subscribe
@@ -24,18 +32,33 @@ public class FastBreakModule extends Module {
             return;
         }
 
-        mc.leftClickCounter = 0;
+        if (mc.currentScreen != null) {
+            return;
+        }
 
-        if (mc.playerController instanceof PlayerControllerMP) {
-            PlayerControllerMP playerController = (PlayerControllerMP) mc.playerController;
+        if (mc.objectMouseOver.typeOfHit != EnumMovingObjectType.TILE) {
+            return;
+        }
 
-            if (playerController.curBlockDamageMP == 0.0F) {
-                return;
+        if (instant.getValue()) {
+            if (Mouse.isButtonDown(0)) {
+                PlayerUtil.destroyBlockInstant(mc.objectMouseOver.blockX, mc.objectMouseOver.blockY, mc.objectMouseOver.blockZ, mc.objectMouseOver.sideHit);
             }
+        } else {
+            mc.leftClickCounter = 0;
 
-            if (playerController.curBlockDamageMP < 1.0f) {
-                playerController.curBlockDamageMP = 1.0f;
+            if (mc.playerController instanceof PlayerControllerMP) {
+                PlayerControllerMP playerController = (PlayerControllerMP) mc.playerController;
+
+                if (playerController.curBlockDamageMP == 0.0F) {
+                    return;
+                }
+
+                if (playerController.curBlockDamageMP < 1.0f) {
+                    playerController.curBlockDamageMP = 1.0f;
+                }
             }
         }
+
     });
 }

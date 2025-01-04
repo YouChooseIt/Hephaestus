@@ -112,6 +112,9 @@ public abstract class BlockFluid extends Block {
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 return null;
             }
+            if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && MinecraftImpl.getMinecraft().thePlayer.inWater) {
+                return null;
+            }
             return AxisAlignedBB.getBoundingBoxFromPool(i, j, k, i + 1, j + 1, k + 1);
         }
 

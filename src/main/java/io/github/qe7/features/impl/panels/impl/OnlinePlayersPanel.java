@@ -8,7 +8,7 @@ import net.minecraft.src.ScaledResolution;
 
 import java.util.Objects;
 
-public class OnlinePlayersPanel extends Panel {
+public final class OnlinePlayersPanel extends Panel {
 
     public OnlinePlayersPanel() {
         super("OnlinePlayers", "Displays online players");

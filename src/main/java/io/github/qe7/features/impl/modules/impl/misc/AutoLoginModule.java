@@ -11,10 +11,10 @@ import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Packet3Chat;
 
-public class AutoLoginModule extends Module {
+public final class AutoLoginModule extends Module {
 
     public AutoLoginModule() {
-        super("AutoLogin", "Automatically logs in the local player when prompted", ModuleCategory.MISC);
+        super("AutoLogin", "Automatically logs you in when you join.", ModuleCategory.MISC);
     }
 
     @Subscribe

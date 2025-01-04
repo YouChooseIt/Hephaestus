@@ -1,5 +1,6 @@
 package io.github.qe7.features.impl.modules.impl.movement;
 
+import io.github.qe7.events.PlayerMoveSetEvent;
 import io.github.qe7.events.UpdateEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
@@ -11,10 +12,10 @@ import net.minecraft.src.GuiContainer;
 import net.minecraft.src.GuiInventory;
 import org.lwjgl.input.Keyboard;
 
-public class InventoryMoveModule extends Module {
+public final class InventoryMoveModule extends Module {
 
     public InventoryMoveModule() {
-        super("InventoryMove", "Allows you to move while your inventory is open", ModuleCategory.MOVEMENT);
+        super("InventoryMove", "Allows the player to move while your inventory is open.", ModuleCategory.MOVEMENT);
     }
 
     @Subscribe
@@ -26,9 +27,6 @@ public class InventoryMoveModule extends Module {
         if (!(Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) {
             return;
         }
-
-        float moveForward = 0.0F;
-        float moveStrafe = 0.0F;
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
             Minecraft.getMinecraft().thePlayer.rotationYaw -= 5.0F;
@@ -45,6 +43,23 @@ public class InventoryMoveModule extends Module {
         if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
             Minecraft.getMinecraft().thePlayer.rotationPitch += 5.0F;
         }
+    });
+
+
+    @Subscribe
+    public final Listener<PlayerMoveSetEvent> playerMoveSetListener = new Listener<>(event -> {
+        if (Minecraft.getMinecraft().currentScreen == null) {
+            return;
+        }
+
+        if (!(Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) {
+            return;
+        }
+
+        event.setCancelled(true);
+
+        float moveForward = 0.0F;
+        float moveStrafe = 0.0F;
 
         if (Keyboard.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindForward.keyCode)) {
             moveForward += 1.0F;
@@ -62,6 +77,8 @@ public class InventoryMoveModule extends Module {
             moveStrafe -= 1.0F;
         }
 
-        MovementUtil.setSpeed(0.22d, Minecraft.getMinecraft().thePlayer.rotationYaw, moveStrafe, moveForward);
+        Minecraft.getMinecraft().thePlayer.moveStrafing = moveStrafe;
+        Minecraft.getMinecraft().thePlayer.moveForward = moveForward;
     });
+
 }

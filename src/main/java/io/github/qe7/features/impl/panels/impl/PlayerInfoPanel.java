@@ -6,7 +6,7 @@ import io.github.qe7.utils.math.MathUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.ScaledResolution;
 
-public class PlayerInfoPanel extends Panel {
+public final class PlayerInfoPanel extends Panel {
 
     public PlayerInfoPanel() {
         super("PlayerInfo", "Displays information about the player");
@@ -31,8 +31,8 @@ public class PlayerInfoPanel extends Panel {
                 "Health: " + Minecraft.getMinecraft().thePlayer.health,
                 "Armor: " + Minecraft.getMinecraft().thePlayer.getPlayerArmorValue(),
                 "Item: " + (Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null ? Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem().getStatName() : "N/a"),
-                "Pitch: " + Minecraft.getMinecraft().thePlayer.rotationPitch,
-                "Yaw: " + MathUtil.playerYaw180(),
+                "Pitch: " + MathUtil.round(Minecraft.getMinecraft().thePlayer.rotationPitch, 2),
+                "Yaw: " + MathUtil.round(MathUtil.playerYaw180(), 2),
         };
 
         float longest = 100;

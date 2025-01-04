@@ -9,14 +9,14 @@ import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import net.minecraft.src.Packet1Login;
 
-public class AutoListModule extends Module {
+public final class AutoListModule extends Module {
 
     private final TimerUtil timerUtil = new TimerUtil();
 
     private boolean shouldSendList = false;
 
     public AutoListModule() {
-        super("AutoList", "Automatically prints the \"list\" command when joining.", ModuleCategory.MISC);
+        super("AutoList", "Automatically sends the \"list\" command when joining.", ModuleCategory.MISC);
     }
 
     @Subscribe

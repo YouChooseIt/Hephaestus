@@ -9,10 +9,10 @@ import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
 
-public class NameTagsModule extends Module {
+public final class NameTagsModule extends Module {
 
     public NameTagsModule() {
-        super("NameTags", "Displays a name plate that is easier to see", ModuleCategory.RENDER);
+        super("NameTags", "Displays a name plate that is easier to see.", ModuleCategory.RENDER);
     }
 
     @Subscribe

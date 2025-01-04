@@ -5,7 +5,7 @@ import io.github.qe7.features.impl.commands.impl.client.api.ClientCommand;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.utils.ChatUtil;
 
-public class CommandListClientCommand extends ClientCommand {
+public final class CommandListClientCommand extends ClientCommand {
 
     public CommandListClientCommand() {
         super("Commands", "Prints a list of all commands");

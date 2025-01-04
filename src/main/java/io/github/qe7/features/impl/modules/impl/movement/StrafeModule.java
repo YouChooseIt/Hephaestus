@@ -8,10 +8,10 @@ import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
 
-public class StrafeModule extends Module {
+public final class StrafeModule extends Module {
 
     public StrafeModule() {
-        super("Strafe", "Strafe like you're in counter-strike: source", ModuleCategory.MOVEMENT);
+        super("Strafe", "Strafe like you're in counter-strike: source.", ModuleCategory.MOVEMENT);
     }
 
     @Subscribe

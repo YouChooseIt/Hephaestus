@@ -4,21 +4,22 @@ import io.github.qe7.events.UpdateEvent;
 import io.github.qe7.events.render.RenderScreenEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
+import io.github.qe7.features.impl.modules.api.settings.impl.IntSetting;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.ItemFood;
 
-public class AutoHealModule extends Module {
+public final class AutoHealModule extends Module {
+
+    private final IntSetting healHealth = new IntSetting("Heal Health", 12, 0, 20, 1);
 
     public AutoHealModule() {
-        super("AutoHeal", "Automatically heals the player under a given health", ModuleCategory.MISC);
+        super("AutoHeal", "Automatically heals the player when under a given health.", ModuleCategory.MISC);
     }
 
     @Subscribe
-    public final Listener<RenderScreenEvent> renderScreenEventListener = new Listener<>(event -> {
-        this.setSuffix(12 + "/" + Minecraft.getMinecraft().thePlayer.health);
-    });
+    public final Listener<RenderScreenEvent> renderScreenEventListener = new Listener<>(event -> this.setSuffix(healHealth.getValue() + "/" + Minecraft.getMinecraft().thePlayer.health));
 
     @Subscribe
     public final Listener<UpdateEvent> updateEventListener = new Listener<>(event -> {
@@ -27,7 +28,7 @@ public class AutoHealModule extends Module {
         }
 
         // check if the player has less then or equal to healHealth
-        if (Minecraft.getMinecraft().thePlayer.health >= 12) {
+        if (Minecraft.getMinecraft().thePlayer.health >= healHealth.getValue()) {
             return;
         }
 

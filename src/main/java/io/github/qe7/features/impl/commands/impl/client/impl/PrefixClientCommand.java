@@ -4,7 +4,7 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.features.impl.commands.impl.client.api.ClientCommand;
 import io.github.qe7.utils.ChatUtil;
 
-public class PrefixClientCommand extends ClientCommand {
+public final class PrefixClientCommand extends ClientCommand {
 
     public PrefixClientCommand() {
         super("Prefix", "Change the command prefix");

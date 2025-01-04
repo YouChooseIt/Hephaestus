@@ -5,7 +5,7 @@ import io.github.qe7.utils.RenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.ScaledResolution;
 
-public class ServerInfoPanel extends Panel {
+public final class ServerInfoPanel extends Panel {
 
     public ServerInfoPanel() {
         super("ServerInfo", "Displays information about the server");

@@ -14,7 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.Packet10Flying;
 import org.lwjgl.input.Keyboard;
 
-public class FreeCameraModule extends Module {
+public final class FreeCameraModule extends Module {
 
     private final Minecraft mc = Minecraft.getMinecraft();
 
@@ -23,7 +23,7 @@ public class FreeCameraModule extends Module {
     private float yaw, pitch;
 
     public FreeCameraModule() {
-        super("FreeCam", "Out of body experience", ModuleCategory.MISC);
+        super("FreeCam", "Out of body experience.", ModuleCategory.MISC);
     }
 
     @Override

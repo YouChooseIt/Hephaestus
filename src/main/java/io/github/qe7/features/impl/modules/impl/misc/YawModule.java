@@ -7,10 +7,10 @@ import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
 
-public class YawModule extends Module {
+public final class YawModule extends Module {
 
     public YawModule() {
-        super("Yaw", "Locks your Yaw to a 45* cardinal", ModuleCategory.MISC);
+        super("Yaw", "Locks the player's Yaw to the closest 45* cardinal", ModuleCategory.MISC);
     }
 
     @Subscribe
