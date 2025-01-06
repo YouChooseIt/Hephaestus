@@ -8,7 +8,7 @@ import net.minecraft.src.RenderManager;
 
 @Getter
 @AllArgsConstructor
-public class RenderLivingLabelEvent extends CancellableEvent {
+public final class RenderLivingLabelEvent extends CancellableEvent {
 
     private final EntityLiving entity;
 

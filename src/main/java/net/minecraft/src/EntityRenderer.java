@@ -1,5 +1,9 @@
 package net.minecraft.src;
 
+import io.github.qe7.Hephaestus;
+import io.github.qe7.events.render.RenderCameraClipEvent;
+import io.github.qe7.features.impl.modules.impl.render.CameraModule;
+import io.github.qe7.features.impl.modules.impl.render.ViewModelModule;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -89,6 +93,13 @@ public class EntityRenderer {
 
     public void updateRenderer() {
         fogColor2 = fogColor1;
+
+        if (Hephaestus.getInstance().getModuleManager().getRegistry().get(CameraModule.class).isEnabled()) {
+            field_22228_r = CameraModule.distance.getValue().floatValue();
+        } else {
+            field_22228_r = 4F;
+        }
+
         field_22227_s = field_22228_r;
         field_22225_u = field_22226_t;
         field_22223_w = field_22224_v;
@@ -264,8 +275,14 @@ public class EntityRenderer {
                         continue;
                     }
                     double d7 = movingobjectposition.hitVec.distanceTo(Vec3D.createVector(d, d1, d2));
-                    if (d7 < d3) {
-                        d3 = d7;
+
+                    final RenderCameraClipEvent cameraClipEvent = new RenderCameraClipEvent();
+                    Hephaestus.getInstance().getEventBus().post(cameraClipEvent);
+
+                    if (!cameraClipEvent.isCancelled()) {
+                        if (d7 < d3) {
+                            d3 = d7;
+                        }
                     }
                 }
 
@@ -336,8 +353,12 @@ public class EntityRenderer {
         if (mc.gameSettings.viewBobbing) {
             setupViewBobbing(f);
         }
-        if (!mc.gameSettings.thirdPersonView && !mc.renderViewEntity.isPlayerSleeping() && !mc.gameSettings.hideGUI) {
-            itemRenderer.renderItemInFirstPerson(f);
+        if (!mc.renderViewEntity.isPlayerSleeping() && !mc.gameSettings.hideGUI) {
+            if ((Hephaestus.getInstance().getModuleManager().getRegistry().get(ViewModelModule.class).isEnabled() && ViewModelModule.thirdPerson.getValue()) && mc.gameSettings.thirdPersonView) {
+                itemRenderer.renderItemInFirstPerson(f);
+            } else if (!mc.gameSettings.thirdPersonView) {
+                itemRenderer.renderItemInFirstPerson(f);
+            }
         }
         GL11.glPopMatrix();
         if (!mc.gameSettings.thirdPersonView && !mc.renderViewEntity.isPlayerSleeping()) {
@@ -345,7 +366,7 @@ public class EntityRenderer {
             hurtCameraEffect(f);
         }
         if (mc.gameSettings.viewBobbing) {
-            setupViewBobbing(f);
+            setupViewBobbing(f * 20);
         }
     }
 

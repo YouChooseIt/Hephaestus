@@ -16,9 +16,15 @@ import net.minecraft.src.EnumMovingObjectType;
 import net.minecraft.src.PlayerControllerMP;
 import org.lwjgl.input.Mouse;
 
+import java.util.function.BooleanSupplier;
+
 public final class FastBreakModule extends Module {
 
     private final BooleanSetting instant = new BooleanSetting("Instant", true);
+
+    private final BooleanSupplier instantSupplier = () -> !instant.getValue();
+
+    private final DoubleSetting damage = new DoubleSetting("Damage", 1.0, 0.1, 1.0, 0.1).supplyIf(instantSupplier);
 
     public FastBreakModule() {
         super("FastBreak", "Mines blocks faster or instantly.", ModuleCategory.MISC);
@@ -54,8 +60,8 @@ public final class FastBreakModule extends Module {
                     return;
                 }
 
-                if (playerController.curBlockDamageMP < 1.0f) {
-                    playerController.curBlockDamageMP = 1.0f;
+                if (playerController.curBlockDamageMP < damage.getValue().floatValue()) {
+                    playerController.curBlockDamageMP = damage.getValue().floatValue();
                 }
             }
         }

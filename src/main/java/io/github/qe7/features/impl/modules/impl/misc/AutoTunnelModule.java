@@ -67,6 +67,7 @@ public final class AutoTunnelModule extends Module {
     public void onEnable() {
         super.onEnable();
 
+        if (mc.thePlayer == null) return;
         mc.thePlayer.setPosition(Math.floor(mc.thePlayer.posX), mc.thePlayer.posY, Math.floor(mc.thePlayer.posZ));
     }
 

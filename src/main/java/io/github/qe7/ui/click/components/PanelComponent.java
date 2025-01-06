@@ -58,7 +58,7 @@ public class PanelComponent {
 
         this.fontRenderer.drawStringWithShadow(moduleCategory.getName(), x + 3, y + 3, -1);
 
-        Gui.drawRect(x, y + height, x + width, y + totalHeight + 0.5f, new Color(0, 0, 0, 100).getRGB());
+        Gui.drawRect(x, y + height, x + width, y + totalHeight + 0.5f, new Color(0, 0, 0, 150).getRGB());
 
         totalHeight = height + 2;
 

@@ -833,14 +833,7 @@ public abstract class Minecraft implements Runnable {
         }
     }
 
-    private void func_28001_B() {
-        (new ThreadCheckHasPaid(this)).start();
-    }
-
     public void runTick() {
-        if (ticksRan == 6000) {
-            func_28001_B();
-        }
         statFileWriter.func_27178_d();
         inGameGUI.updateTick();
         entityRenderer.getMouseOver(1.0F);

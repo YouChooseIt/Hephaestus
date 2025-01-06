@@ -100,7 +100,7 @@ public class Gui {
         fontrenderer.drawStringWithShadow(s, i, j, k);
     }
 
-    protected void drawTexturedModalRect(int i, int j, int k, int l, int i1, int j1) {
+    public void drawTexturedModalRect(int i, int j, int k, int l, int i1, int j1) {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
         Tessellator tessellator = Tessellator.instance;
@@ -112,5 +112,5 @@ public class Gui {
         tessellator.draw();
     }
 
-    protected float zLevel;
+    public float zLevel;
 }

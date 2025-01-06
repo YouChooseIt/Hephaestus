@@ -1,9 +1,11 @@
 package io.github.qe7.features.impl.modules.impl.movement;
 
+import io.github.qe7.Hephaestus;
 import io.github.qe7.events.PlayerMoveSetEvent;
 import io.github.qe7.events.UpdateEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
+import io.github.qe7.features.impl.modules.impl.misc.AutoTunnelModule;
 import io.github.qe7.utils.MovementUtil;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;

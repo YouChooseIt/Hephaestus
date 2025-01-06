@@ -1,4 +1,4 @@
-package io.github.qe7.features.impl.modules.impl.misc;
+package io.github.qe7.features.impl.modules.impl.combat;
 
 import io.github.qe7.events.UpdateEvent;
 import io.github.qe7.events.render.RenderScreenEvent;
@@ -15,7 +15,7 @@ public final class AutoHealModule extends Module {
     private final IntSetting healHealth = new IntSetting("Heal Health", 12, 0, 20, 1);
 
     public AutoHealModule() {
-        super("AutoHeal", "Automatically heals the player when under a given health.", ModuleCategory.MISC);
+        super("AutoHeal", "Automatically heals the player when under a given health.", ModuleCategory.COMBAT);
     }
 
     @Subscribe

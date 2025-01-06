@@ -1,5 +1,7 @@
 package io.github.qe7.features.impl.panels.impl;
 
+import io.github.qe7.Hephaestus;
+import io.github.qe7.features.impl.modules.impl.exploit.Slot9Module;
 import io.github.qe7.features.impl.panels.api.Panel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.GuiInGame;
@@ -38,6 +40,11 @@ public final class InventoryPanel extends Panel {
 
         for (int i = 9; i < 36; i++) {
             ItemStack itemStack = Minecraft.getMinecraft().thePlayer.inventory.mainInventory[i];
+
+            if (i == 9 && Hephaestus.getInstance().getModuleManager().getRegistry().get(Slot9Module.class).isEnabled()) {
+                GuiInGame.drawRect(x, y, x + 17, y + 17, new java.awt.Color(150, 150, 0, 100).getRGB());
+            }
+
             if (itemStack != null) {
                 GuiInGame.itemRenderer.renderItemIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().renderEngine, itemStack, x, y);
                 GuiInGame.itemRenderer.renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().renderEngine, itemStack, x, y);
