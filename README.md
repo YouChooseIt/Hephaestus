@@ -6,7 +6,7 @@ Check out the [assets repository](https://github.com/qe7/Hephaestus-Assets) for 
 
 ## Background
 
-Hephaestus was a client I worked on privately with Wsndow and later GameHerobrine for 2beta2t. 
+Hephaestus was a client I worked on privately with [Wsndow](https://github.com/wsndow0) and later [GameHerobrine](https://github.com/GameHerobrine) for 2beta2t. 
 It was a custom client that provided various utilities and features to enhance gameplay.
 After some time I decided to release it to the public, as an open-source project.
 
