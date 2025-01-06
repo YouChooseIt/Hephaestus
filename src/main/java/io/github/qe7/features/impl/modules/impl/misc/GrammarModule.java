@@ -34,6 +34,7 @@ public final class GrammarModule extends Module {
         abbreviations.put("lol", "laugh out loud");
         abbreviations.put("rofl", "rolling on the floor laughing");
         abbreviations.put("lmao", "laughing my ass off");
+        abbreviations.put("lmfao", "laughing my fucking ass off");
         abbreviations.put("omg", "oh my god");
         abbreviations.put("thx", "thanks");
         abbreviations.put("np", "no problem");
@@ -50,6 +51,7 @@ public final class GrammarModule extends Module {
         abbreviations.put("wyd", "what are you doing?");
         abbreviations.put("hmu", "hit me up");
         abbreviations.put("bff", "best friends forever");
+        abbreviations.put("ffs", "for fuck's sake");
         abbreviations.put("asap", "as soon as possible");
         abbreviations.put("irl", "in real life");
         abbreviations.put("dm", "direct message");
@@ -69,26 +71,18 @@ public final class GrammarModule extends Module {
         abbreviations.put("afaik", "as far as I know");
         abbreviations.put("omw", "on my way");
         abbreviations.put("m8", "mate");
-        abbreviations.put("GH", "GameHerobrine");
         abbreviations.put("gh", "GameHerobrine");
-        abbreviations.put("Cliff", "Shliff");
+        abbreviations.put("cliff", "shliff");
         abbreviations.put("wsndow0", "skidder");
         abbreviations.put("color", "colour");
         abbreviations.put("colorful", "colourful");
         abbreviations.put("armor", "armour");
         abbreviations.put("favorite", "favourite");
         abbreviations.put("neighbor", "neighbour");
-        abbreviations.put("Heshaestus", "Hephaestus");
-        abbreviations.put("fabrick", "fabric");
-        abbreviations.put("reliq", "relique");
-        abbreviations.put("da", "the");
         abbreviations.put("wat", "what");
         abbreviations.put("wut", "what");
-        abbreviations.put("fabric", "mcp");
-        abbreviations.put("license", "licence");
         abbreviations.put("stfu", "shut the fuck up");
         abbreviations.put("kys", "keep yourself safe");
-        abbreviations.put("woooow_0", "nebuladreamer4");
         abbreviations.put("nig", "nigga"); //N-Word pass by wsndow0
         abbreviations.put("fr", "for real");
         abbreviations.put("iirc", "if I recall correctly");
@@ -100,14 +94,15 @@ public final class GrammarModule extends Module {
     public final Listener<OutgoingPacketEvent> outgoingPacketEventListener = new Listener<>(event -> {
         if (event.getPacket() instanceof Packet3Chat) {
             Packet3Chat chatPacket = (Packet3Chat) event.getPacket();
-            String message = chatPacket.message;
+            String message = chatPacket.message.toLowerCase();
 
             for (String abbreviation : abbreviations.keySet()) {
                 String regex = "\\b" + Pattern.quote(abbreviation) + "\\b";
                 message = message.replaceAll(regex, Matcher.quoteReplacement(abbreviations.get(abbreviation)));
             }
 
-            if (!message.endsWith(".") && !message.endsWith("?") && !message.endsWith("!") && !message.startsWith(".") && !message.startsWith("/") && !message.startsWith("!") && !message.startsWith("?")) {
+            if (!message.matches("^[^a-zA-Z0-9].*") && !message.matches(".*[^a-zA-Z0-9]$")) {
+                // Add a period at the end of the message if it doesn't start or end with a special character
                 message += ".";
             }
 
