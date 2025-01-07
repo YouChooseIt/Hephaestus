@@ -2,12 +2,10 @@ package io.github.qe7.features.impl.modules.impl.render;
 
 import io.github.qe7.Hephaestus;
 import io.github.qe7.events.render.RenderGlobalEvent;
-import io.github.qe7.events.render.RenderWorldEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
 import io.github.qe7.features.impl.modules.api.settings.impl.BooleanSetting;
 import io.github.qe7.utils.RenderUtil;
-import it.unimi.dsi.fastutil.booleans.BooleanSet;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;

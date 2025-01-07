@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 import io.github.qe7.events.PlayerMoveSetEvent;
 import io.github.qe7.events.UpdateEvent;
-import io.github.qe7.events.render.RenderWorldEvent;
+import io.github.qe7.events.render.RenderGlobalEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
 import io.github.qe7.features.impl.modules.api.settings.impl.BooleanSetting;
@@ -627,7 +627,7 @@ public final class AutoTunnelModule extends Module {
     });
 
     @Subscribe
-    public final Listener<RenderWorldEvent> renderScreenEventListener = new Listener<>(event -> {
+    public final Listener<RenderGlobalEvent> renderGlobalEventListener = new Listener<>(event -> {
         dir = this.getDirection();
         isDiagonal = dir.ordinal() % 2 == 1;
         int x = MathHelper.floor_double(mc.thePlayer.posX);

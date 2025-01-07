@@ -54,6 +54,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new ViewModelModule());
         modules.add(new StorageESPModule());
         modules.add(new EntityESPModule());
+        modules.add(new NoRenderModule());
 
         /* Movement */
         modules.add(new FlightModule());

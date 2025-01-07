@@ -3,6 +3,7 @@ package net.minecraft.src;
 import io.github.qe7.Hephaestus;
 import io.github.qe7.events.render.RenderCameraClipEvent;
 import io.github.qe7.features.impl.modules.impl.render.CameraModule;
+import io.github.qe7.features.impl.modules.impl.render.NoRenderModule;
 import io.github.qe7.features.impl.modules.impl.render.ViewModelModule;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Mouse;
@@ -896,17 +897,17 @@ public class EntityRenderer {
             }
         } else {
             GL11.glFogi(2917 /*GL_FOG_MODE*/, 9729 /*GL_LINEAR*/);
-            GL11.glFogf(2915 /*GL_FOG_START*/, farPlaneDistance * 0.25F);
-            GL11.glFogf(2916 /*GL_FOG_END*/, farPlaneDistance);
+            GL11.glFogf(2915 /*GL_FOG_START*/, NoRenderModule.isFogEnabled() ? farPlaneDistance * 100F : farPlaneDistance * 0.25F);
+            GL11.glFogf(2916 /*GL_FOG_END*/, NoRenderModule.isFogEnabled() ? farPlaneDistance * 101F : farPlaneDistance);
             if (i < 0) {
-                GL11.glFogf(2915 /*GL_FOG_START*/, 0.0F);
-                GL11.glFogf(2916 /*GL_FOG_END*/, farPlaneDistance * 0.8F);
+                GL11.glFogf(2915 /*GL_FOG_START*/, NoRenderModule.isFogEnabled() ? farPlaneDistance * 100F : 0.0F);
+                GL11.glFogf(2916 /*GL_FOG_END*/, NoRenderModule.isFogEnabled() ? farPlaneDistance * 101F : farPlaneDistance * 0.8F);
             }
             if (GLContext.getCapabilities().GL_NV_fog_distance) {
                 GL11.glFogi(34138, 34139);
             }
             if (mc.theWorld.worldProvider.isNether) {
-                GL11.glFogf(2915 /*GL_FOG_START*/, 0.0F);
+                GL11.glFogf(2915 /*GL_FOG_START*/, NoRenderModule.isFogEnabled() ? farPlaneDistance * 100F : 0.0F);
             }
         }
         GL11.glEnable(2903 /*GL_COLOR_MATERIAL*/);

@@ -9,7 +9,6 @@ import java.util.*;
 
 import io.github.qe7.Hephaestus;
 import io.github.qe7.events.render.RenderGlobalEvent;
-import io.github.qe7.events.render.RenderWorldEvent;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.ARBOcclusionQuery;
 import org.lwjgl.opengl.GL11;
@@ -260,7 +259,6 @@ public class RenderGlobal
 
     public void renderEntities(Vec3D vec3d, ICamera icamera, float f)
     {
-        Hephaestus.getInstance().getEventBus().post(new RenderWorldEvent());
         if(renderEntitiesStartupCounter > 0)
         {
             renderEntitiesStartupCounter--;
@@ -311,8 +309,10 @@ public class RenderGlobal
             TileEntityRenderer.instance.renderTileEntity(tileEntity, f);
         }
 
+        GL11.glDisable(2912 /*GL_FOG*/);
         final RenderGlobalEvent renderGlobalEvent = new RenderGlobalEvent();
         Hephaestus.getInstance().getEventBus().post(renderGlobalEvent);
+        GL11.glEnable(2912 /*GL_FOG*/);
     }
 
     public String getDebugInfoRenders()

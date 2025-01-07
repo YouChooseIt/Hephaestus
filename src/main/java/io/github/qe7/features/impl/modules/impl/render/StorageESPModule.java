@@ -1,6 +1,6 @@
 package io.github.qe7.features.impl.modules.impl.render;
 
-import io.github.qe7.events.render.RenderWorldEvent;
+import io.github.qe7.events.render.RenderGlobalEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
 import io.github.qe7.features.impl.modules.api.settings.impl.BooleanSetting;
@@ -23,7 +23,7 @@ public final class StorageESPModule extends Module {
     }
 
     @Subscribe
-    public final Listener<RenderWorldEvent> renderWorldEventListener = new Listener<>(event -> {
+    public final Listener<RenderGlobalEvent> renderGlobalEventListener = new Listener<>(event -> {
         for (Object tileEntity : Minecraft.getMinecraft().theWorld.loadedTileEntityList) {
             if (!(tileEntity instanceof TileEntity)) {
                 continue;
