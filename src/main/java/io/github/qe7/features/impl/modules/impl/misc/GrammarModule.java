@@ -97,8 +97,8 @@ public final class GrammarModule extends Module {
             String message = chatPacket.message;
 
             for (String abbreviation : abbreviations.keySet()) {
-                String regex = "\\b" + Pattern.quote(abbreviation) + "\\b";
-                message = message.toLowerCase().replaceAll(regex, Matcher.quoteReplacement(abbreviations.get(abbreviation)).toLowerCase());
+                String regex = "(?i)\\b" + Pattern.quote(abbreviation) + "\\b";
+                message = message.replaceAll(regex, Matcher.quoteReplacement(abbreviations.get(abbreviation)));
             }
 
             if (!message.matches("^[^a-zA-Z0-9].*") && !message.matches(".*[^a-zA-Z0-9]$")) {
