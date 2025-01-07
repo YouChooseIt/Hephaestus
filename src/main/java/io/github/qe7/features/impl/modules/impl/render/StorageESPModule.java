@@ -12,7 +12,7 @@ import net.minecraft.src.*;
 
 import java.awt.*;
 
-public class StorageESPModule extends Module {
+public final class StorageESPModule extends Module {
 
     private final BooleanSetting chest = new BooleanSetting("Chest", true);
     private final BooleanSetting dispenser = new BooleanSetting("Dispenser", true);

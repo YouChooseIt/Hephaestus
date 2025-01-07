@@ -8,6 +8,7 @@ import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
 import io.github.qe7.features.impl.modules.impl.combat.AutoHealModule;
+import io.github.qe7.features.impl.modules.impl.exploit.XCarryModule;
 import io.github.qe7.features.impl.modules.impl.misc.AutoTunnelModule;
 import io.github.qe7.features.impl.modules.impl.combat.AntiKnockBackModule;
 import io.github.qe7.features.impl.modules.impl.combat.ForceFieldModule;
@@ -81,6 +82,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         /* Exploit */
         modules.add(new Slot9Module());
         modules.add(new FastPortalsModule());
+        modules.add(new XCarryModule());
 
         modules.forEach(this::register);
 

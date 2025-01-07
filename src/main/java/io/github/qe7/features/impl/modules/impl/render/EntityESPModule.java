@@ -15,7 +15,7 @@ import net.minecraft.src.*;
 
 import java.awt.*;
 
-public class EntityESPModule extends Module {
+public final class EntityESPModule extends Module {
 
     private final BooleanSetting player = new BooleanSetting("Player", true);
     private final BooleanSetting mob = new BooleanSetting("Mob", true);
