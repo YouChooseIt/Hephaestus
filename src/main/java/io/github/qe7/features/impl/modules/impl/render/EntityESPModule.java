@@ -39,13 +39,13 @@ public class EntityESPModule extends Module {
 
             if (entity instanceof EntityPlayer && player.getValue()) {
                 final Color color = Hephaestus.getInstance().getRelationManager().isFriend(((EntityPlayer) entity).username) ? new Color(63, 124, 182) : Hephaestus.getInstance().getRelationManager().isEnemy(((EntityPlayer) entity).username) ? new Color(255, 0, 0) : Color.WHITE;
-                RenderUtil.drawEntityESP(x, y, z, entity.width, entity.height, color, 0.2f);
+                RenderUtil.drawEntityESP(x, y, z, entity.width, entity.height + 0.2f, color, 0.2f);
             } else if (entity instanceof EntityMob && mob.getValue()) {
-                RenderUtil.drawEntityESP(x, y, z, entity.width, entity.height, new Color(255, 150, 0), 0.2f);
+                RenderUtil.drawEntityESP(x, y, z, entity.width, entity.height + 0.2f, new Color(255, 150, 0), 0.2f);
             } else if (entity instanceof EntityAnimal && animal.getValue()) {
-                RenderUtil.drawEntityESP(x, y, z, entity.width, entity.height, new Color(0, 255, 0), 0.2f);
+                RenderUtil.drawEntityESP(x, y, z, entity.width, entity.height + 0.2f, new Color(0, 255, 0), 0.2f);
             } else if (entity instanceof EntityItem && item.getValue()) {
-                RenderUtil.drawEntityESP(x, y, z, entity.width, entity.height, new Color(103, 103, 103), 0.2f);
+                RenderUtil.drawEntityESP(x, y, z, entity.width, entity.height + 0.2f, new Color(103, 103, 103), 0.2f);
             }
         }
     });

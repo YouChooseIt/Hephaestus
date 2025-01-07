@@ -98,7 +98,7 @@ public final class GrammarModule extends Module {
 
             for (String abbreviation : abbreviations.keySet()) {
                 String regex = "\\b" + Pattern.quote(abbreviation) + "\\b";
-                message = message.replaceAll(regex, Matcher.quoteReplacement(abbreviations.get(abbreviation)).toLowerCase());
+                message = message.toLowerCase().replaceAll(regex, Matcher.quoteReplacement(abbreviations.get(abbreviation)).toLowerCase());
             }
 
             if (!message.matches("^[^a-zA-Z0-9].*") && !message.matches(".*[^a-zA-Z0-9]$")) {
