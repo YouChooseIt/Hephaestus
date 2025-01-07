@@ -7,6 +7,7 @@ package net.minecraft.src;
 import io.github.qe7.Hephaestus;
 import io.github.qe7.events.render.RenderInsideBlockOverlayEvent;
 import io.github.qe7.features.impl.modules.impl.exploit.Slot9Module;
+import io.github.qe7.features.impl.modules.impl.misc.AutoTunnelModule;
 import io.github.qe7.features.impl.modules.impl.render.ViewModelModule;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
@@ -129,6 +130,8 @@ public class ItemRenderer {
         GL11.glPopMatrix();
     }
 
+    float yaw, pitch;
+
     public void renderItemInFirstPerson(float f) {
         float f1 = prevEquippedProgress + (equippedProgress - prevEquippedProgress) * f;
         EntityPlayerSP entityplayersp = mc.thePlayer;
@@ -238,6 +241,17 @@ public class ItemRenderer {
             GL11.glScalef(f9, f9, f9);
             if (itemstack.getItem().shouldRotateAroundWhenRendering()) {
                 GL11.glRotatef(180F, 0.0F, 1.0F, 0.0F);
+            }
+            if (Hephaestus.getInstance().getModuleManager().getRegistry().get(ViewModelModule.class).isEnabled()) {
+                if (Hephaestus.getInstance().getModuleManager().getRegistry().get(AutoTunnelModule.class).isEnabled()) {
+                    // Update yaw and pitch for rotation
+                    yaw += 1.0f; // Spin the item based on yaw
+                    pitch += 1.0f; // Spin the item based on pitch
+
+                    // Apply the rotation (do not change position)
+                    GL11.glRotatef(yaw, 0.0f, 1.0f, 0.0f); // Rotate around the Y-axis
+                    GL11.glRotatef(pitch, 1.0f, 0.0f, 0.0f); // Rotate around the X-axis
+                }
             }
             renderItem(entityplayersp, itemstack);
             GL11.glPopMatrix();
