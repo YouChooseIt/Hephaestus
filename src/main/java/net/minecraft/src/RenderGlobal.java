@@ -8,6 +8,7 @@ import java.nio.IntBuffer;
 import java.util.*;
 
 import io.github.qe7.Hephaestus;
+import io.github.qe7.events.render.RenderGlobalEvent;
 import io.github.qe7.events.render.RenderWorldEvent;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.ARBOcclusionQuery;
@@ -277,7 +278,7 @@ public class RenderGlobal
         TileEntityRenderer.staticPlayerX = ((Entity) (entityliving)).lastTickPosX + (((Entity) (entityliving)).posX - ((Entity) (entityliving)).lastTickPosX) * (double)f;
         TileEntityRenderer.staticPlayerY = ((Entity) (entityliving)).lastTickPosY + (((Entity) (entityliving)).posY - ((Entity) (entityliving)).lastTickPosY) * (double)f;
         TileEntityRenderer.staticPlayerZ = ((Entity) (entityliving)).lastTickPosZ + (((Entity) (entityliving)).posZ - ((Entity) (entityliving)).lastTickPosZ) * (double)f;
-        List list = worldObj.getLoadedEntityList();
+        List<Entity> list = worldObj.getLoadedEntityList();
         countEntitiesTotal = list.size();
         for(int i = 0; i < worldObj.weatherEffects.size(); i++)
         {
@@ -289,34 +290,29 @@ public class RenderGlobal
             }
         }
 
-        for(int j = 0; j < list.size(); j++)
-        {
-            Entity entity1 = (Entity)list.get(j);
-            if(!entity1.isInRangeToRenderVec3D(vec3d) || !entity1.ignoreFrustumCheck && !icamera.isBoundingBoxInFrustum(entity1.boundingBox) || entity1 == mc.renderViewEntity && !mc.gameSettings.thirdPersonView && !mc.renderViewEntity.isPlayerSleeping())
-            {
+        for (Entity o : list) {
+            if (!o.isInRangeToRenderVec3D(vec3d) || !o.ignoreFrustumCheck && !icamera.isBoundingBoxInFrustum(o.boundingBox) || o == mc.renderViewEntity && !mc.gameSettings.thirdPersonView && !mc.renderViewEntity.isPlayerSleeping()) {
                 continue;
             }
-            int l = MathHelper.floor_double(entity1.posY);
-            if(l < 0)
-            {
+            int l = MathHelper.floor_double(o.posY);
+            if (l < 0) {
                 l = 0;
             }
-            if(l >= 128)
-            {
+            if (l >= 128) {
                 l = 127;
             }
-            if(worldObj.blockExists(MathHelper.floor_double(entity1.posX), l, MathHelper.floor_double(entity1.posZ)))
-            {
+            if (worldObj.blockExists(MathHelper.floor_double(o.posX), l, MathHelper.floor_double(o.posZ))) {
                 countEntitiesRendered++;
-                RenderManager.instance.renderEntity(entity1, f);
+                RenderManager.instance.renderEntity(o, f);
             }
         }
 
-        for(int k = 0; k < tileEntities.size(); k++)
-        {
-            TileEntityRenderer.instance.renderTileEntity((TileEntity)tileEntities.get(k), f);
+        for (TileEntity tileEntity : tileEntities) {
+            TileEntityRenderer.instance.renderTileEntity(tileEntity, f);
         }
 
+        final RenderGlobalEvent renderGlobalEvent = new RenderGlobalEvent();
+        Hephaestus.getInstance().getEventBus().post(renderGlobalEvent);
     }
 
     public String getDebugInfoRenders()
@@ -1561,7 +1557,7 @@ public class RenderGlobal
         }
     }
 
-    public List tileEntities;
+    public List<TileEntity> tileEntities;
     private World worldObj;
     private RenderEngine renderEngine;
     private List worldRenderersToUpdate;

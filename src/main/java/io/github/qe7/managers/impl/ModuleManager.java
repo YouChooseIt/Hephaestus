@@ -51,6 +51,8 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new ClickGUIModule());
         modules.add(new CameraModule());
         modules.add(new ViewModelModule());
+        modules.add(new StorageESPModule());
+        modules.add(new EntityESPModule());
 
         /* Movement */
         modules.add(new FlightModule());

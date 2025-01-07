@@ -94,11 +94,11 @@ public final class GrammarModule extends Module {
     public final Listener<OutgoingPacketEvent> outgoingPacketEventListener = new Listener<>(event -> {
         if (event.getPacket() instanceof Packet3Chat) {
             Packet3Chat chatPacket = (Packet3Chat) event.getPacket();
-            String message = chatPacket.message.toLowerCase();
+            String message = chatPacket.message;
 
             for (String abbreviation : abbreviations.keySet()) {
                 String regex = "\\b" + Pattern.quote(abbreviation) + "\\b";
-                message = message.replaceAll(regex, Matcher.quoteReplacement(abbreviations.get(abbreviation)));
+                message = message.replaceAll(regex, Matcher.quoteReplacement(abbreviations.get(abbreviation)).toLowerCase());
             }
 
             if (!message.matches("^[^a-zA-Z0-9].*") && !message.matches(".*[^a-zA-Z0-9]$")) {
