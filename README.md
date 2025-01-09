@@ -28,7 +28,8 @@ Any bugs or suggestions can be submitted on the [issues page](https://github.com
 
 * **Exploit**:
     + FastPortals: Instantly travel through portals.
-    + Slot9: Automatically switch to the correct item in the hot-bar.
+    + Slot9: Infinite durability exploit, switches to slot 9 (the top left inventory slot).
+    + XCarry: Allows you to store items in your crafting slots.
 
 
 * **Misc**:
@@ -54,7 +55,8 @@ Any bugs or suggestions can be submitted on the [issues page](https://github.com
     + Jesus: Allows you to walk on water.
     + Speed: Speeds up your life.
     + Step: Allows the player to step up higher.
-    + Strafe: Strafe like you're in counter-strike: source. 
+    + Strafe: Strafe like you're in counter-strike: source.
+    + SafeWalk: For the people who can't walk without falling off a ledge.
 
 
 * **Render**:
@@ -65,6 +67,10 @@ Any bugs or suggestions can be submitted on the [issues page](https://github.com
     + NameTags: Displays a name plate that is easier to see.
     + ViewModel: Modifies the properties of the view model.
     + XRay: Disables the rendering of non-whitelisted blocks.
+    + StorageESP: ESP for storage.
+    + EntityESP: ESP for entities.
+    + NoRender: Disables rendering of... stuff.
+    + Tracers: Renders a line to the feet (feet lover) of entities
 
 ## Panels
 
