@@ -4,6 +4,7 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.events.packet.IncomingPacketEvent;
 import io.github.qe7.utils.ChatUtil;
 import io.github.qe7.utils.math.TimerUtil;
+import lombok.Getter;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import me.zero.alpine.listener.Subscriber;
@@ -23,6 +24,7 @@ public final class PlayerManager implements Subscriber {
 
     private final TimerUtil timerUtil = new TimerUtil();
 
+    @Getter
     private final List<String> onlinePlayers = new ArrayList<>();
 
     private boolean test = false;
@@ -97,9 +99,5 @@ public final class PlayerManager implements Subscriber {
         } else if ("left".equals(action)) {
             onlinePlayers.remove(playerName);
         }
-    }
-
-    public List<String> getOnlinePlayers() {
-        return new ArrayList<>(onlinePlayers);
     }
 }

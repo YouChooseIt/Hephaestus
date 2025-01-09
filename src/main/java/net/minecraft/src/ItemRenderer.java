@@ -242,16 +242,12 @@ public class ItemRenderer {
             if (itemstack.getItem().shouldRotateAroundWhenRendering()) {
                 GL11.glRotatef(180F, 0.0F, 1.0F, 0.0F);
             }
-            if (Hephaestus.getInstance().getModuleManager().getRegistry().get(ViewModelModule.class).isEnabled()) {
-                if (Hephaestus.getInstance().getModuleManager().getRegistry().get(AutoTunnelModule.class).isEnabled()) {
-                    // Update yaw and pitch for rotation
-                    yaw += 1.0f; // Spin the item based on yaw
-                    pitch += 1.0f; // Spin the item based on pitch
+            if (Hephaestus.getInstance().getModuleManager().getRegistry().get(ViewModelModule.class).isEnabled() && ViewModelModule.autism.getValue()) {
+                yaw += 1.0f;
+                pitch += 1.0f;
 
-                    // Apply the rotation (do not change position)
-                    GL11.glRotatef(yaw, 0.0f, 1.0f, 0.0f); // Rotate around the Y-axis
-                    GL11.glRotatef(pitch, 1.0f, 0.0f, 0.0f); // Rotate around the X-axis
-                }
+                GL11.glRotatef(yaw, 0.0f, 1.0f, 0.0f);
+                GL11.glRotatef(pitch, 1.0f, 0.0f, 0.0f);
             }
             renderItem(entityplayersp, itemstack);
             GL11.glPopMatrix();

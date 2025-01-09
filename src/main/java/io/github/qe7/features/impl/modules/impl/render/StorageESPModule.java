@@ -35,6 +35,10 @@ public final class StorageESPModule extends Module {
             final double y = tileEntity1.yCoord - RenderManager.renderPosY;
             final double z = tileEntity1.zCoord - RenderManager.renderPosZ;
 
+            if (Minecraft.getMinecraft().theWorld.getBlockId(tileEntity1.xCoord, tileEntity1.yCoord, tileEntity1.zCoord) == 0) {
+                continue;
+            }
+
             if (tileEntity instanceof TileEntityChest && chest.getValue()) {
                 RenderUtil.drawBlockESP(x, y, z, new Color(255, 255, 0), 0.2f);
             } else if (tileEntity instanceof TileEntityDispenser && dispenser.getValue()) {

@@ -194,6 +194,7 @@ public class EntityRenderer {
     }
 
     private void hurtCameraEffect(float f) {
+        if (NoRenderModule.isHurtCamEnabled()) return;
         EntityLiving entityliving = mc.renderViewEntity;
         float f1 = (float) entityliving.hurtTime - f;
         if (entityliving.health <= 0) {

@@ -55,6 +55,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new StorageESPModule());
         modules.add(new EntityESPModule());
         modules.add(new NoRenderModule());
+        modules.add(new TracersModule());
 
         /* Movement */
         modules.add(new FlightModule());
@@ -63,6 +64,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new SpeedModule());
         modules.add(new JesusModule());
         modules.add(new StrafeModule());
+        modules.add(new SafeWalkModule());
 
         /* Misc */
         modules.add(new AutoLoginModule());
@@ -79,6 +81,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new ScaffoldModule());
         modules.add(new NoPushModule());
         modules.add(new AutoTunnelModule());
+        modules.add(new AutoWalkModule());
 
         /* Exploit */
         modules.add(new Slot9Module());

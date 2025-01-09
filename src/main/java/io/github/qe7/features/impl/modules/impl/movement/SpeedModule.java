@@ -6,6 +6,7 @@ import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
 import io.github.qe7.features.impl.modules.api.settings.impl.EnumSetting;
 import io.github.qe7.features.impl.modules.api.settings.impl.interfaces.IEnumSetting;
+import io.github.qe7.utils.MovementUtil;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
@@ -43,7 +44,7 @@ public final class SpeedModule extends Module {
     public final Listener<UpdateEvent> updateEventListener = new Listener<>(event -> {
         if (Minecraft.getMinecraft().thePlayer == null) return;
 
-        if (Minecraft.getMinecraft().thePlayer.motionX == 0 && Minecraft.getMinecraft().thePlayer.motionZ == 0) return;
+        if (!MovementUtil.isMoving()) return;
 
         switch (mode.getValue()) {
             case PULSE:

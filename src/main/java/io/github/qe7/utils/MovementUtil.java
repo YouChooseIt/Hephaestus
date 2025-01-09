@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 public final class MovementUtil {
 
     public static boolean isMoving() {
-        return Minecraft.getMinecraft().thePlayer.movementInput.moveForward != 0.0F || Minecraft.getMinecraft().thePlayer.movementInput.moveStrafe != 0.0F;
+        return !(Minecraft.getMinecraft().thePlayer.motionX == 0 && Minecraft.getMinecraft().thePlayer.motionZ == 0);
     }
 
     public static void setSpeed(double moveSpeed) {

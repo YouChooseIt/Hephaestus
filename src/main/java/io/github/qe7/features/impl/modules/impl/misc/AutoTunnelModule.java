@@ -26,6 +26,11 @@ public final class AutoTunnelModule extends Module {
 
     public final Minecraft mc = Minecraft.getMinecraft();
 
+    private final BooleanSetting swing = new BooleanSetting("Swing", true);
+    public BooleanSetting disableClientPlace = new BooleanSetting("DisableClientPlace", true);
+    public BooleanSetting alwaysCheckBoth = new BooleanSetting( "AlwaysCheckBoth", true);
+    public BooleanSetting render = new BooleanSetting("Render", false);
+
     public DoubleSetting walkStart = new DoubleSetting("StartWalkingAfter", 2.0D, 1.0D, 8.0D, 1.0D);
     public DoubleSetting reach = new DoubleSetting("Reach", 4.0D, 1.0D, 8.0D, 0.1D);
 
@@ -35,10 +40,6 @@ public final class AutoTunnelModule extends Module {
     public EnumSetting<MineModeEnum> mineMode = new EnumSetting<>("MineMode", MineModeEnum.LEGAL);
     public EnumSetting<OrderEnum> order = new EnumSetting<>("Order", OrderEnum.DOWN_UP);
     public EnumSetting<PlaceModeEnum> placeMode = new EnumSetting<>("PlaceMode", PlaceModeEnum.SINGLE);
-
-    public BooleanSetting disableClientPlace = new BooleanSetting("DisableClientPlace", true);
-    public BooleanSetting alwaysCheckBoth = new BooleanSetting( "AlwaysCheckBoth", true);
-    public BooleanSetting render = new BooleanSetting("Render", false);
 
     private Direction dir;
 
@@ -253,6 +254,9 @@ public final class AutoTunnelModule extends Module {
     }
 
     public void placeBlock(int x, int y, int z, int face) {
+        if (swing.getValue()) {
+            mc.thePlayer.swingItem();
+        }
         if (this.disableClientPlace.getValue()) {
             PlayerUtil.placeBlock(x, y, z, face);
         } else {
@@ -261,6 +265,9 @@ public final class AutoTunnelModule extends Module {
     }
 
     public void destroyBlock(int x, int y, int z, int face) {
+        if (swing.getValue()) {
+            mc.thePlayer.swingItem();
+        }
         if (this.mineMode.getValue() == MineModeEnum.LEGAL) {
             PlayerUtil.destroyBlock(this.xCur, this.yCur, this.zCur, this.getHitSide());
         } else {
@@ -611,9 +618,15 @@ public final class AutoTunnelModule extends Module {
             ++i;
         }
         if (this.selected) {
+            if (swing.getValue()) {
+                mc.thePlayer.swingItem();
+            }
             this.destroyBlock(this.xCur, this.yCur, this.zCur, this.getHitSide());
         }
         if (this.place) {
+            if (swing.getValue()) {
+                mc.thePlayer.swingItem();
+            }
             this.placeBlock(this.xPlace, this.yPlace, this.zPlace, this.facePlace);
             this.place = false;
         }

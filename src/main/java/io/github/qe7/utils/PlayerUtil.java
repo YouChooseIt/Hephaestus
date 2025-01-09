@@ -68,11 +68,11 @@ public final class PlayerUtil {
 
                     // Ensure the line is formatted correctly
                     if (parts.length == 2) {
-                        String name = parts[0].trim();
+                        String name = parts[0].trim().toLowerCase();
                         String cape = parts[1].trim();
 
                         // Check if the username matches
-                        if (name.equalsIgnoreCase(username)) {
+                        if (name.toLowerCase().equalsIgnoreCase(username)) {
                             reader.close();
                             return "https://raw.githubusercontent.com/qe7/Hephaestus-Assets/refs/heads/main/capes/" + cape;
                         }

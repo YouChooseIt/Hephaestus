@@ -1,5 +1,6 @@
 package io.github.qe7.features.impl.modules.impl.misc;
 
+import io.github.qe7.Hephaestus;
 import io.github.qe7.events.packet.IncomingPacketEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
@@ -29,6 +30,7 @@ public final class AutoListModule extends Module {
         if (shouldSendList && timerUtil.hasTimeElapsed(10000, false)) {
             ChatUtil.addPrefixedMessage(this.getClass().getSimpleName(), "Sending /list command...");
             ChatUtil.sendMessage("/list");
+            Hephaestus.getInstance().getPlayerManager().getOnlinePlayers().clear();
             shouldSendList = false;
         }
     });

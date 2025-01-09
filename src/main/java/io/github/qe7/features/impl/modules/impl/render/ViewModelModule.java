@@ -12,6 +12,7 @@ public final class ViewModelModule extends Module {
     public static final DoubleSetting zOffset = new DoubleSetting("Z Offset", 0.0, -10.0, 10.0, 0.1);
 
     public static final BooleanSetting thirdPerson = new BooleanSetting("Third Person", false);
+    public static final BooleanSetting autism = new BooleanSetting("Rotate", false);
 
     public ViewModelModule() {
         super("ViewModel", "Modifies attributes of the view model.", ModuleCategory.RENDER);

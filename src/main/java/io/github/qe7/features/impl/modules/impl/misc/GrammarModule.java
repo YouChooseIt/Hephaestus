@@ -88,6 +88,27 @@ public final class GrammarModule extends Module {
         abbreviations.put("iirc", "if I recall correctly");
         abbreviations.put("wb", "welcome back");
         abbreviations.put("ong", "on god");
+        abbreviations.put("icl", "I can't lie");
+        abbreviations.put("ic", "I see");
+        abbreviations.put("icr", "I can't remember");
+        abbreviations.put("icm", "I can't make");
+        abbreviations.put("icn", "I can't name");
+        abbreviations.put("icb", "I can't believe");
+        abbreviations.put("icd", "I can't describe");
+        abbreviations.put("icf", "I can't forget");
+        abbreviations.put("icg", "I can't guess");
+        abbreviations.put("ich", "I can't help");
+        abbreviations.put("icj", "I can't justify");
+        abbreviations.put("ick", "I can't keep");
+        abbreviations.put("icp", "I can't promise");
+        abbreviations.put("ics", "I can't say");
+        abbreviations.put("ict", "I can't tell");
+        abbreviations.put("icv", "I can't understand");
+        abbreviations.put("icw", "I can't wait");
+        abbreviations.put("icx", "I can't explain");
+        abbreviations.put("avg", "average");
+        abbreviations.put("wdym", "what do you mean");
+        abbreviations.put("rq", "real quick");
     }
 
     @Subscribe

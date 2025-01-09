@@ -6,6 +6,9 @@ package net.minecraft.src;
 
 import io.github.qe7.Hephaestus;
 import io.github.qe7.events.PushOutOfEntityEvent;
+import io.github.qe7.features.impl.modules.impl.movement.SafeWalkModule;
+import lombok.Getter;
+import net.minecraft.client.Minecraft;
 
 import java.util.List;
 import java.util.Random;
@@ -247,6 +250,13 @@ public abstract class Entity {
         double d7 = d2;
         AxisAlignedBB axisalignedbb = boundingBox.copy();
         boolean flag = onGround && isSneaking();
+
+        if (Hephaestus.getInstance().getModuleManager().getRegistry().get(SafeWalkModule.class).isEnabled()) {
+            if (this == Minecraft.getMinecraft().thePlayer) {
+                flag = onGround;
+            }
+        }
+
         if (flag) {
             double d8 = 0.050000000000000003D;
             for (; d != 0.0D && worldObj.getCollidingBoundingBoxes(this, boundingBox.getOffsetBoundingBox(d, -1D, 0.0D)).size() == 0; d5 = d) {
@@ -1047,6 +1057,7 @@ public abstract class Entity {
     public double renderDistanceWeight;
     public boolean preventEntitySpawning;
     public Entity riddenByEntity;
+    @Getter
     public Entity ridingEntity;
     public World worldObj;
     public double prevPosX;

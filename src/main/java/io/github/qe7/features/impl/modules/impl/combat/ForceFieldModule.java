@@ -4,6 +4,7 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.events.UpdateEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
+import io.github.qe7.features.impl.modules.api.settings.impl.BooleanSetting;
 import io.github.qe7.features.impl.modules.api.settings.impl.DoubleSetting;
 import io.github.qe7.utils.PacketUtil;
 import me.zero.alpine.listener.Listener;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class ForceFieldModule extends Module {
+
+    private final BooleanSetting swing = new BooleanSetting("Swing", true);
 
     private final DoubleSetting range = new DoubleSetting("Range", 4.2, 0.0, 10.0, 0.1);
 
@@ -56,6 +59,9 @@ public final class ForceFieldModule extends Module {
             }
         }
 
+        if (swing.getValue()) {
+            mc.thePlayer.swingItem();
+        }
         PacketUtil.sendPacket(new Packet7UseEntity(mc.thePlayer.entityId, target.entityId, 1));
     }
 }

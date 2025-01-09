@@ -120,7 +120,7 @@ public abstract class EntityPlayer extends EntityLiving {
     public void updateCloak() {
         playerCloakUrl = (new StringBuilder()).append("http://s3.amazonaws.com/MinecraftCloaks/").append(username).append(".png").toString();
 
-        final String customCape = PlayerUtil.getCapeFromGithub("https://raw.githubusercontent.com/qe7/Hephaestus-Assets/refs/heads/main/capes/capes.txt", username);
+        final String customCape = PlayerUtil.getCapeFromGithub("https://raw.githubusercontent.com/qe7/Hephaestus-Assets/refs/heads/main/capes/capes.txt", username.toLowerCase());
 
         if (customCape != null) {
             playerCloakUrl = customCape;
@@ -442,6 +442,9 @@ public abstract class EntityPlayer extends EntityLiving {
     }
 
     public void swingItem() {
+        if (isSwinging) {
+            return;
+        }
         swingProgressInt = -1;
         isSwinging = true;
     }
