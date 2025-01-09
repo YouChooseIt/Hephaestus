@@ -21,7 +21,7 @@ public final class TracersModule extends Module {
     private final BooleanSetting item = new BooleanSetting("Item", true);
 
     public TracersModule() {
-        super("Tracers", "Renders a line to the feet (feet lover) of entities", ModuleCategory.RENDER);
+        super("Tracers", "Renders a line to the feet (feet lover) of entities.", ModuleCategory.RENDER);
     }
 
     @Subscribe
