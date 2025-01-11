@@ -79,23 +79,23 @@ public class PanelComponent {
             x = mouseX - dragX;
             y = mouseY - dragY;
         }
+    	GL11.glEnable(GL11.GL_STENCIL_TEST);
+        GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
+        GL11.glStencilOp(GL11.GL_ZERO, GL11.GL_REPLACE, GL11.GL_REPLACE);
+        GL11.glStencilFunc(GL11.GL_ALWAYS, STENCTIL_ALLOWED, 0xff);
+        Gui.drawRect(x, y + height, x + width, y + totalHeight + 0.5f, new Color(0, 0, 0, 150).getRGB());
         
-       
+        GL11.glStencilOp(GL11.GL_ZERO, GL11.GL_ZERO, GL11.GL_ZERO);
         Gui.drawRect(x, y, x + width, y + height, new Color(29, 34, 54, 255).getRGB());
         Gui.drawRect(x - 0.5f, y - 0.5f, x + width + 0.5f, y, new Color(0, 0, 0, 255).getRGB());
         Gui.drawRect(x - 0.5f, y + height, x + width + 0.5f, y + height + 0.5f, new Color(0, 0, 0, 255).getRGB());
         Gui.drawRect(x - 0.5f, y + totalHeight, x + width + 0.5f, y + totalHeight + 0.5f, new Color(0, 0, 0, 255).getRGB());
         Gui.drawRect(x - 0.5f, y - 0.5f, x, y + totalHeight + 0.5f, new Color(0, 0, 0, 255).getRGB());
+        Gui.drawRect(x + width, y - 0.5f, x + width + 0.5f, y + totalHeight + 0.5f, new Color(0, 0, 0, 255).getRGB());
         this.fontRenderer.drawStringWithShadow(moduleCategory.getName(), x + 3, y + 3, -1);
         
-        Gui.drawRect(x + width, y - 0.5f, x + width + 0.5f, y + totalHeight + 0.5f, new Color(0, 0, 0, 255).getRGB());
         
-        GL11.glEnable(GL11.GL_STENCIL_TEST);
-        GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
-        GL11.glStencilOp(GL11.GL_ZERO, GL11.GL_REPLACE, GL11.GL_REPLACE);
-        GL11.glStencilFunc(GL11.GL_ALWAYS, STENCTIL_ALLOWED, 0xff);
-        Gui.drawRect(x, y + height, x + width, y + totalHeight + 0.5f, new Color(0, 0, 0, 150).getRGB());
-
+        
         GL11.glStencilFunc(GL11.GL_EQUAL, STENCTIL_ALLOWED, 0xff);
         GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP);
         
