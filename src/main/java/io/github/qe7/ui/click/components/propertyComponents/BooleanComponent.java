@@ -24,6 +24,7 @@ public class BooleanComponent extends AbstractPropertyComponent {
         this.fontRenderer.drawStringWithShadow(this.setting.getName(), x + 7, y + 3, -1);
 
         Gui.drawRect(x + width - 14, y + 3, x + width - 6, y + height - 3, this.setting.getValue() ? new Color(29, 34, 54, 255).getRGB() : new Color(21, 21, 21, 128).getRGB());
+        
         Gui.drawRect(x + width - 14 - 0.5f, y + 3 - 0.5f, x + width - 6 + 0.5f, y + 3, new Color(0, 0, 0, 255).getRGB());
         Gui.drawRect(x + width - 14 - 0.5f, y + height - 3, x + width - 6 + 0.5f, y + height - 3 + 0.5f, new Color(0, 0, 0, 255).getRGB());
         Gui.drawRect(x + width - 14 - 0.5f, y + 3 - 0.5f, x + width - 14, y + height - 3 + 0.5f, new Color(0, 0, 0, 255).getRGB());

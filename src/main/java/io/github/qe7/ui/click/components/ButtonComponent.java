@@ -88,7 +88,7 @@ public class ButtonComponent {
     }
 
     public void mouseClicked(int mouseX, int mouseY, int button) {
-        if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+        if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY < y + height) {
             switch (button) {
                 case 0:
                     this.module.setEnabled(!this.module.isEnabled());
