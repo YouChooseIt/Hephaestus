@@ -10,6 +10,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 
 import java.awt.*;
@@ -159,15 +160,16 @@ public abstract class Minecraft implements Runnable {
             Display.setDisplayMode(new DisplayMode(displayWidth, displayHeight));
         }
         Display.setTitle("Minecraft Minecraft Beta 1.7.3");
+        PixelFormat pf = new PixelFormat().withStencilBits(8);
         try {
-            Display.create();
+            Display.create(pf);
         } catch (LWJGLException lwjglexception) {
             lwjglexception.printStackTrace();
             try {
                 Thread.sleep(1000L);
             } catch (InterruptedException ignored) {
             }
-            Display.create();
+            Display.create(pf);
         }
         File mcDataDir = getMinecraftDir();
         saveLoader = new SaveConverterMcRegion(new File(mcDataDir, "saves"));

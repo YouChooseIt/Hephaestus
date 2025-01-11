@@ -65,6 +65,15 @@ public class ClickGUI extends GuiScreen {
             panelComponent.mouseReleased(i, j, k);
         }
     }
+    
+    @Override
+    protected void mouseMovedOrUp(int mx, int my, int button) {
+    	super.mouseMovedOrUp(mx, my, button);
+    	
+    	 for (PanelComponent panelComponent : panelComponentList) {
+             panelComponent.mouseMovedOrUp(mx, my, button);
+         }
+    }
 
     @Override
     public boolean doesGuiPauseGame() {
