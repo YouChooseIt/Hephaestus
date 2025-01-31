@@ -1,11 +1,13 @@
 package io.github.qe7.managers.impl;
 
 import io.github.qe7.Hephaestus;
+import io.github.qe7.events.UpdateEvent;
 import io.github.qe7.events.packet.IncomingPacketEvent;
 import io.github.qe7.features.impl.commands.impl.chat.api.ChatCommand;
 import io.github.qe7.features.impl.commands.impl.chat.impl.*;
 import io.github.qe7.features.impl.modules.impl.misc.ChatBotModule;
 import io.github.qe7.managers.api.Manager;
+import io.github.qe7.type.ChatBotSkid;
 import io.github.qe7.utils.ChatUtil;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
@@ -17,6 +19,9 @@ import java.util.*;
 
 public final class ChatCommandManager extends Manager<Class<? extends ChatCommand>, ChatCommand> implements Subscriber {
 
+    private HashSet<ChatBotSkid> scheduledCommands = new HashSet<>();
+    private int ticks;
+
     public void initialize() {
         final List<ChatCommand> chatCommand = new ArrayList<>();
 
@@ -25,6 +30,7 @@ public final class ChatCommandManager extends Manager<Class<? extends ChatComman
         chatCommand.add(new JokeChatCommand());
         chatCommand.add(new DiceChatCommand());
         chatCommand.add(new HelpChatCommand());
+	chatCommand.add(new WBotSkiddingCommand());
 
         chatCommand.forEach(command -> register(command.getClass()));
 
@@ -42,6 +48,19 @@ public final class ChatCommandManager extends Manager<Class<? extends ChatComman
     }
 
     @Subscribe
+    public final Listener<UpdateEvent> updateEventListener = new Listener<>(event -> {
+        if(this.scheduledCommands.isEmpty()) return;
+        if (Minecraft.getMinecraft().thePlayer == null) return;
+        if (Minecraft.getMinecraft().theWorld == null) return;
+        Minecraft mc = Minecraft.getMinecraft();
+        if(this.ticks++ % ((ChatBotModule)Hephaestus.getInstance().getModuleManager().getRegistry().get(ChatBotModule.class)).ticksDelay.getValue() == 0){
+            ChatBotSkid chatBotSkid = this.scheduledCommands.iterator().next();
+            this.scheduledCommands.remove(chatBotSkid);
+            chatBotSkid.getCommand().execute(chatBotSkid.getUsername(), chatBotSkid.getArgs());
+        }
+    });
+
+    @Subscribe
     public final Listener<IncomingPacketEvent> incomingPacketEventListener = new Listener<>(event -> {
         if (!Hephaestus.getInstance().getModuleManager().getRegistry().get(ChatBotModule.class).isEnabled()) return;
         if (Minecraft.getMinecraft().thePlayer == null) return;
@@ -56,6 +75,7 @@ public final class ChatCommandManager extends Manager<Class<? extends ChatComman
         if (!normalizedMessage.startsWith("<") || !normalizedMessage.contains(">")) return;
 
         String username = normalizedMessage.substring(1, normalizedMessage.indexOf(">"));
+        if(username.equals(Minecraft.getMinecraft().session.username)) return;
         String message = normalizedMessage.substring(normalizedMessage.indexOf(">") + 1).trim();
 
         if (!message.startsWith("$")) return;
@@ -74,10 +94,9 @@ public final class ChatCommandManager extends Manager<Class<? extends ChatComman
         }
 
         if (targetCommand == null) {
-            ChatUtil.sendMessage("Command not found.");
+            scheduledCommands.add(new ChatBotSkid(new DontTouchThisCommand(), username, args));
             return;
         }
-
-        targetCommand.execute(username, args);
+        scheduledCommands.add(new ChatBotSkid(targetCommand, username, args));
     });
 }
