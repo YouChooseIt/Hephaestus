@@ -44,7 +44,7 @@ public final class Hephaestus {
         this.version = "1.0.0";
         this.prefix = ".";
 
-        this.authors = new String[]{"qe7"};
+        this.authors = new String[]{"qe7", "wsndow0", "gameherobrine"};
     }
 
     public void initialize() {
