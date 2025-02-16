@@ -41,7 +41,7 @@ public final class Hephaestus {
         this.relationManager = new RelationManager();
 
         this.name = "Hephaestus";
-        this.version = "1.0.0";
+        this.version = "1.0.2";
         this.prefix = ".";
 
         this.authors = new String[]{"qe7", "wsndow0", "gameherobrine"};
@@ -65,6 +65,7 @@ public final class Hephaestus {
 
         this.getAccountManager().saveAccounts();
         this.getModuleManager().saveModules();
+        this.getModuleManager().savePlates();
         this.getPanelManager().savePanels();
     }
 }

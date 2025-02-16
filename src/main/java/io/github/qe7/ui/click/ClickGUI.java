@@ -1,13 +1,22 @@
 package io.github.qe7.ui.click;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
 import io.github.qe7.ui.click.components.PanelComponent;
+import io.github.qe7.utils.config.FileUtil;
 import net.minecraft.src.GuiScreen;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 public class ClickGUI extends GuiScreen {
+
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private final List<PanelComponent> panelComponentList = new ArrayList<>();
 
@@ -22,6 +31,8 @@ public class ClickGUI extends GuiScreen {
             panelComponentList.add(new PanelComponent(moduleCategory, width, height, x, y));
             y += height + 5;
         }
+
+        this.loadPlates();
     }
 
     @Override
@@ -78,5 +89,31 @@ public class ClickGUI extends GuiScreen {
     @Override
     public boolean doesGuiPauseGame() {
         return false;
+    }
+
+    public void savePlates() {
+        final JsonObject jsonObject = new JsonObject();
+
+        for (PanelComponent panelComponent : panelComponentList) {
+            jsonObject.add(panelComponent.getModuleCategory().getName(), panelComponent.serialize());
+        }
+        
+        FileUtil.writeFile("plates", GSON.toJson(jsonObject));
+    }
+
+    public void loadPlates() {
+        final String config = FileUtil.readFile("plates");
+
+        if (config == null) {
+            return;
+        }
+
+        final JsonObject jsonObject = GSON.fromJson(config, JsonObject.class);
+
+        for (PanelComponent panelComponent : panelComponentList) {
+            if (jsonObject.has(panelComponent.getModuleCategory().getName())) {
+                panelComponent.deserialize(jsonObject.getAsJsonObject(panelComponent.getModuleCategory().getName()));
+            }
+        }
     }
 }

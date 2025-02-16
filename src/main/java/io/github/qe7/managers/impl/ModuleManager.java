@@ -9,14 +9,11 @@ import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
 import io.github.qe7.features.impl.modules.impl.combat.AutoHealModule;
 import io.github.qe7.features.impl.modules.impl.exploit.XCarryModule;
-import io.github.qe7.features.impl.modules.impl.misc.AutoTunnelModule;
 import io.github.qe7.features.impl.modules.impl.combat.AntiKnockBackModule;
 import io.github.qe7.features.impl.modules.impl.combat.ForceFieldModule;
 import io.github.qe7.features.impl.modules.impl.exploit.FastPortalsModule;
 import io.github.qe7.features.impl.modules.impl.exploit.Slot9Module;
 import io.github.qe7.features.impl.modules.impl.misc.*;
-import io.github.qe7.features.impl.modules.impl.misc.AutoListModule;
-import io.github.qe7.features.impl.modules.impl.misc.AutoLoginModule;
 import io.github.qe7.features.impl.modules.impl.movement.*;
 import io.github.qe7.features.impl.modules.impl.render.*;
 import io.github.qe7.managers.api.Manager;
@@ -120,6 +117,10 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         }
     }
 
+    private <T extends Module> T getModule(Class<T> moduleClass) {
+        return moduleClass.cast(getRegistry().get(moduleClass));
+    }
+
     public List<Setting<?>> getSettingsByModule(Module module) {
         return setting.getOrDefault(module, Collections.emptyList());
     }
@@ -153,6 +154,10 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
                 module.deserialize(jsonObject.getAsJsonObject(module.getName()));
             }
         }
+    }
+
+    public void savePlates() {
+        this.getModule(ClickGUIModule.class).savePlates();
     }
 
     @Subscribe

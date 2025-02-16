@@ -396,36 +396,110 @@ public abstract class Minecraft implements Runnable {
     }
 
     public void shutdownMinecraftApplet() {
-        try {
-            statFileWriter.func_27175_b();
-            statFileWriter.syncStats();
-            if (mcApplet != null) {
-                mcApplet.clearApplet();
+        try
+        {
+            if (statFileWriter != null)
+            {
+                try
+                {
+                    statFileWriter.func_27175_b();
+                    statFileWriter.syncStats();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
-            try {
-                if (downloadResourcesThread != null) {
+
+            if (mcApplet != null)
+            {
+                try
+                {
+                    mcApplet.clearApplet();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+            if (downloadResourcesThread != null)
+            {
+                try
+                {
                     downloadResourcesThread.closeMinecraft();
                 }
-            } catch (Exception exception) {
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
-            System.out.println("Stopping!");
-            try {
+
+            System.out.println ("Stopping!");
+
+            try
+            {
                 changeWorld1(null);
-            } catch (Throwable throwable) {
             }
-            try {
+            catch (Throwable throwable)
+            {
+                throwable.printStackTrace();
+            }
+
+            try
+            {
                 GLAllocation.deleteTexturesAndDisplayLists();
-            } catch (Throwable throwable1) {
             }
-            sndManager.closeMinecraft();
-            Mouse.destroy();
-            Keyboard.destroy();
-        } finally {
-            Display.destroy();
-            if (!hasCrashed) {
+            catch (Throwable throwable1)
+            {
+                throwable1.printStackTrace();
+            }
+
+            try
+            {
+                sndManager.closeMinecraft();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            try
+            {
+                if (Mouse.isCreated())
+                {
+                    Mouse.destroy();
+                }
+                if (Keyboard.isCreated())
+                {
+                    Keyboard.destroy();
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        finally
+        {
+            try
+            {
+                if (Display.isCreated())
+                {
+                    Display.destroy();
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            if (!hasCrashed)
+            {
                 System.exit(0);
             }
         }
+
         System.gc();
     }
 

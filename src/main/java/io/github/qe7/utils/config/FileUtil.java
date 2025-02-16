@@ -9,7 +9,7 @@ public final class FileUtil {
 
     private static final String FILE_EXTENSION = ".json";
 
-    private static final String FILE_DIRECTORY = System.getenv("SystemDrive") + File.separator + Hephaestus.getInstance().getName() + File.separator;
+    private static final String FILE_DIRECTORY = System.getProperty("user.home") + File.separator + Hephaestus.getInstance().getName() + File.separator;
 
     private FileUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
@@ -77,6 +77,9 @@ public final class FileUtil {
 
     public static void writeFile(final String fileName, final String content) {
         File file = new File(FILE_DIRECTORY + fileName + FILE_EXTENSION);
+
+        //debug
+        System.out.println("Write file dir: " + FILE_DIRECTORY + fileName + FILE_EXTENSION);
 
         createDirectory();
 

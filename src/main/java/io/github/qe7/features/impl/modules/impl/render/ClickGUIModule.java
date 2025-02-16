@@ -28,4 +28,12 @@ public final class ClickGUIModule extends Module {
         Minecraft.getMinecraft().displayGuiScreen(clickGUI);
         this.setEnabled(false);
     }
+
+    public void savePlates() {
+        if (clickGUI != null) {
+            clickGUI.savePlates();
+        } else {
+            System.out.println("Plate saving skipped");
+        }
+    }
 }

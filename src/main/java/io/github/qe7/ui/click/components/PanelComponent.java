@@ -1,9 +1,15 @@
 package io.github.qe7.ui.click.components;
 
+import com.google.gson.JsonObject;
 import io.github.qe7.Hephaestus;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
+import io.github.qe7.features.impl.modules.api.settings.api.Setting;
 import io.github.qe7.managers.impl.ModuleManager;
+import io.github.qe7.utils.ChatUtil;
+import io.github.qe7.utils.config.Serialized;
+import lombok.Getter;
+import me.zero.alpine.listener.Subscriber;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.Gui;
@@ -17,12 +23,13 @@ import java.util.stream.Collectors;
 
 import org.lwjgl.opengl.GL11;
 
-public class PanelComponent {
+public class PanelComponent implements Serialized {
 	private static final int STENCTIL_ALLOWED = 12;
     private final List<ButtonComponent> buttonComponentList = new ArrayList<>();
 
     private final ScrollBarComponent scrollbar;
     
+    @Getter
     private final ModuleCategory moduleCategory;
 
     private final FontRenderer fontRenderer;
@@ -199,4 +206,22 @@ public class PanelComponent {
 			this.scrollbar.mouseMovedOrUp(mx, my, button);
 		}
 	}
+
+    @Override
+    public JsonObject serialize() {
+        final JsonObject object = new JsonObject();
+
+        object.addProperty("x", x);
+        object.addProperty("y", y);
+        object.addProperty("opened", open);
+
+        return object;
+    }
+
+    @Override
+    public void deserialize(JsonObject object) {
+        x = object.get("x").getAsInt();
+        y = object.get("y").getAsInt();
+        open = object.get("opened").getAsBoolean();
+    }
 }
