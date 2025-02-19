@@ -1,6 +1,7 @@
 package io.github.qe7.type;
 
 public class BlockPos {
+
     public final int x;
     public final int y;
     public final int z;
@@ -18,7 +19,7 @@ public class BlockPos {
     }
 
     public boolean equals(Object o) {
-        BlockPos p = (BlockPos)o;
+        BlockPos p = (BlockPos) o;
         return p.x == this.x && p.y == this.y && p.z == this.z;
     }
 

@@ -1,5 +1,8 @@
 # Hephaestus - 2beta2t Utility Client
 
+[![discord](https://img.shields.io/badge/Discord-join-7289DA.svg)](https://discord.gg/88rmYJQAEf)
+[![license](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://github.com/qe7/Hephaestus/blob/main/LICENSE)
+
 A hacked client designed for use on 2beta2t, providing various utilities and features to enhance gameplay.
 
 Check out the [assets repository](https://github.com/qe7/Hephaestus-Assets) for the assets used in this client.

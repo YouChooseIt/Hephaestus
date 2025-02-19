@@ -69,7 +69,7 @@ public final class AutoTunnelModule extends Module {
         super.onEnable();
 
         if (mc.thePlayer == null) return;
-        mc.thePlayer.setPosition(Math.floor(mc.thePlayer.posX), mc.thePlayer.posY, Math.floor(mc.thePlayer.posZ));
+        mc.thePlayer.setPosition(Math.floor(mc.thePlayer.posX) + 0.5f, mc.thePlayer.posY, Math.floor(mc.thePlayer.posZ) + 0.5f);
     }
 
     @Override
@@ -83,30 +83,30 @@ public final class AutoTunnelModule extends Module {
 
     public Direction getDirection() {
         if (this.direction.getValue() == ModesEnum.ZPOS) {
-            return Direction.ZPOS;
+            return Direction.Z_POS;
         }
         if (this.direction.getValue() == ModesEnum.ZPOSXNEG) {
-            return Direction.ZPOSXNEG;
+            return Direction.Z_POS_X_NEG;
         }
         if (this.direction.getValue() == ModesEnum.XNEG) {
-            return Direction.XNEG;
+            return Direction.X_NEG;
         }
         if (this.direction.getValue() == ModesEnum.ZNEGXNEG) {
-            return Direction.ZNEGXNEG;
+            return Direction.Z_NEG_X_NEG;
         }
         if (this.direction.getValue() == ModesEnum.ZNEG) {
-            return Direction.ZNEG;
+            return Direction.Z_NEG;
         }
         if (this.direction.getValue() == ModesEnum.ZNEGXPOS) {
-            return Direction.ZNEGXPOS;
+            return Direction.Z_NEG_X_POS;
         }
         if (this.direction.getValue() == ModesEnum.XPOS) {
-            return Direction.XPOS;
+            return Direction.X_POS;
         }
         if (this.direction.getValue() == ModesEnum.ZPOSXPOS) {
-            return Direction.ZPOSXPOS;
+            return Direction.Z_POS_X_POS;
         }
-        return Direction.ZPOS;
+        return Direction.Z_POS;
     }
 
     public Order getOrder() {
