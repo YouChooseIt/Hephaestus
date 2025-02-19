@@ -35,6 +35,8 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required for creating releases
 
     steps:
       - name: Checkout code
@@ -49,10 +51,10 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: nightly-v1.0.0
-          release_name: "Hephaestus nightly-v1.0.0"
+          tag_name: v1.0.0
+          name: "Hephaestus v1.0.0"
           draft: false
           prerelease: false
           files: artifacts/Hephaestus-1.0.0-SNAPSHOT-all.jar
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Use a personal access token
