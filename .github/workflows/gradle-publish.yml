@@ -48,11 +48,14 @@ jobs:
           name: Hephaestus-JAR
           path: artifacts/
 
+      - name: Get short commit SHA
+        run: echo "TAG_NAME=Alpha-v1.0.0-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.0
-          name: "Hephaestus v1.0.0"
+          tag_name: ${{ env.TAG_NAME }}
+          name: "Hephaestus ${{ env.TAG_NAME }}"
           draft: false
           prerelease: false
           files: artifacts/Hephaestus-1.0.0-SNAPSHOT-all.jar
