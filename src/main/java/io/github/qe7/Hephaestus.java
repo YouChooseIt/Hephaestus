@@ -48,7 +48,7 @@ public final class Hephaestus {
     }
 
     public void initialize() {
-        System.out.println("Initializing " + this.getName() + "...");
+        System.out.println("Initializing " + this.getName() + ".");
 
         this.getAccountManager().initialize();
         this.getModuleManager().initialize();
@@ -61,7 +61,7 @@ public final class Hephaestus {
     }
 
     public void shutdown() {
-        System.out.println("Shutting down " + this.getName() + "...");
+        System.out.println("Shutting down " + this.getName() + ".");
 
         this.getAccountManager().saveAccounts();
         this.getModuleManager().saveModules();
