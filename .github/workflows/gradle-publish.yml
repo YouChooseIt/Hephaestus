@@ -1,4 +1,4 @@
-name: Build JAR and Create Release
+name: Build JAR with Gradle (Java 8 - Corretto)
 
 on:
   push:
@@ -7,17 +7,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK
+      - name: Set up JDK (Corretto 8)
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: 'corretto'
+          java-version: '8'
 
       - name: Make gradlew executable
         run: chmod +x gradlew
@@ -25,23 +25,8 @@ jobs:
       - name: Build JAR
         run: ./gradlew build
 
-      - name: Create GitHub Release
-        id: create-release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload JAR as artifact
+        uses: actions/upload-artifact@v3
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-      - name: Upload JAR to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create-release.outputs.upload_url }}
-          asset_path: build/libs/Hephaestus-1.0.0-SNAPSHOT-all.jar
-          asset_name: Hephaestus-1.0.0-SNAPSHOT-all.jar
-          asset_content_type: application/java-archive
+          name: Hephaestus-1.0.0-SNAPSHOT-all.jar
+          path: build/libs/Hephaestus-1.0.0-SNAPSHOT-all.jar
