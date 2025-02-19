@@ -1,4 +1,4 @@
-name: Build JAR with Gradle (Java 8 - Corretto)
+name: Build and Release JAR (Java 8 - Corretto)
 
 on:
   push:
@@ -31,4 +31,33 @@ jobs:
         with:
           name: Hephaestus-JAR
           path: build/libs/Hephaestus-1.0.0-SNAPSHOT-all.jar
-          compression-level: 0
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required for creating releases
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download JAR from artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Hephaestus-JAR
+          path: artifacts/
+
+      - name: Get short commit SHA
+        run: echo "TAG_NAME=Alpha-v1.0.0-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+          name: "Hephaestus ${{ env.TAG_NAME }}"
+          draft: false
+          prerelease: false
+          files: artifacts/Hephaestus-1.0.0-SNAPSHOT-all.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Use a personal access token
