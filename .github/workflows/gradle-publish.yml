@@ -27,8 +27,8 @@ jobs:
         run: ./gradlew build --no-daemon
 
       - name: Upload JAR as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Hephaestus-JAR
           path: build/libs/Hephaestus-1.0.0-SNAPSHOT-all.jar
-
+          compression-level: 0
