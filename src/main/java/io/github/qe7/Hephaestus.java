@@ -41,7 +41,7 @@ public final class Hephaestus {
         this.relationManager = new RelationManager();
 
         this.name = "Hephaestus";
-        this.version = "1.0.2";
+        this.version = "1.0.0";
         this.prefix = ".";
 
         this.authors = new String[]{"qe7", "wsndow0", "gameherobrine"};
