@@ -63,14 +63,14 @@ public class IntComponent extends AbstractPropertyComponent {
 
     private void updateSlider(int mouseX) {
         double relativeMouseX = Math.min(Math.max(mouseX - x - 5, 0), width - 10);
-        double newValue = setting.getMinimum() + (relativeMouseX / (float)(width - 10)) * (setting.getMaximum() - setting.getMinimum());
-
-        if (newValue < setting.getMinimum()) {
-            newValue = setting.getMinimum();
-        } else if (newValue > setting.getMaximum()) {
-            newValue = setting.getMaximum();
-        }
-
+        double range = setting.getMaximum() - setting.getMinimum();
+        double rawValue = setting.getMinimum() + (relativeMouseX / (width - 10)) * range;
+    
+        int step = setting.getStep();
+        int newValue = setting.getMinimum() + (int) (Math.round((rawValue - setting.getMinimum()) / (double) step) * step);
+    
+        newValue = Math.max(setting.getMinimum(), Math.min(newValue, setting.getMaximum()));
+        
         setting.setValue((int) newValue);
     }
 }
