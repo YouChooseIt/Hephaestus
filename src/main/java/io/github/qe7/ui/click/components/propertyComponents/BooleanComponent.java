@@ -35,7 +35,7 @@ public class BooleanComponent extends AbstractPropertyComponent {
     public void mouseClicked(int mouseX, int mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button);
 
-        if (mouseX >= x + width - 14 && mouseX <= x + width - 6 && mouseY >= y + 3 && mouseY <= y + height - 3) {
+        if (mouseX >= x + width - 14 && mouseX <= x + width - 6 && mouseY > y + 3 && mouseY <= y + height - 3) {
             this.setting.setValue(!this.setting.getValue());
         }
     }

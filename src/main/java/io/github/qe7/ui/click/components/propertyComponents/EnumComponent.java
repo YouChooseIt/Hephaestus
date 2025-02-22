@@ -28,7 +28,7 @@ public class EnumComponent extends AbstractPropertyComponent {
     public void mouseClicked(int mouseX, int mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button);
 
-        if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+        if (mouseX >= x && mouseX <= x + width && mouseY > y && mouseY <= y + height) {
             switch (button) {
                 case 0:
                     this.setting.cycleForward();

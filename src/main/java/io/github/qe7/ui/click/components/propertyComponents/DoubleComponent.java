@@ -44,7 +44,7 @@ public class DoubleComponent extends AbstractPropertyComponent {
         super.mouseClicked(mouseX, mouseY, button);
 
         if (button == 0) {
-            if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+            if (mouseX >= x && mouseX <= x + width && mouseY > y && mouseY <= y + height) {
                 dragging = true;
                 updateSlider(mouseX);
             }

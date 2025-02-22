@@ -61,7 +61,7 @@ public class KeyBindComponent extends AbstractPropertyComponent {
     public void mouseClicked(int mouseX, int mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button);
 
-        if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height && button == 0) {
+        if (mouseX >= x && mouseX <= x + width && mouseY > y && mouseY <= y + height && button == 0) {
             this.isListening = !this.isListening;
         }
     }
