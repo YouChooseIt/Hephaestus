@@ -12,7 +12,8 @@ public enum ModuleCategory {
     MOVEMENT("Movement", new Color(119, 221, 119)),
     RENDER("Render", new Color(253, 253, 150)),
     MISC("Misc", new Color(174, 198, 207)),
-    EXPLOIT("Exploit", new Color(255, 45, 140));
+    EXPLOIT("Exploit", new Color(255, 45, 140)),
+    BUILD("AutoBuild", new Color(174, 198, 207));
 
     private final String name;
     private final Color color;
