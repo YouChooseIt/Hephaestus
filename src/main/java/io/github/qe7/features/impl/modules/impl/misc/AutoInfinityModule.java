@@ -31,11 +31,15 @@ public final class AutoInfinityModule extends Module {
 
     private long dropDelay = 500L;
 
+    private int startStackSize = 0;
+
     private final Queue<DropTask> dropQueue = new LinkedList<>();
 
     public BooleanSetting requireQ = new BooleanSetting("Require Q", true);
 
     private final IntSetting maxAttempts = new IntSetting("Drop blocks per Q", 5, 5, 140, 5);
+
+    private final BooleanSetting usualDropFix = new BooleanSetting("Fix all drop for negative inf items", true);
 
     public AutoInfinityModule() {
         super("AutoInfinity", "Automatically drops an infinite positive item to negative.", ModuleCategory.MISC);
@@ -48,7 +52,9 @@ public final class AutoInfinityModule extends Module {
         }
 
         ItemStack stack = mc.thePlayer.getCurrentEquippedItem();
-        if (stack == null || (stack.stackSize < 0 && stack.stackSize > -129)) {
+        if (stack == null) {
+            return;
+        } else if (!usualDropFix.getValue() && (stack.stackSize < 0 && stack.stackSize > -129)) {
             return;
         }
 
@@ -82,7 +88,11 @@ public final class AutoInfinityModule extends Module {
         }
 
         DropTask task = dropQueue.poll();
+
         lastDropTime = System.currentTimeMillis();
+
+        int taskMaxAttempts = maxAttempts.getValue();
+        if(startStackSize < 0 && usualDropFix.getValue()) taskMaxAttempts = 1;
 
         //System.out.println("[AutoInf~] Dropping attempt: " + task.attempt);
         //ItemStack stack = mc.thePlayer.inventory.getItemStack();
@@ -90,10 +100,13 @@ public final class AutoInfinityModule extends Module {
 
 
         if (task.attempt == 0) {
+            ItemStack stack = mc.thePlayer.getCurrentEquippedItem();
+            startStackSize = stack.stackSize;
+
             mc.playerController.func_27174_a(mc.thePlayer.inventorySlots.windowId, task.slot, 0, false, mc.thePlayer);
 
             dropQueue.add(new DropTask(task.slot, task.attempt + 1));
-        } else if (task.attempt <= maxAttempts.getValue()) {
+        } else if (task.attempt <= taskMaxAttempts) {
             if (task.attempt == 1) dropDelay = 60L;
 
             mc.playerController.func_27174_a(mc.thePlayer.inventorySlots.windowId, -999, 1, false, mc.thePlayer);
@@ -108,6 +121,7 @@ public final class AutoInfinityModule extends Module {
 
             dropping = false;
             dropDelay = 500L;
+            startStackSize = 0;
         }
     }
 
