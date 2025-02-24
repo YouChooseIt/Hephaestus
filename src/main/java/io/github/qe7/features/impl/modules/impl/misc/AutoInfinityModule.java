@@ -39,7 +39,7 @@ public final class AutoInfinityModule extends Module {
 
     private final IntSetting maxAttempts = new IntSetting("Drop blocks per Q", 5, 5, 140, 5);
 
-    private final BooleanSetting usualDropFix = new BooleanSetting("Fix all drop for negative inf items", true);
+    private final BooleanSetting usualDropFix = new BooleanSetting("Fix negative drop", true);
 
     public AutoInfinityModule() {
         super("AutoInfinity", "Automatically drops an infinite positive item to negative.", ModuleCategory.MISC);

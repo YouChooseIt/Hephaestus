@@ -99,7 +99,9 @@ public final class ScaffoldModule extends Module {
         ) {
             return false;
         }
-        return id == 0 || id == 10 || id == 11 || id == 8 || id == 9;
+
+        return id == 0 || id == Block.waterMoving.blockID || id == Block.waterStill.blockID 
+            || id == Block.lavaMoving.blockID || id == Block.lavaStill.blockID;
     }
 
     public void placeBlock(int x, int y, int z) {
@@ -108,6 +110,13 @@ public final class ScaffoldModule extends Module {
         ItemStack currentItem = player.inventory.getCurrentItem();
 
         if (currentItem == null) {
+            return;
+        }
+
+        int centerX = MathHelper.floor_double(player.posX);
+        int centerZ = MathHelper.floor_double(player.posZ);
+        int centerY = MathHelper.floor_double(player.posY);
+        if (x == centerX && (y == centerY || y == centerY - 1) && z == centerZ) {
             return;
         }
 
@@ -124,7 +133,6 @@ public final class ScaffoldModule extends Module {
             int px = dir[0], py = dir[1], pz = dir[2], side = dir[3];
             if (!canPlaceBlock(px, py, pz)) {
                 mc.playerController.sendPlaceBlock(player, world, currentItem, px, py, pz, side);
-                PlayerUtil.placeBlock(px, py, pz, side);
                 return;
             }
         }
