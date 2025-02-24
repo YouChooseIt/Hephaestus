@@ -129,7 +129,7 @@ public class PlayerController
 
     public ItemStack func_27174_a(int i, int j, int k, boolean flag, EntityPlayer entityplayer)
     {
-        return entityplayer.craftingInventory.func_27280_a(j, k, flag, entityplayer);
+        return entityplayer.craftingInventory.handleSlotClick(j, k, flag, entityplayer);
     }
 
     public void func_20086_a(int i, EntityPlayer entityplayer)

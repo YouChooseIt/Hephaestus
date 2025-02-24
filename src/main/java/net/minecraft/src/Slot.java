@@ -43,6 +43,15 @@ public class Slot
     {
         inventory.setInventorySlotContents(slotIndex, itemstack);
         onSlotChanged();
+
+        //HephDebug
+        /* StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        System.out.println("======================================");
+        System.out.println("putStack stack trace; slot index: " + slotIndex + ", count: " + ((itemstack == null) ? "null" : itemstack.stackSize));
+
+        for (int i = 2; i < Math.min(stackTrace.length, 17); i++) {
+            System.out.println(stackTrace[i]);
+        } */
     }
 
     public void onSlotChanged()
