@@ -70,7 +70,7 @@ public final class ExtrudeModule extends Module {
 
                 // System.out.println("[Extrude Module] <<<<<<<<<<<<<BLOCK PLACED>>>>>>>>>>>>>");
                 // System.out.println("[Extrude Module] Block placed: " + placement.x + ", " + placement.y + ", " + placement.z);
-                // placeBlock(placement.x, placement.y, placement.z);
+                placeBlock(placement.x, placement.y, placement.z);
                 lastPlaceTime += 100;
             }
         } else if (pendingPlacements.isEmpty() && processing &&
