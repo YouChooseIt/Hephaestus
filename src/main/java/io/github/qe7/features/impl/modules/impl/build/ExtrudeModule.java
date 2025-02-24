@@ -37,7 +37,7 @@ public final class ExtrudeModule extends Module {
     private boolean processing = false;
 
     public ExtrudeModule() {
-        super("Extrude", "Completes placed block up in the places where such a block is located on the plane.", ModuleCategory.BUILD);
+        super("Extrude", "Copies the pattern on plane up the Y-axis, duplicating the blocks layer by layer.", ModuleCategory.BUILD);
     }
 
     @Override
