@@ -8,6 +8,7 @@ import io.github.qe7.features.impl.modules.api.ModuleCategory;
 import io.github.qe7.features.impl.modules.api.settings.impl.BooleanSetting;
 import io.github.qe7.features.impl.modules.api.settings.impl.IntSetting;
 import io.github.qe7.utils.PacketUtil;
+import lombok.Getter;
 import me.zero.alpine.listener.Listener;
 import me.zero.alpine.listener.Subscribe;
 import net.minecraft.client.Minecraft;
@@ -23,7 +24,8 @@ public final class AutoInfinityModule extends Module {
 
     private final Minecraft mc = Minecraft.getMinecraft();
 
-    private boolean isDropping = false;
+    @Getter
+    private boolean dropping = false;
 
     private long lastDropTime = 0;
 
@@ -52,12 +54,12 @@ public final class AutoInfinityModule extends Module {
 
         event.cancel();
 
-        if(!isDropping) autoDrop();
+        if(!dropping) autoDrop();
     });
 
     @Subscribe
     public final Listener<UpdateEvent> updateEventListener = new Listener<>(event -> {
-        if (isDropping) {
+        if (dropping) {
             processDropQueue();
         }
     });
@@ -66,12 +68,12 @@ public final class AutoInfinityModule extends Module {
         int slot = 36 + mc.thePlayer.inventory.currentItem;
         dropQueue.clear();
         dropQueue.add(new DropTask(slot, 0));
-        isDropping = true;
+        dropping = true;
     }
 
     private void processDropQueue() {
         if (dropQueue.isEmpty()) {
-            isDropping = false;
+            dropping = false;
             return;
         }
 
@@ -92,7 +94,7 @@ public final class AutoInfinityModule extends Module {
 
             dropQueue.add(new DropTask(task.slot, task.attempt + 1));
         } else if (task.attempt <= maxAttempts.getValue()) {
-            if (task.attempt == 1) dropDelay = 100L;
+            if (task.attempt == 1) dropDelay = 60L;
 
             mc.playerController.func_27174_a(mc.thePlayer.inventorySlots.windowId, -999, 1, false, mc.thePlayer);
 
@@ -104,7 +106,7 @@ public final class AutoInfinityModule extends Module {
                 PacketUtil.sendPacket(new Packet101CloseWindow(mc.thePlayer.inventorySlots.windowId));
             }
 
-            isDropping = false;
+            dropping = false;
             dropDelay = 500L;
         }
     }

@@ -1,8 +1,8 @@
 package io.github.qe7.features.impl.modules.impl.misc;
 
+import io.github.qe7.Hephaestus;
 import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.events.UpdateEvent;
-import io.github.qe7.events.render.RenderScreenEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
 import io.github.qe7.features.impl.modules.api.settings.impl.BooleanSetting;
@@ -58,6 +58,10 @@ public final class Auto127Module extends Module {
 
     @Subscribe
     public final Listener<KeyPressEvent> keyPressEventListener = new Listener<>(event -> {
+        if (Hephaestus.getInstance().getModuleManager().getRegistry().get(AutoInfinityModule.class).isEnabled()) {
+            return;
+        }
+
         if (!requireQ.getValue()) {
             return;
         }

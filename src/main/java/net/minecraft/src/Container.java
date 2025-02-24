@@ -127,9 +127,9 @@ public abstract class Container
                         if (carriedStack != null && slot.isItemValid(carriedStack)) {
                             // The selected item is transferred to the item in the inventory
                             int amountToMove = (clickType != 0) ? 1 : carriedStack.stackSize;
-                            if (amountToMove > slot.getSlotStackLimit()) {
+                            /* if (amountToMove > slot.getSlotStackLimit()) {
                                 amountToMove = slot.getSlotStackLimit();
-                            }
+                            } */
                             slot.putStack(carriedStack.splitStack(amountToMove));
                             if (carriedStack.stackSize == 0) {
                                 playerInventory.setItemStack(null);
