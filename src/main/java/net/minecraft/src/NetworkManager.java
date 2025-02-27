@@ -59,6 +59,9 @@ public class NetworkManager {
             return;
         }
 
+        //HephDebug
+        //System.out.println("[~~~::>>>]+ " + packet.getClass().getName());
+
         synchronized (sendQueueLock) {
             sendQueueByteLength += packet.getPacketSize() + 1;
             if (packet.isChunkDataPacket) {
@@ -179,6 +182,8 @@ public class NetworkManager {
         Packet packet;
         for (int i = 100; !readPackets.isEmpty() && i-- >= 0; packet.processPacket(netHandler)) {
             packet = (Packet) readPackets.remove(0);
+            //HephDebug
+            //System.out.println("[~~~]+ " + packet.getClass().getName());
         }
 
         wakeThreads();

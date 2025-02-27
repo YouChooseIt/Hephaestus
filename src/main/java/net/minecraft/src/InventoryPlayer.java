@@ -426,6 +426,16 @@ public class InventoryPlayer
     {
         itemStack = itemstack;
         player.onItemStackChanged(itemstack);
+
+        //HephDebug
+        /* System.out.println("======================================");
+        if(itemstack == null) System.out.println("> setItemStack null");
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        System.out.println("setItemStack stack trace:");
+
+        for (int i = 2; i < Math.min(stackTrace.length, 17); i++) {
+            System.out.println(stackTrace[i]);
+        } */
     }
 
     public ItemStack getItemStack()

@@ -1,4 +1,4 @@
-package io.github.qe7.features.impl.modules.impl.misc;
+package io.github.qe7.features.impl.modules.impl.movement;
 
 import io.github.qe7.events.UpdateEvent;
 import io.github.qe7.features.impl.modules.api.Module;
@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 public final class YawModule extends Module {
 
     public YawModule() {
-        super("Yaw", "Locks the player's Yaw to the closest 45* cardinal", ModuleCategory.MISC);
+        super("Yaw", "Locks the player's Yaw to the closest 45* cardinal", ModuleCategory.MOVEMENT);
     }
 
     @Subscribe

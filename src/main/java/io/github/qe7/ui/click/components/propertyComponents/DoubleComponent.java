@@ -44,7 +44,7 @@ public class DoubleComponent extends AbstractPropertyComponent {
         super.mouseClicked(mouseX, mouseY, button);
 
         if (button == 0) {
-            if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+            if (mouseX >= x && mouseX <= x + width && mouseY > y && mouseY <= y + height) {
                 dragging = true;
                 updateSlider(mouseX);
             }
@@ -62,17 +62,15 @@ public class DoubleComponent extends AbstractPropertyComponent {
 
     private void updateSlider(int mouseX) {
         double relativeMouseX = Math.min(Math.max(mouseX - x - 5, 0), width - 10);
-        double newValue = setting.getMinimum() + (relativeMouseX / (float)(width - 10)) * (setting.getMaximum() - setting.getMinimum());
-
-        // round to nearest 0.1
-        newValue = Math.round(newValue * 10.0) / 10.0;
-
-        if (newValue < setting.getMinimum()) {
-            newValue = setting.getMinimum();
-        } else if (newValue > setting.getMaximum()) {
-            newValue = setting.getMaximum();
-        }
-
+        double range = setting.getMaximum() - setting.getMinimum();
+        double rawValue = setting.getMinimum() + (relativeMouseX / (width - 10)) * range;
+    
+        double step = setting.getStep();
+        double newValue = setting.getMinimum() + Math.round((rawValue - setting.getMinimum()) / step) * step;
+    
+        newValue = Math.max(setting.getMinimum(), Math.min(newValue, setting.getMaximum()));
+    
         setting.setValue(newValue);
     }
+    
 }

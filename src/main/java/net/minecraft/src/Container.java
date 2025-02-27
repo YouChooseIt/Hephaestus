@@ -4,6 +4,9 @@
 
 package net.minecraft.src;
 
+import io.github.qe7.Hephaestus;
+import io.github.qe7.features.impl.modules.impl.misc.Auto127Module;
+import io.github.qe7.features.impl.modules.impl.misc.AutoInfinityModule;
 import java.util.*;
 
 // Referenced classes of package net.minecraft.src:
@@ -68,134 +71,124 @@ public abstract class Container
         }
     }
 
-    public ItemStack func_27280_a(int i, int j, boolean flag, EntityPlayer entityplayer)
-    {
-        ItemStack itemstack = null;
-        if(j == 0 || j == 1)
-        {
-            InventoryPlayer inventoryplayer = entityplayer.inventory;
-            if(i == -999)
-            {
-                if(inventoryplayer.getItemStack() != null && i == -999)
-                {
-                    if(j == 0)
-                    {
-                        entityplayer.dropPlayerItem(inventoryplayer.getItemStack());
-                        inventoryplayer.setItemStack(null);
+    public ItemStack handleSlotClick(int slotId, int clickType, boolean isShiftClick, EntityPlayer player) {
+        AutoInfinityModule AutoInfinityModule = Hephaestus.getInstance().getModuleManager().getModule(AutoInfinityModule.class);
+
+        ItemStack resultStack = null;
+        // Handle click: 0 (left-click), 1 (right-click)
+        if (clickType == 0 || clickType == 1) {
+            InventoryPlayer playerInventory = player.inventory;
+            
+            // Clicking outside the inventory
+            if (slotId == -999) {
+                if (playerInventory.getItemStack() != null) {
+                    if (clickType == 0) {
+                        player.dropPlayerItem(playerInventory.getItemStack());
+                        playerInventory.setItemStack(null);
                     }
-                    if(j == 1)
-                    {
-                        entityplayer.dropPlayerItem(inventoryplayer.getItemStack().splitStack(1));
-                        if(inventoryplayer.getItemStack().stackSize == 0)
-                        {
-                            inventoryplayer.setItemStack(null);
+                    if (clickType == 1) {
+                        player.dropPlayerItem(playerInventory.getItemStack().splitStack(1));
+                        if (playerInventory.getItemStack().stackSize == 0) {
+                            if(
+                                !(AutoInfinityModule.isEnabled()))
+                            {
+                                playerInventory.setItemStack(null);
+                            }
                         }
                     }
                 }
-            } else
-            if(flag)
-            {
-                ItemStack itemstack1 = getStackInSlot(i);
-                if(itemstack1 != null)
-                {
-                    int k = itemstack1.stackSize;
-                    itemstack = itemstack1.copy();
-                    Slot slot1 = (Slot)slots.get(i);
-                    if(slot1 != null && slot1.getStack() != null)
-                    {
-                        int l = slot1.getStack().stackSize;
-                        if(l < k)
-                        {
-                            func_27280_a(i, j, flag, entityplayer);
+            } else if (isShiftClick) {
+                // Shift-click: operate on the stack in the slot.
+                ItemStack slotStack = getStackInSlot(slotId);
+                if (slotStack != null) {
+                    int originalStackSize = slotStack.stackSize;
+                    resultStack = slotStack.copy();
+                    Slot currentSlot = (Slot) slots.get(slotId);
+                    if (currentSlot != null && currentSlot.getStack() != null) {
+                        int currentSlotStackSize = currentSlot.getStack().stackSize;
+                        if (currentSlotStackSize < originalStackSize) {
+                            handleSlotClick(slotId, clickType, isShiftClick, player);
                         }
                     }
                 }
-            } else
-            {
-                Slot slot = (Slot)slots.get(i);
-                if(slot != null)
-                {
+            } else {
+                Slot slot = (Slot) slots.get(slotId);
+                if (slot != null) {
                     slot.onSlotChanged();
-                    ItemStack itemstack2 = slot.getStack();
-                    ItemStack itemstack3 = inventoryplayer.getItemStack();
-                    if(itemstack2 != null)
-                    {
-                        itemstack = itemstack2.copy();
+                    ItemStack clickedStack = slot.getStack();
+                    ItemStack carriedStack = playerInventory.getItemStack();
+                    
+                    if (clickedStack != null) {
+                        resultStack = clickedStack.copy();
                     }
-                    if(itemstack2 == null)
-                    {
-                        if(itemstack3 != null && slot.isItemValid(itemstack3))
-                        {
-                            int i1 = j != 0 ? 1 : itemstack3.stackSize;
-                            if(i1 > slot.getSlotStackLimit())
-                            {
-                                i1 = slot.getSlotStackLimit();
-                            }
-                            slot.putStack(itemstack3.splitStack(i1));
-                            if(itemstack3.stackSize == 0)
-                            {
-                                inventoryplayer.setItemStack(null);
+                    
+                    // If the slot is empty
+                    if (clickedStack == null) {
+                        if (carriedStack != null && slot.isItemValid(carriedStack)) {
+                            // The selected item is transferred to the item in the inventory
+                            int amountToMove = (clickType != 0) ? 1 : carriedStack.stackSize;
+                            /* if (amountToMove > slot.getSlotStackLimit()) {
+                                amountToMove = slot.getSlotStackLimit();
+                            } */
+                            slot.putStack(carriedStack.splitStack(amountToMove));
+                            if (carriedStack.stackSize == 0) {
+                                playerInventory.setItemStack(null);
                             }
                         }
-                    } else
-                    if(itemstack3 == null)
-                    {
-                        int j1 = j != 0 ? (itemstack2.stackSize + 1) / 2 : itemstack2.stackSize;
-                        ItemStack itemstack5 = slot.decrStackSize(j1);
-                        inventoryplayer.setItemStack(itemstack5);
-                        if(itemstack2.stackSize == 0)
-                        {
+                    }
+                    else if (carriedStack == null) {
+                        int removeAmount = (clickType != 0) ? (clickedStack.stackSize + 1) / 2 : clickedStack.stackSize;
+                        ItemStack removedStack = slot.decrStackSize(removeAmount);
+                        playerInventory.setItemStack(removedStack);
+                        if (clickedStack.stackSize == 0) {
                             slot.putStack(null);
                         }
-                        slot.onPickupFromSlot(inventoryplayer.getItemStack());
-                    } else
-                    if(slot.isItemValid(itemstack3))
-                    {
-                        if(itemstack2.itemID != itemstack3.itemID || itemstack2.getHasSubtypes() && itemstack2.getItemDamage() != itemstack3.getItemDamage())
-                        {
-                            if(itemstack3.stackSize <= slot.getSlotStackLimit())
-                            {
-                                ItemStack itemstack4 = itemstack2;
-                                slot.putStack(itemstack3);
-                                inventoryplayer.setItemStack(itemstack4);
+                        slot.onPickupFromSlot(playerInventory.getItemStack());
+                    }
+                    else if (slot.isItemValid(carriedStack)) {
+                        // If the items are different or have different metadata.
+                        if (clickedStack.itemID != carriedStack.itemID ||
+                            (clickedStack.getHasSubtypes() && clickedStack.getItemDamage() != carriedStack.getItemDamage())) {
+                            if (carriedStack.stackSize <= slot.getSlotStackLimit()) {
+                                ItemStack tempStack = clickedStack;
+                                slot.putStack(carriedStack);
+                                playerInventory.setItemStack(tempStack);
                             }
-                        } else
-                        {
-                            int k1 = j != 0 ? 1 : itemstack3.stackSize;
-                            if(k1 > slot.getSlotStackLimit() - itemstack2.stackSize)
-                            {
-                                k1 = slot.getSlotStackLimit() - itemstack2.stackSize;
+                        } else {
+                            // Items are the same; merge stacks as much as possible.
+                            int transferAmount = (clickType != 0) ? 1 : carriedStack.stackSize;
+                            int maxTransferBySlotLimit = slot.getSlotStackLimit() - clickedStack.stackSize;
+                            if (transferAmount > maxTransferBySlotLimit) {
+                                transferAmount = maxTransferBySlotLimit;
                             }
-                            if(k1 > itemstack3.getMaxStackSize() - itemstack2.stackSize)
-                            {
-                                k1 = itemstack3.getMaxStackSize() - itemstack2.stackSize;
+                            int maxTransferByItemLimit = carriedStack.getMaxStackSize() - clickedStack.stackSize;
+                            if (transferAmount > maxTransferByItemLimit) {
+                                transferAmount = maxTransferByItemLimit;
                             }
-                            itemstack3.splitStack(k1);
-                            if(itemstack3.stackSize == 0)
-                            {
-                                inventoryplayer.setItemStack(null);
+                            carriedStack.splitStack(transferAmount);
+                            if (carriedStack.stackSize == 0) {
+                                playerInventory.setItemStack(null);
                             }
-                            itemstack2.stackSize += k1;
+                            clickedStack.stackSize += transferAmount;
                         }
-                    } else
-                    if(itemstack2.itemID == itemstack3.itemID && itemstack3.getMaxStackSize() > 1 && (!itemstack2.getHasSubtypes() || itemstack2.getItemDamage() == itemstack3.getItemDamage()))
-                    {
-                        int l1 = itemstack2.stackSize;
-                        if(l1 > 0 && l1 + itemstack3.stackSize <= itemstack3.getMaxStackSize())
-                        {
-                            itemstack3.stackSize += l1;
-                            itemstack2.splitStack(l1);
-                            if(itemstack2.stackSize == 0)
-                            {
+                    }
+                    else if (clickedStack.itemID == carriedStack.itemID &&
+                             carriedStack.getMaxStackSize() > 1 &&
+                             (!clickedStack.getHasSubtypes() || clickedStack.getItemDamage() == carriedStack.getItemDamage())) {
+                        int clickedStackSize = clickedStack.stackSize;
+                        if (clickedStackSize > 0 && clickedStackSize + carriedStack.stackSize <= carriedStack.getMaxStackSize()) {
+                            carriedStack.stackSize += clickedStackSize;
+                            clickedStack.splitStack(clickedStackSize);
+                            if (clickedStack.stackSize == 0) {
                                 slot.putStack(null);
                             }
-                            slot.onPickupFromSlot(inventoryplayer.getItemStack());
+                            slot.onPickupFromSlot(playerInventory.getItemStack());
                         }
                     }
                 }
             }
         }
-        return itemstack;
+        return resultStack;
     }
 
     public void onCraftGuiClosed(EntityPlayer entityplayer)

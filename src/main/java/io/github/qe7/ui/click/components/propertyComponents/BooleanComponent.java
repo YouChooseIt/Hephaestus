@@ -23,7 +23,7 @@ public class BooleanComponent extends AbstractPropertyComponent {
 
         this.fontRenderer.drawStringWithShadow(this.setting.getName(), x + 7, y + 3, -1);
 
-        Gui.drawRect(x + width - 14, y + 3, x + width - 6, y + height - 3, this.setting.getValue() ? new Color(29, 34, 54, 255).getRGB() : new Color(21, 21, 21, 128).getRGB());
+        Gui.drawRect(x + width - 14, y + 3, x + width - 6, y + height - 3, this.setting.getValue() ? new Color(89, 91, 197, 255).getRGB() : new Color(21, 21, 21, 128).getRGB());
         
         Gui.drawRect(x + width - 14 - 0.5f, y + 3 - 0.5f, x + width - 6 + 0.5f, y + 3, new Color(0, 0, 0, 255).getRGB());
         Gui.drawRect(x + width - 14 - 0.5f, y + height - 3, x + width - 6 + 0.5f, y + height - 3 + 0.5f, new Color(0, 0, 0, 255).getRGB());
@@ -35,7 +35,7 @@ public class BooleanComponent extends AbstractPropertyComponent {
     public void mouseClicked(int mouseX, int mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button);
 
-        if (mouseX >= x + width - 14 && mouseX <= x + width - 6 && mouseY >= y + 3 && mouseY <= y + height - 3) {
+        if (mouseX >= x + width - 14 && mouseX <= x + width - 6 && mouseY > y + 3 && mouseY <= y + height - 3) {
             this.setting.setValue(!this.setting.getValue());
         }
     }

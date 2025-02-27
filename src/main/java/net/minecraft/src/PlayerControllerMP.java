@@ -177,6 +177,11 @@ public class PlayerControllerMP extends PlayerController
     public boolean sendPlaceBlock(EntityPlayer entityplayer, World world, ItemStack itemstack, int i, int j, int k, int l)
     {
         syncCurrentPlayItem();
+        //HephDebug
+        /* System.out.println("[PlayerControllerMP] - Place block packet: {X: " +
+        i + ", Y: " + j + ", Z: " + k + ", SIDE: " + l + ", ID: "
+        + entityplayer.inventory.getCurrentItem().itemID + ", Size:" +
+        + entityplayer.inventory.getCurrentItem().stackSize + "}"); */
         netClientHandler.addToSendQueue(new Packet15Place(i, j, k, l, entityplayer.inventory.getCurrentItem()));
         boolean flag = super.sendPlaceBlock(entityplayer, world, itemstack, i, j, k, l);
         return flag;

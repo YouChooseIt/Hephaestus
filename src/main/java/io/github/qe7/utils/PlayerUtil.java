@@ -28,6 +28,11 @@ public final class PlayerUtil {
     }
 
     public static void placeBlock(int x, int y, int z, int side) {
+        //HephDebug
+        /* System.out.println("[PlayerUtil] - Place block packet: {X: " +
+        x + ", Y: " + y + ", Z: " + z + ", SIDE: " + side + ", ID: "
+        + Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().itemID + ", Size:" +
+        + Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().stackSize + "}"); */
         if (Minecraft.getMinecraft().isMultiplayerWorld()) {
             Minecraft.getMinecraft().getSendQueue().addToSendQueue(new Packet15Place(x, y, z, side, Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem()));
             return;

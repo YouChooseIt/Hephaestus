@@ -8,14 +8,15 @@ import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
 import io.github.qe7.features.impl.modules.impl.combat.AutoHealModule;
-import io.github.qe7.features.impl.modules.impl.exploit.XCarryModule;
 import io.github.qe7.features.impl.modules.impl.combat.AntiKnockBackModule;
 import io.github.qe7.features.impl.modules.impl.combat.ForceFieldModule;
+import io.github.qe7.features.impl.modules.impl.exploit.XCarryModule;
 import io.github.qe7.features.impl.modules.impl.exploit.FastPortalsModule;
 import io.github.qe7.features.impl.modules.impl.exploit.Slot9Module;
-import io.github.qe7.features.impl.modules.impl.misc.*;
 import io.github.qe7.features.impl.modules.impl.movement.*;
 import io.github.qe7.features.impl.modules.impl.render.*;
+import io.github.qe7.features.impl.modules.impl.build.*;
+import io.github.qe7.features.impl.modules.impl.misc.*;
 import io.github.qe7.managers.api.Manager;
 import io.github.qe7.utils.config.FileUtil;
 import lombok.Getter;
@@ -62,20 +63,20 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new JesusModule());
         modules.add(new StrafeModule());
         modules.add(new SafeWalkModule());
+        modules.add(new YawModule());
 
         /* Misc */
         modules.add(new AutoLoginModule());
         modules.add(new NoFallDamageModule());
+        modules.add(new AutoInfinityModule());
         modules.add(new FreeCameraModule());
         modules.add(new FastBreakModule());
         modules.add(new AutoToolModule());
-        modules.add(new YawModule());
         modules.add(new AutoListModule());
         modules.add(new SchizoBotModule());
         modules.add(new ChatBotModule());
         modules.add(new GrammarModule());
         modules.add(new Auto127Module());
-        modules.add(new ScaffoldModule());
         modules.add(new NoPushModule());
         modules.add(new AutoTunnelModule());
         modules.add(new AutoWalkModule());
@@ -84,6 +85,10 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new Slot9Module());
         modules.add(new FastPortalsModule());
         modules.add(new XCarryModule());
+
+        /* Build */
+        modules.add(new ScaffoldModule());
+        modules.add(new ExtrudeModule());
 
         modules.forEach(this::register);
 
@@ -117,7 +122,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         }
     }
 
-    private <T extends Module> T getModule(Class<T> moduleClass) {
+    public <T extends Module> T getModule(Class<T> moduleClass) {
         return moduleClass.cast(getRegistry().get(moduleClass));
     }
 

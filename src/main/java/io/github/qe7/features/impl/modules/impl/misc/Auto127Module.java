@@ -1,8 +1,8 @@
 package io.github.qe7.features.impl.modules.impl.misc;
 
+import io.github.qe7.Hephaestus;
 import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.events.UpdateEvent;
-import io.github.qe7.events.render.RenderScreenEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
 import io.github.qe7.features.impl.modules.api.settings.impl.BooleanSetting;
@@ -16,6 +16,8 @@ import org.lwjgl.input.Keyboard;
 
 public final class Auto127Module extends Module {
 
+    private final Minecraft mc = Minecraft.getMinecraft();
+
     private final BooleanSetting requireQ = new BooleanSetting("Require Q", true);
 
     public Auto127Module() {
@@ -24,8 +26,8 @@ public final class Auto127Module extends Module {
 
     @Subscribe
     public final Listener<UpdateEvent> updateEventListener = new Listener<>(event -> {
-        int slot = 36 + Minecraft.getMinecraft().thePlayer.inventory.currentItem;
-        ItemStack stack = Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem();
+        int slot = 36 + mc.thePlayer.inventory.currentItem;
+        ItemStack stack = mc.thePlayer.getCurrentEquippedItem();
 
         if (requireQ.getValue() && !Keyboard.isKeyDown(Keyboard.KEY_Q)) {
             return;
@@ -39,23 +41,27 @@ public final class Auto127Module extends Module {
             return;
         }
 
-        Minecraft.getMinecraft().playerController.func_27174_a(Minecraft.getMinecraft().thePlayer.inventorySlots.windowId, slot, 0, false, Minecraft.getMinecraft().thePlayer);
+        mc.playerController.func_27174_a(mc.thePlayer.inventorySlots.windowId, slot, 0, false, mc.thePlayer);
 
         int i = 0;
 
         do {
-            Minecraft.getMinecraft().playerController.func_27174_a(Minecraft.getMinecraft().thePlayer.inventorySlots.windowId, -999, 1, false, Minecraft.getMinecraft().thePlayer);
+            mc.playerController.func_27174_a(mc.thePlayer.inventorySlots.windowId, -999, 1, false, mc.thePlayer);
         } while (stack.stackSize > -129 && ++i < 5);
 
-        Minecraft.getMinecraft().playerController.func_27174_a(Minecraft.getMinecraft().thePlayer.inventorySlots.windowId, slot, 0, false, Minecraft.getMinecraft().thePlayer);
+        mc.playerController.func_27174_a(mc.thePlayer.inventorySlots.windowId, slot, 0, false, mc.thePlayer);
 
-        if (Minecraft.getMinecraft().isMultiplayerWorld()) {
-            PacketUtil.sendPacket(new Packet101CloseWindow(Minecraft.getMinecraft().thePlayer.inventorySlots.windowId));
+        if (mc.isMultiplayerWorld()) {
+            PacketUtil.sendPacket(new Packet101CloseWindow(mc.thePlayer.inventorySlots.windowId));
         }
     });
 
     @Subscribe
     public final Listener<KeyPressEvent> keyPressEventListener = new Listener<>(event -> {
+        if (Hephaestus.getInstance().getModuleManager().getRegistry().get(AutoInfinityModule.class).isEnabled()) {
+            return;
+        }
+
         if (!requireQ.getValue()) {
             return;
         }
@@ -64,11 +70,11 @@ public final class Auto127Module extends Module {
             return;
         }
 
-        if (Minecraft.getMinecraft().theWorld == null) {
+        if (mc.theWorld == null) {
             return;
         }
 
-        ItemStack stack = Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem();
+        ItemStack stack = mc.thePlayer.getCurrentEquippedItem();
 
         if (stack == null) {
             return;
