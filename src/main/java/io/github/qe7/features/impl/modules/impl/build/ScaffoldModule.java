@@ -1,10 +1,13 @@
 package io.github.qe7.features.impl.modules.impl.build;
 
 import io.github.qe7.events.UpdateEvent;
+import io.github.qe7.events.render.RenderScreenEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.ModuleCategory;
 import io.github.qe7.features.impl.modules.api.settings.impl.BooleanSetting;
+import io.github.qe7.features.impl.modules.api.settings.impl.EnumSetting;
 import io.github.qe7.features.impl.modules.api.settings.impl.IntSetting;
+import io.github.qe7.features.impl.modules.api.settings.impl.interfaces.IEnumSetting;
 import io.github.qe7.utils.PlayerUtil;
 import io.github.qe7.utils.math.TimerUtil;
 import me.zero.alpine.listener.Listener;
@@ -15,6 +18,8 @@ import net.minecraft.src.*;
 public final class ScaffoldModule extends Module {
 
     private final Minecraft mc = Minecraft.getMinecraft();
+
+    private final EnumSetting<PlaceModeEnum> placeMode = new EnumSetting<>("Place mode", PlaceModeEnum.RECTANGLE);
 
     private final IntSetting radius = new IntSetting("Radius", 1, 1, 5, 1);
 
@@ -45,6 +50,11 @@ public final class ScaffoldModule extends Module {
     }
 
     @Subscribe
+    public final Listener<RenderScreenEvent> renderScreenEventListener = new Listener<>(event -> {
+        this.setSuffix(this.placeMode.getValue().getName());
+    });
+
+    @Subscribe
     public final Listener<UpdateEvent> updateEventListener = new Listener<>(event -> {
         if (mc.thePlayer == null) return;
 
@@ -62,32 +72,47 @@ public final class ScaffoldModule extends Module {
             return;
         }
 
-        int maxLayers = radius * 2;
+        switch (this.placeMode.getValue()) {
+            case RECTANGLE:
+                for (int i = centerX - radius; i <= centerX + radius; i++) {
+                    for (int j = centerZ - radius; j <= centerZ + radius; j++) {
+                        if (canPlaceBlock(i, centerY, j)) {
+                            placeBlock(i, centerY, j);
+                        }
+                    }
+                }
 
-        for (int layer = 0; layer <= maxLayers; layer++) {
-            for (int offset = 0; offset <= layer; offset++) {
-                for (int i = 0; i <= offset; i++) {
-                    int[][] positions = {
-                        {centerX + i, centerZ + (offset - i)},
-                        {centerX + i, centerZ - (offset - i)},
-                        {centerX - i, centerZ + (offset - i)},
-                        {centerX - i, centerZ - (offset - i)}
-                    };
-                    
-                    for (int[] pos : positions) {
-                        int x = pos[0];
-                        int z = pos[1];
-                        
-                        if (Math.abs(x - centerX) <= radius && 
-                            Math.abs(z - centerZ) <= radius) {
+                break;
+            case TRIANGLE:
+                int maxLayers = radius * 2;
+
+                for (int layer = 0; layer <= maxLayers; layer++) {
+                    for (int offset = 0; offset <= layer; offset++) {
+                        for (int i = 0; i <= offset; i++) {
+                            int[][] positions = {
+                                {centerX + i, centerZ + (offset - i)},
+                                {centerX + i, centerZ - (offset - i)},
+                                {centerX - i, centerZ + (offset - i)},
+                                {centerX - i, centerZ - (offset - i)}
+                            };
                             
-                            if (canPlaceBlock(x, centerY, z)) {
-                                placeBlock(x, centerY, z);
+                            for (int[] pos : positions) {
+                                int x = pos[0];
+                                int z = pos[1];
+                                
+                                if (Math.abs(x - centerX) <= radius && 
+                                    Math.abs(z - centerZ) <= radius) {
+                                    
+                                    if (canPlaceBlock(x, centerY, z)) {
+                                        placeBlock(x, centerY, z);
+                                    }
+                                }
                             }
                         }
                     }
                 }
-            }
+
+                break;
         }
     });
 
@@ -135,6 +160,27 @@ public final class ScaffoldModule extends Module {
                 mc.playerController.sendPlaceBlock(player, world, currentItem, px, py, pz, side);
                 return;
             }
+        }
+    }
+
+    public enum PlaceModeEnum implements IEnumSetting {
+        RECTANGLE("Rectangle"),
+        TRIANGLE("Triangle");
+
+        private final String name;
+
+        PlaceModeEnum(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public Enum<?> getEnum(String name) {
+            return PlaceModeEnum.valueOf(name);
         }
     }
 }
