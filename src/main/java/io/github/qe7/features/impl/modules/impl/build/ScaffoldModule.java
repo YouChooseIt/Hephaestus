@@ -64,7 +64,7 @@ public final class ScaffoldModule extends Module {
         int radius = this.radius.getValue();
 
         ItemStack currentItem = mc.thePlayer.inventory.getCurrentItem();
-        if (currentItem == null) {
+        if (currentItem == null || !(currentItem.getItem() instanceof ItemBlock)) {
             return;
         }
 

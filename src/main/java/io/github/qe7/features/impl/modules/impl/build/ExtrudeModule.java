@@ -87,7 +87,7 @@ public final class ExtrudeModule extends Module {
         if (mc.thePlayer == null) return;
 
         ItemStack currentItem = mc.thePlayer.inventory.getCurrentItem();
-        if (currentItem == null) {
+        if (currentItem == null || !(currentItem.getItem() instanceof ItemBlock)) {
             return;
         }
 
