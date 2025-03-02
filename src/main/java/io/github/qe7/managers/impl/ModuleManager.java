@@ -7,12 +7,8 @@ import io.github.qe7.Hephaestus;
 import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
-import io.github.qe7.features.impl.modules.impl.combat.AutoHealModule;
-import io.github.qe7.features.impl.modules.impl.combat.AntiKnockBackModule;
-import io.github.qe7.features.impl.modules.impl.combat.ForceFieldModule;
-import io.github.qe7.features.impl.modules.impl.exploit.XCarryModule;
-import io.github.qe7.features.impl.modules.impl.exploit.FastPortalsModule;
-import io.github.qe7.features.impl.modules.impl.exploit.Slot9Module;
+import io.github.qe7.features.impl.modules.impl.combat.*;
+import io.github.qe7.features.impl.modules.impl.exploit.*;
 import io.github.qe7.features.impl.modules.impl.movement.*;
 import io.github.qe7.features.impl.modules.impl.render.*;
 import io.github.qe7.features.impl.modules.impl.build.*;
@@ -64,6 +60,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new StrafeModule());
         modules.add(new SafeWalkModule());
         modules.add(new YawModule());
+        modules.add(new FreezeYModule());
 
         /* Misc */
         modules.add(new AutoLoginModule());

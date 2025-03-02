@@ -7,6 +7,7 @@ package net.minecraft.src;
 import io.github.qe7.Hephaestus;
 import io.github.qe7.events.PushOutOfEntityEvent;
 import io.github.qe7.features.impl.modules.impl.movement.SafeWalkModule;
+import io.github.qe7.features.impl.modules.impl.movement.FreezeYModule;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 
@@ -251,15 +252,22 @@ public abstract class Entity {
         AxisAlignedBB axisalignedbb = boundingBox.copy();
         boolean flag = onGround && isSneaking();
 
-        if (Hephaestus.getInstance().getModuleManager().getRegistry().get(SafeWalkModule.class).isEnabled()) {
+        if (Hephaestus.getInstance().getModuleManager().getRegistry().get(SafeWalkModule.class).isEnabled() ||
+        Hephaestus.getInstance().getModuleManager().getRegistry().get(FreezeYModule.class).isEnabled()) {
             if (this == Minecraft.getMinecraft().thePlayer) {
                 flag = onGround;
             }
         }
 
         if (flag) {
+            double safeOffset = -1D;
+
+            if (Hephaestus.getInstance().getModuleManager().getRegistry().get(FreezeYModule.class).isEnabled()) {
+                safeOffset = -0.5D;
+            }
+
             double d8 = 0.050000000000000003D;
-            for (; d != 0.0D && worldObj.getCollidingBoundingBoxes(this, boundingBox.getOffsetBoundingBox(d, -1D, 0.0D)).size() == 0; d5 = d) {
+            for (; d != 0.0D && worldObj.getCollidingBoundingBoxes(this, boundingBox.getOffsetBoundingBox(d, safeOffset, 0.0D)).size() == 0; d5 = d) {
                 if (d < d8 && d >= -d8) {
                     d = 0.0D;
                     continue;
@@ -271,7 +279,7 @@ public abstract class Entity {
                 }
             }
 
-            for (; d2 != 0.0D && worldObj.getCollidingBoundingBoxes(this, boundingBox.getOffsetBoundingBox(0.0D, -1D, d2)).size() == 0; d7 = d2) {
+            for (; d2 != 0.0D && worldObj.getCollidingBoundingBoxes(this, boundingBox.getOffsetBoundingBox(0.0D, safeOffset, d2)).size() == 0; d7 = d2) {
                 if (d2 < d8 && d2 >= -d8) {
                     d2 = 0.0D;
                     continue;
