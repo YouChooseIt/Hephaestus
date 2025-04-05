@@ -66,6 +66,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         modules.add(new AutoLoginModule());
         modules.add(new NoFallDamageModule());
         modules.add(new AutoInfinityModule());
+        modules.add(new PreventDropModule());
         modules.add(new FreeCameraModule());
         modules.add(new FastBreakModule());
         modules.add(new AutoToolModule());
