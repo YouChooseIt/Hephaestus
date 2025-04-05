@@ -9,6 +9,7 @@ public final class ArmourHudPanel extends Panel {
 
     public ArmourHudPanel() {
         super("ArmourHud", "Displays your armor on the screen");
+        
 
         this.x = 10;
         this.y = 40;
